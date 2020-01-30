@@ -64,16 +64,68 @@ class Character extends React.Component {
             <div>
                 Character Information:
                 <p>
-                        {JSON.stringify(this.props.characterGen)}
-                    </p>
+                    {JSON.stringify(this.props.characterGen)}
+                </p>
+                <RacialInfo racial={this.props.characterGen} />
+                <Adventurer adventureClass={this.props.characterGen.adventureClass} />
+                <CharBackground background={this.props.characterGen.background} />
+                <h4>Character Stats</h4>
                 <ul>
-                    <Stats stats={this.props.characterGen} />
+                    <Stats stats={this.props.characterGen.stats} />
+                </ul>
+                <h4>The Original rolls for if you want to just use the rolls</h4>
+                <ul>
+                    <Stats stats={this.props.characterGen.originalStats} />
                 </ul>
             </div>
         )
     }
 }
 
+class CharBackground extends React.Component{
+    constructor(props){
+        super(props)
+    }
+
+    render(){
+        return(
+        <div>
+            <h3>
+                Background: {this.props.background}
+            </h3>
+        </div>
+        )}
+}
+
+class Adventurer extends React.Component{
+    constructor(props){
+        super(props)
+    }
+
+    render(){
+        return(
+            <div>
+                <h2>
+                    Class: {this.props.adventureClass}
+                </h2>
+            </div>
+        )
+    }
+}
+class RacialInfo extends React.Component{
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return(
+            <div>
+                <h2>
+                    Race: {this.props.racial.subRace} {this.props.racial.baseRace} 
+                </h2>
+            </div>
+        )
+    }
+}
 class Stats extends React.Component {
     constructor(props){
         super(props)
@@ -84,7 +136,7 @@ class Stats extends React.Component {
     render(){
         return(
             <p>
-                {_.map(this.props.stats.stats,(stat, index)=>{
+                {_.map(this.props.stats,(stat, index)=>{
                 let key = index;
                 
             return <li key='key'>{key}:{JSON.stringify(stat)}</li>
