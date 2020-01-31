@@ -18,7 +18,7 @@ class App extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick(){
-        axios.get('http://localhost:3000/character')
+        axios.get('https://dndcharactergenerator.herokuapp.com/character')
             .then(({data})=>{
                 console.log('got in then', data)
                 this.setState({
