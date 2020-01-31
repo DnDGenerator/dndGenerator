@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import React from 'react';
-
+import _ from 'lodash';
 
 class Stats extends React.Component {
     constructor(props){
@@ -12,7 +11,7 @@ class Stats extends React.Component {
     render(){
         return(
             <p>
-                {_.map(this.props.stats.stats,(stat, index)=>{
+                {_.map(this.props.stats,(stat, index)=>{
                 let key = index;
                 
             return <li key='key'>{key}:{JSON.stringify(stat)}</li>
@@ -22,4 +21,4 @@ class Stats extends React.Component {
     }
 }
 
-module.exports=Stats
+export default Stats;

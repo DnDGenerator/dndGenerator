@@ -10,5 +10,6 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/character', (req, res)=>{
-    res.send(characterObj(req.query.eberronInclude))
+    console.log(req.query);
+    res.send(characterObj(req.query))
 })

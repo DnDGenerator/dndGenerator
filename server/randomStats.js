@@ -3,18 +3,22 @@ const baseClass = require('./classGenerator');
 const background = require('./backgroundGen');
 const race = require('./baseRace');
 const subRace = require('./subRace');
-const classicRolls = require('./classicGenerator')
+const classicRoller = require('./classicGenerator')
 const dice = require('./dice');
-const path = require('path');
-// const reactApp = require('../app/index.html')
 
-const characterCreator = (ebberonOrNot)=>{
+const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls})=>{
     const characterObj = {};
-    characterObj.stats = stats();
+    console.log(!classicRolls)
+    if(classicRolls === 'false'){
+        characterObj.stats = classicRoller()
+    }else{
+        characterObj.stats = stats();
+    }
+    
     characterObj.baseClass = baseClass();
     characterObj.background = background();
     characterObj.baseRace = race();
-    const subRaceObj = subRace(characterObj.baseRace, ebberonOrNot)
+    const subRaceObj = subRace(characterObj.baseRace, eberronInclude)
     for (let key in subRaceObj){
         if(key !== 'noSubrace'){
             characterObj.subRace = key;            

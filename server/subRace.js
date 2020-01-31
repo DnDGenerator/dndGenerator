@@ -2,7 +2,7 @@ const dice = require('./dice')
 
 module.exports = (baseRace, eberronOrNot)=>{
     let options = []
-    if(eberronOrNot){
+    if(eberronOrNot === 'false'){
         switch(baseRace){
             case 'dwarf':
                 options = [
