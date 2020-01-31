@@ -18,7 +18,7 @@ class App extends React.Component{
         this.handleClick = this.handleClick.bind(this);
     }
     handleClick(){
-        axios.get('http://localhost:3000/')
+        axios.get('http://localhost:3000/character')
             .then(({data})=>{
                 console.log('got in then', data)
                 this.setState({
@@ -63,9 +63,7 @@ class Character extends React.Component {
         return(
             <div>
                 Character Information:
-                <p>
-                    {JSON.stringify(this.props.characterGen)}
-                </p>
+                
                 <RacialInfo racial={this.props.characterGen} />
                 <Adventurer adventureClass={this.props.characterGen.adventureClass} />
                 <CharBackground background={this.props.characterGen.background} />
@@ -147,3 +145,5 @@ class Stats extends React.Component {
 }
 
 ReactDOM.render(<App />, document.getElementById('app'))
+
+export default App;
