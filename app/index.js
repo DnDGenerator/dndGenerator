@@ -20,7 +20,7 @@ class App extends React.Component{
     handleClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/character')
             .then(({data})=>{
-                console.log('got in then', data)
+                
                 this.setState({
                     subRace: data.subRace,
                     adventureClass: data.baseClass,
@@ -41,9 +41,6 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <p>
-                    {JSON.stringify(this.state)}
-                </p>
                 <Character characterGen={this.state} />
                 <button onClick={this.handleClick}>Click for Fodder</button>
             </div>
