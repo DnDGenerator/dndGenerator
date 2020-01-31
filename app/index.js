@@ -26,7 +26,7 @@ class App extends React.Component{
     }
     handleClick(){
         //https://dndcharactergenerator.herokuapp.com
-        axios.get('http://localhost:3000/character', {
+        axios.get('https://dndcharactergenerator.herokuapp.com/character', {
             params:{
                 eberronInclude: this.state.eberron,
                 ravnicaInclude: this.state.ravnica,
@@ -69,9 +69,6 @@ class App extends React.Component{
     render(){
         return(
             <div>
-                <p>
-                    {JSON.stringify(this.state)}
-                </p>
                 <Character characterGen={this.state} ravnicaOnChange={this.handleRavnicaChange} eberron={this.handleEberronChange} classicRolls={this.handleClassicRollsChange}/>
                 <button onClick={this.handleClick}>Click for Fodder</button>
             </div>

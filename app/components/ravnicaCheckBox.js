@@ -9,7 +9,7 @@ class RavnicaCheckBox extends React.Component {
         return(
             <div>
                 <h4>
-                    Include Ravnica Guild Backgrounds
+                    Include Ravnica Guild Backgrounds (currently unavailable)
                     <input type="checkbox" checked={this.props.ravnica} onChange={this.props.ravnicaChange} />
                 </h4>
             </div>
