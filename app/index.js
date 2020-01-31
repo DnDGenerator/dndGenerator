@@ -60,20 +60,29 @@ class Character extends React.Component {
     }
     render(){
         return(
-            <div>
+            <div id='character'>
                 Character Information:
-                
-                <RacialInfo racial={this.props.characterGen} />
-                <Adventurer adventureClass={this.props.characterGen.adventureClass} />
-                <CharBackground background={this.props.characterGen.background} />
+                <div id="racicalInfo">
+                    <RacialInfo racial={this.props.characterGen} />
+                </div>
+                <div id="adventureclass">
+                    <Adventurer adventureClass={this.props.characterGen.adventureClass} />
+                </div>
+                <div id="charbackground">
+                    <CharBackground background={this.props.characterGen.background} />
+                </div>
                 <h4>Character Stats</h4>
-                <ul>
-                    <Stats stats={this.props.characterGen.stats} />
-                </ul>
+                <div id="modifiedstats">
+                    <ul>
+                        <Stats stats={this.props.characterGen.stats} />
+                    </ul>            
+                </div>
                 <h4>The Original rolls for if you want to just use the rolls</h4>
-                <ul>
-                    <Stats stats={this.props.characterGen.originalStats} />
-                </ul>
+                <div id="ogstats">
+                    <ul>
+                        <Stats stats={this.props.characterGen.originalStats} />
+                    </ul>
+                </div>
             </div>
         )
     }
