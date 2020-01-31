@@ -13,14 +13,20 @@ class App extends React.Component{
             background:'',
             baseRace:'',
             stats:{},
-            originalStats:{}
+            originalStats:{},
+            eberron:false
         }
         this.handleClick = this.handleClick.bind(this);
+        this.handleEberronChange = this.handleEberronChange.bind(this);
     }
     handleClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/character')
+        //https://dndcharactergenerator.herokuapp.com
+        axios.get('http://localhost:3000/character', {
+            params:{
+                eberronInclude: this.state.eberron
+            }
+        })
             .then(({data})=>{
-                
                 this.setState({
                     subRace: data.subRace,
                     adventureClass: data.baseClass,
@@ -35,19 +41,42 @@ class App extends React.Component{
                 console.log('axios failed')
             })
     }
+    handleEberronChange(){
+
+        this.setState(state =>({
+            eberron: !state.eberron
+        }))
+    }
     componentDidUpdate() {
         console.log('Component re-rendered.');
     }
     render(){
         return(
             <div>
+                <p>
+                    {JSON.stringify(this.state)}
+                </p>
                 <Character characterGen={this.state} />
+                <EberronCheckBox eberron={this.state.eberron} eberronChange={this.handleEberronChange} />
                 <button onClick={this.handleClick}>Click for Fodder</button>
             </div>
         )
     }
 }
-
+class EberronCheckBox extends React.Component {
+    constructor(props){
+        super(props)
+    }
+    render(){
+        return(
+            <div>
+                <h4>Include Ebberon Dragonmark subraces
+                    <input type="checkbox" checked={this.props.eberron} onChange={this.props.eberronChange} />
+                </h4>
+            </div>
+        )
+    }
+}
 class Character extends React.Component {
     constructor(props){
         super(props)
@@ -89,7 +118,6 @@ class CharBackground extends React.Component{
     constructor(props){
         super(props)
     }
-
     render(){
         return(
         <div>
@@ -104,7 +132,6 @@ class Adventurer extends React.Component{
     constructor(props){
         super(props)
     }
-
     render(){
         return(
             <div>

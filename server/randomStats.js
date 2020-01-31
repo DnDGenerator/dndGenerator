@@ -8,13 +8,13 @@ const dice = require('./dice');
 const path = require('path');
 // const reactApp = require('../app/index.html')
 
-const characterCreator = ()=>{
+const characterCreator = (ebberonOrNot)=>{
     const characterObj = {};
     characterObj.stats = stats();
     characterObj.baseClass = baseClass();
     characterObj.background = background();
     characterObj.baseRace = race();
-    const subRaceObj = subRace(characterObj.baseRace)
+    const subRaceObj = subRace(characterObj.baseRace, ebberonOrNot)
     for (let key in subRaceObj){
         if(key !== 'noSubrace'){
             characterObj.subRace = key;            
@@ -158,7 +158,6 @@ const characterCreator = ()=>{
     }catch{
         console.log('i guess there is something wrong here as well')
     }
-    console.log(characterObj)
     return characterObj
 }
 
