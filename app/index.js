@@ -29,7 +29,6 @@ class App extends React.Component{
                     stats: data.stats,
                     originalStats:data.originalStats
                 })
-                console.log("this is state",this.state)
             })
             .catch(e=>{
                 console.error(e);
