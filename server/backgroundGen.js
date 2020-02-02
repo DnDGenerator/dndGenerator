@@ -22,10 +22,25 @@ const backgrounds = [
     'anthropologist',
     'archaeologist'
 ]
-
-module.exports = ()=>{
+const ravnicaGuilds = [
+    'Golgari Swarm',
+    'Azorius Senate',
+    'House Dimir',
+    'Cult of Rakdos',
+    'Gruul Clans',
+    'Selesnya Conclave',
+    'Orzhov Syndicate',
+    'Simic Combine',
+    'Izzet League',
+    'Boros Legion'
+];
+module.exports = (useRavnicaGuilds)=>{
     try{
-    return backgrounds[dice.roll(`1d${backgrounds.length}`).result - 1]
+        if(useRavnicaGuilds==='false'){
+            return backgrounds[dice.roll(`1d${backgrounds.length}`).result - 1]
+        }else{
+            return ravnicaGuilds[dice.roll(`1d${ravnicaGuilds.length}`).result - 1]
+        }
     }catch{
         console.log('oops we broke backgroundGen')
     }

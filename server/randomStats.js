@@ -16,7 +16,7 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls})=>{
     }
     
     characterObj.baseClass = baseClass();
-    characterObj.background = background();
+    characterObj.background = background(ravnicaInclude);
     characterObj.baseRace = race();
     const subRaceObj = subRace(characterObj.baseRace, eberronInclude)
     for (let key in subRaceObj){
