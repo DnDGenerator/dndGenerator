@@ -56,6 +56,7 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls})=>{
             characterObj.stats.int += 2;
             break;
         case 'half-elf':
+            //will need to take care of ebeeron here
             characterObj.stats.cha += 2;
             
             try{

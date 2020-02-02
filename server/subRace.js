@@ -135,6 +135,17 @@ module.exports = (baseRace, eberronOrNot)=>{
                     {'scourge':'con'},
                     {'fallen':'str'}
                 ]
+                break;
+            // case 'half-elf':
+            //     options = [
+            //         {'Mark of Detection':'special'}
+            //     ]
+            //     break;
+            // case 'half-orc':
+            //     options = [
+            //         {'Mark of Finding':''}
+            //     ]
+            //     break;
             default:
                 return {'noSubrace':'noSubrace'}
         }

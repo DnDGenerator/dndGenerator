@@ -20,7 +20,13 @@ const backgrounds = [
     'spy',
     'urchin',
     'anthropologist',
-    'archaeologist'
+    'archaeologist',
+    'clan crafter',
+    'smuggler',
+    'shipwright',
+    'fisher',
+    'marine',
+    'haunted'
 ]
 const ravnicaGuilds = [
     'Golgari Swarm',
