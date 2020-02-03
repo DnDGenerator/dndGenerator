@@ -122,14 +122,14 @@ module.exports = (characterObj)=>{
             break;
         case 'warforged':
             characterObj.stats.con +=2;
-            let statlist = ['str','dex','cha','int','wis'];
-            let traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+            statlist = ['str','dex','cha','int','wis'];
+            traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
             characterObj.stats[traitOne[0]] += 1;
             break;
         case 'changeling':
             characterObj.stats.cha +=2;
-            let statlist = ['str','dex','con','int','wis'];
-            let traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+            statlist = ['str','dex','con','int','wis'];
+            traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
             characterObj.stats[traitOne[0]] += 1;
             break;
     }
