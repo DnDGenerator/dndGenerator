@@ -22,14 +22,14 @@ module.exports = (characterOj)=>{
             break;
         case 'Mark of Making':
             characterOj.stats.int += 2;
-            var statlist = ['str','dex','con','wis','cha'];
-            var traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+            statlist = ['str','dex','con','wis','cha'];
+            traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
             characterObj.stats[traitOne[0]] += 1;
             break;
         case 'Mark of Passage':
             characterOj.stats.dex += 2;
-            var statlist = ['str','int','con','wis','cha'];
-            var traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+            statlist = ['str','int','con','wis','cha'];
+            traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
             characterObj.stats[traitOne[0]] += 1;
             break;
         case 'Mark of Scribing':
