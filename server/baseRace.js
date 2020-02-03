@@ -60,7 +60,7 @@ module.exports = (eberronDragonMark, includeRavnica, includeEberron)=>{
                 'half-orc',
                 'half-elf'
             ]
-            return dragonmarkOptions;
+            return dragonmarkOptions[dice.roll(`1d${dragonmarkOptions.length}`).result - 1];
         }
         return races[dice.roll(`1d${races.length}`).result - 1]
     }
