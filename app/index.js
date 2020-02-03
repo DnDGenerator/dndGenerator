@@ -46,10 +46,10 @@ class App extends React.Component{
         })
             .then(({data})=>{
                 this.setState({
-                    subRace: data.subRace,
-                    adventureClass: data.baseClass,
-                    background: data.background,
-                    baseRace: data.baseRace,
+                    subRace: data.subRace.toUpper(),
+                    adventureClass: data.baseClass.toUpper(),
+                    background: data.background.toUpper(),
+                    baseRace: data.baseRace.toUpper(),
                     stats: data.stats,
                     originalStats: data.originalStats,
                 })
