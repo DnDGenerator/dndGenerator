@@ -1,6 +1,6 @@
 const dice = require('./dice');
 
-const races = [
+let races = [
     'dwarf',
     'elf',
     'human',
@@ -44,13 +44,13 @@ const ravnica = [
 ]
 module.exports = (eberronDragonMark, includeEberron, includeRavnica)=>{
     try{
-        console.log(includeRavnica)
+        console.log(includeRavnica, 'this should be true')
         if(includeRavnica==='true'){
-            races.concat(ravnica);
+            races = races.concat(ravnica);
             console.log(races)
         }
         if(includeEberron==='true'){
-            races.concat(eberron);
+            races = races.concat(eberron);
         }
         if(eberronDragonMark==='true'){
             const dragonmarkOptions=[
