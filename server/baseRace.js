@@ -42,13 +42,25 @@ const ravnica = [
     'centaur',
     'vedalken'
 ]
-module.exports = ({includeRavnica, includeEberron})=>{
+module.exports = (eberronDragonMark, includeRavnica, includeEberron)=>{
     try{
         if(includeRavnica==='true'){
             races.concat(ravnica);
         }
         if(includeEberron==='true'){
             races.concat(eberron);
+        }
+        if(eberronDragonMark==='true'){
+            const dragonmarkOptions=[
+                'dwarf',
+                'elf',
+                'human',
+                'halfling',
+                'gnome',
+                'half-orc',
+                'half-elf'
+            ]
+            return dragonmarkOptions;
         }
         return races[dice.roll(`1d${races.length}`).result - 1]
     }
