@@ -46,13 +46,27 @@ class App extends React.Component{
         })
             .then(({data})=>{
                 this.setState({
-                    subRace: data.subRace.toUpper(),
-                    adventureClass: data.baseClass.toUpper(),
-                    background: data.background.toUpper(),
-                    baseRace: data.baseRace.toUpper(),
+                    subRace: data.subRace,
+                    adventureClass: data.baseClass,
+                    background: data.background,
+                    baseRace: data.baseRace,
                     stats: data.stats,
                     originalStats: data.originalStats,
                 })
+            }).then(()=>{
+                const temp={};
+                for(let key in this.state){
+                    if(typeof this.state[key] === "string"){
+                        temp[key] = this.state[key].toUpperCase();
+                    }
+                }
+                this.setState({
+                    subRace: temp.subRace,
+                    adventureClass: temp.adventureClass,
+                    background: temp.background,
+                    baseRace: temp.baseRace
+                })
+                
             })
             .catch(e=>{
                 console.error(e);
