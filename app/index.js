@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './index.css';
 import axios from 'axios';
 import Character from './components/character'
+import Button from 'react-bootstrap/Button';
 
 
 class App extends React.Component{
@@ -112,7 +114,14 @@ class App extends React.Component{
     }
     render(){
         return(
+            
             <div>
+                <link
+                    rel="stylesheet"
+                    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+                    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+                    crossorigin="anonymous"
+                />
                 <Character 
                     characterGen={this.state} 
                     eberronRacesFunc={this.handleEberronRacesChange} 
@@ -122,7 +131,7 @@ class App extends React.Component{
                     classicRolls={this.handleClassicRollsChange}
                     onChangeForPointBuyHanlder={this.handlePointBuyChange}
                 />
-                <button onClick={this.handleClick}>Click for Fodder</button>
+                <Button variant="primary" size="lg" onClick={this.handleClick} block="true">Click for Fodder</Button>
             </div>
         )
     }

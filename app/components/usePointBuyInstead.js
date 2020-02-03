@@ -9,7 +9,7 @@ class UsePointBuyInstead extends React.Component{
         return(
             <div>
                 <h4>
-                    Use Point Buy instead of rolling
+                    Use Point Buy instead of rolling:  
                     <input type="checkbox" checked={this.props.pointBuyStatus} onChange={this.props.onChangeForPointBuyHanlder} />
                 </h4>
             </div>
