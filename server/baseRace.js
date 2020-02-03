@@ -44,10 +44,8 @@ const ravnica = [
 ]
 module.exports = (eberronDragonMark, includeEberron, includeRavnica)=>{
     try{
-        console.log(includeRavnica, 'this should be true')
         if(includeRavnica==='true'){
             races = races.concat(ravnica);
-            console.log(races)
         }
         if(includeEberron==='true'){
             races = races.concat(eberron);

@@ -75,8 +75,9 @@ module.exports = (baseRace, eberronOrNot)=>{
                     {'swiftstride':['dex','cha']},
                     {'wildhunt':['wis', 'dex']}
                 ]
+                break;
             default:
-                return {'noSubrace':'noSubrace'}
+                return {'noSubrace':null}
         }
     }else{
         switch(baseRace){
@@ -122,7 +123,7 @@ module.exports = (baseRace, eberronOrNot)=>{
                 ]
                 break;
             default:
-                return {'noSubrace':'noSubrace'}
+                return {'noSubrace':null}
         }
     }
     try{

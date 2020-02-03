@@ -21,7 +21,7 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, include
     const subRaceObj = subRace(characterObj.baseRace, eberronInclude)
     for (let key in subRaceObj){
         if(key !== 'noSubrace'){
-            characterObj.subRace = key;            
+            characterObj.subRace = key;         
         }
     }
     characterObj.originalStats = {
@@ -36,22 +36,23 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, include
         characterObj = nonDragonmarkedRaces(characterObj);
         try{
             for (let key in subRaceObj){
-                
+                console.log(subRaceObj);
                 if(key === 'mountain' || characterObj.baseRace === 'gith'){
                     characterObj.stats[subRaceObj[key]] += 2;
                 }
-                else if(key !== 'noSubrace' && characterObj.baseRace !== 'shifter'){
-                    characterObj.stats[subRaceObj[key]] += 1;
-                } else {
+                else if(characterObj.baseRace === 'shifter'){
+                    console.log(key)
                     characterObj.stats[subRaceObj[key][0]] += 2;
                     characterObj.stats[subRaceObj[key][1]] += 1;
+                }else if(key !== 'noSubrace'){
+                    characterObj.stats[subRaceObj[key]] += 1;
                 }
             }
         }catch{
             console.log('i guess there is something wrong here as well')
         }
     }else{
-        characterObj = dragonmarkedRaces(characterObj);
+        return dragonmarkedRaces(characterObj);
     }
     
     
