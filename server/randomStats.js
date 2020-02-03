@@ -6,15 +6,20 @@ const subRace = require('./subRace');
 const classicRoller = require('./classicGenerator')
 const nonDragonmarkedRaces = require('./normalRacialStatAssignment');
 const dragonmarkedRaces = require('./dragonmarkStatAssignment');
+const pointBuyStats = require('./pointBuy');
 
-const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, includeEberronRaces, includeRavnicaRaces})=>{
-    let characterObj = {};
-    if(classicRolls === 'false'){
+
+
+const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, includeEberronRaces, includeRavnicaRaces, usePointBuy})=>{
+    const characterObj = {};
+    if(usePointBuy === 'true'){
+        console.log('point buy!')
+        characterObj.stats = pointBuyStats();
+    }else if(classicRolls === 'false'){
         characterObj.stats = classicRoller()
     }else{
         characterObj.stats = stats();
     }
-    
     characterObj.baseClass = baseClass();
     characterObj.background = background(ravnicaInclude, eberronInclude);
     characterObj.baseRace = race(eberronInclude, includeEberronRaces, includeRavnicaRaces);
@@ -33,7 +38,9 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, include
         'cha':characterObj.stats.cha
     }
     if(eberronInclude==='false'){
-        characterObj = nonDragonmarkedRaces(characterObj);
+        characterObj.stats = nonDragonmarkedRaces(characterObj.baseRace, characterObj.stats);
+        console.log('point buy! ', characterObj.stats)
+
         try{
             for (let key in subRaceObj){
                 console.log(subRaceObj);
@@ -52,7 +59,7 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, include
             console.log('i guess there is something wrong here as well')
         }
     }else{
-        return dragonmarkedRaces(characterObj);
+        return dragonmarkedRaces(characterObj.subRace, characterObj.stats);
     }
     
     

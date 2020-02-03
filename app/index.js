@@ -19,7 +19,8 @@ class App extends React.Component{
             ravnica:false,
             classicRolls:false,
             ravnicaRaces:false,
-            eberronRaces:false
+            eberronRaces:false,
+            usePointBuy:false
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
@@ -27,6 +28,7 @@ class App extends React.Component{
         this.handleClassicRollsChange = this.handleClassicRollsChange.bind(this);
         this.handleRavnicaRacesChange = this.handleRavnicaRacesChange.bind(this);
         this.handleEberronRacesChange = this.handleEberronRacesChange.bind(this);
+        this.handlePointBuyChange = this.handlePointBuyChange.bind(this);
     }
     handleClick(){
         console.log(this.state.ravnicaRaces)
@@ -38,7 +40,8 @@ class App extends React.Component{
                 ravnicaInclude: this.state.ravnica,
                 classicRolls: this.state.classicRolls,
                 includeEberronRaces: this.state.eberronRaces,
-                includeRavnicaRaces: this.state.ravnicaRaces
+                includeRavnicaRaces: this.state.ravnicaRaces,
+                usePointBuy: this.state.usePointBuy
             }
         })
             .then(({data})=>{
@@ -48,7 +51,7 @@ class App extends React.Component{
                     background: data.background,
                     baseRace: data.baseRace,
                     stats: data.stats,
-                    originalStats:data.originalStats
+                    originalStats: data.originalStats,
                 })
             })
             .catch(e=>{
@@ -70,7 +73,8 @@ class App extends React.Component{
     }
     handleClassicRollsChange(){
         this.setState(state =>({
-            classicRolls: !state.classicRolls
+            classicRolls: !state.classicRolls,
+            usePointBuy: false
         }))
     }
     handleRavnicaRacesChange(){
@@ -83,13 +87,27 @@ class App extends React.Component{
             eberronRaces: !state.eberronRaces
         }))
     }
+    handlePointBuyChange(){
+        this.setState(state=>({
+            usePointBuy: !state.usePointBuy,
+            classicRolls:false
+        }))
+    }
     componentDidUpdate() {
         console.log('Component re-rendered.');
     }
     render(){
         return(
             <div>
-                <Character characterGen={this.state} eberronRacesFunc={this.handleEberronRacesChange} ravnicaRacesFunc={this.handleRavnicaRacesChange} ravnicaOnChange={this.handleRavnicaChange} eberron={this.handleEberronChange} classicRolls={this.handleClassicRollsChange}/>
+                <Character 
+                    characterGen={this.state} 
+                    eberronRacesFunc={this.handleEberronRacesChange} 
+                    ravnicaRacesFunc={this.handleRavnicaRacesChange} 
+                    ravnicaOnChange={this.handleRavnicaChange} 
+                    eberron={this.handleEberronChange} 
+                    classicRolls={this.handleClassicRollsChange}
+                    onChangeForPointBuyHanlder={this.handlePointBuyChange}
+                />
                 <button onClick={this.handleClick}>Click for Fodder</button>
             </div>
         )

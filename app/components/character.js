@@ -6,7 +6,8 @@ import Adventurer from './adventurer';
 import RacialInfo from './racialInfo';
 import Stats from './stats';
 import ClassicRollsCheckBox from './classicRollsCheckBox';
-import ExtraSettingsRacesCheckboxes from './extraSettingsRacesCheckboxes'
+import ExtraSettingsRacesCheckboxes from './extraSettingsRacesCheckboxes';
+import UsePointBuyInstead from './usePointBuyInstead';
 class Character extends React.Component {
     constructor(props){
         super(props)
@@ -21,9 +22,20 @@ class Character extends React.Component {
                 <div id="options">
                     Optional choices
                     {console.log(this.props.characterGen)}
-                    <RavnicaCheckBox ravnica={this.props.characterGen.ravnica} ravnicaChange={this.props.ravnicaOnChange} />
-                    <EberronCheckBox eberron={this.props.characterGen.eberron} eberronChange={this.props.eberron} />
-                    <ExtraSettingsRacesCheckboxes ravnicaRaces={this.props.characterGen.ravnicaRaces} ravnicaRacesChange={this.props.ravnicaRacesFunc} eberronRaces={this.props.eberronRaces} eberronRacesChange={this.props.eberronRacesFunc} />
+                    <RavnicaCheckBox 
+                        ravnica={this.props.characterGen.ravnica} 
+                        ravnicaChange={this.props.ravnicaOnChange} 
+                    />
+                    <EberronCheckBox 
+                        eberron={this.props.characterGen.eberron} 
+                        eberronChange={this.props.eberron} 
+                    />
+                    <ExtraSettingsRacesCheckboxes 
+                        ravnicaRaces={this.props.characterGen.ravnicaRaces} 
+                        ravnicaRacesChange={this.props.ravnicaRacesFunc} 
+                        eberronRaces={this.props.eberronRaces} 
+                        eberronRacesChange={this.props.eberronRacesFunc} 
+                    />
                 </div>
                 Character Information:
                 <div id="racicalInfo">
@@ -36,7 +48,14 @@ class Character extends React.Component {
                     <CharBackground background={this.props.characterGen.background} />
                 </div>
                 <h4>Character Stats</h4>
-                <ClassicRollsCheckBox classicRolls={this.props.characterGen.classicRolls} classicRollsChange={this.props.classicRolls}/>
+                <ClassicRollsCheckBox 
+                    classicRolls={this.props.characterGen.classicRolls} 
+                    classicRollsChange={this.props.classicRolls}
+                />
+                <UsePointBuyInstead
+                    pointBuyStatus={this.props.characterGen.usePointBuy}
+                    onChangeForPointBuyHanlder={this.props.onChangeForPointBuyHanlder}
+                />
                 <div id="modifiedstats">
                     <ul>
                         <Stats stats={this.props.characterGen.stats} />
