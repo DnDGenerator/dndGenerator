@@ -42,7 +42,7 @@ const ravnicaGuilds = [
 ];
 module.exports = (useRavnicaGuilds, addHouseAgent)=>{
     try{
-        if(addHouseAgent==='true' && useRavnicaGuilds==='false'){
+        if(addHouseAgent==='true'){
             backgrounds.push('House Agent');
         }
         if(useRavnicaGuilds==='false'){
