@@ -118,7 +118,7 @@ module.exports = (baseRace, eberronOrNot)=>{
                 ]
                 break;
             case 'dwarf':
-                option4s=[
+                options=[
                     {'Mark of Warding':null}
                 ]
                 break;

@@ -59,7 +59,8 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, include
             console.log('i guess there is something wrong here as well')
         }
     }else{
-        return dragonmarkedRaces(characterObj.subRace, characterObj.stats);
+        console.log(characterObj)
+        characterObj.stats = dragonmarkedRaces(characterObj.subRace, characterObj.stats);
     }
     
     
