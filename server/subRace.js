@@ -82,43 +82,43 @@ module.exports = (baseRace, eberronOrNot)=>{
         switch(baseRace){
             case 'half-elf':
                 options=[
-                    'Mark of Detection',
-                    'Mark of Storm'
+                    {'Mark of Detection':null},
+                    {'Mark of Storm':null}
                 ]
                 break;
             case 'half-orc':
                 options=[
-                    'Mark of Finding'
+                    {'Mark of Finding':null}
                 ]
                 break;
             case 'human':
                 options=[
-                    'Mark of Finding',
-                    'Mark of Handling',
-                    'Mark of Making',
-                    'Mark of Passage',
-                    'Mark of Sentinel'
+                    {'Mark of Finding':null},
+                    {'Mark of Handling':null},
+                    {'Mark of Making':null},
+                    {'Mark of Passage':null},
+                    {'Mark of Sentinel':null}
                 ]
                 break;
             case 'halfling':
                 options=[
-                    'Mark of Healing',
-                    'Mark of Hospitality'
+                    {'Mark of Healing':null},
+                    {'Mark of Hospitality':null}
                 ]
                 break;
             case 'gnome':
                 options=[
-                    'Mark of Scribing'
+                    {'Mark of Scribing':null}
                 ]
                 break;
             case 'elf':
                 options=[
-                    'Mark of Shadow'
+                    {'Mark of Shadow':null}
                 ]
                 break;
             case 'dwarf':
                 option4s=[
-                    'Mark of Warding'
+                    {'Mark of Warding':null}
                 ]
                 break;
             default:
@@ -126,6 +126,7 @@ module.exports = (baseRace, eberronOrNot)=>{
         }
     }
     try{
+        console.log(options)
         return options[dice.roll(`1d${options.length}`).result - 1]
     }catch{
         console.log('oops we crashed the subRace')

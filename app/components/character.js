@@ -20,6 +20,7 @@ class Character extends React.Component {
             <div id='character'>
                 <div id="options">
                     Optional choices
+                    {console.log(this.props.characterGen)}
                     <RavnicaCheckBox ravnica={this.props.characterGen.ravnica} ravnicaChange={this.props.ravnicaOnChange} />
                     <EberronCheckBox eberron={this.props.characterGen.eberron} eberronChange={this.props.eberron} />
                     <ExtraSettingsRacesCheckboxes ravnicaRaces={this.props.characterGen.ravnicaRaces} ravnicaRacesChange={this.props.ravnicaRacesFunc} eberronRaces={this.props.eberronRaces} eberronRacesChange={this.props.eberronRacesFunc} />

@@ -42,10 +42,12 @@ const ravnica = [
     'centaur',
     'vedalken'
 ]
-module.exports = (eberronDragonMark, includeRavnica, includeEberron)=>{
+module.exports = (eberronDragonMark, includeEberron, includeRavnica)=>{
     try{
+        console.log(includeRavnica)
         if(includeRavnica==='true'){
             races.concat(ravnica);
+            console.log(races)
         }
         if(includeEberron==='true'){
             races.concat(eberron);

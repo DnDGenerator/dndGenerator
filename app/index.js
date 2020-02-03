@@ -29,7 +29,9 @@ class App extends React.Component{
         this.handleEberronRacesChange = this.handleEberronRacesChange.bind(this);
     }
     handleClick(){
+        console.log(this.state.ravnicaRaces)
         //https://dndcharactergenerator.herokuapp.com
+        
         axios.get('https://dndcharactergenerator.herokuapp.com/character', {
             params:{
                 eberronInclude: this.state.eberron,
@@ -55,11 +57,13 @@ class App extends React.Component{
             })
     }
     handleEberronChange(){
+        console.log('handles eberron')
         this.setState(state =>({
             eberron: !state.eberron
         }))
     }
     handleRavnicaChange(){
+        console.log('handles ravnica')
         this.setState(state =>({
             ravnica: !state.ravnica
         }))
