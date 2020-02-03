@@ -40,8 +40,11 @@ const characterCreator = ({eberronInclude, ravnicaInclude, classicRolls, include
                 if(key === 'mountain' || characterObj.baseRace === 'gith'){
                     characterObj.stats[subRaceObj[key]] += 2;
                 }
-                else if(key !== 'noSubrace'){
+                else if(key !== 'noSubrace' && characterObj.baseRace !== 'shifter'){
                     characterObj.stats[subRaceObj[key]] += 1;
+                } else {
+                    characterObj.stats[subRaceObj[key][0]] += 2;
+                    characterObj.stats[subRaceObj[key][1]] += 1;
                 }
             }
         }catch{

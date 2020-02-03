@@ -27,9 +27,9 @@ module.exports = (characterObj)=>{
         case 'half-elf':
             characterObj.stats.cha += 2;
             try{
-                var statlist = ['str','dex','con','int','wis'];
-                var traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
-                var traitTwo = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+                let statlist = ['str','dex','con','int','wis'];
+                let traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+                let traitTwo = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
                 characterObj.stats[traitOne[0]] += 1;
                 characterObj.stats[traitTwo[0]] += 1;
             }
@@ -115,6 +115,22 @@ module.exports = (characterObj)=>{
             break;
         case 'genasi':
             characterObj.stats.con += 2;
+            break;
+        case 'kalashtar':
+            characterObj.stats.wis +=2;
+            characterObj.stats.cha +=1;
+            break;
+        case 'warforged':
+            characterObj.stats.con +=2;
+            let statlist = ['str','dex','cha','int','wis'];
+            let traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+            characterObj.stats[traitOne[0]] += 1;
+            break;
+        case 'changeling':
+            characterObj.stats.cha +=2;
+            let statlist = ['str','dex','con','int','wis'];
+            let traitOne = statlist.splice((dice.roll(`1d${statlist.length}`).result - 1),1);
+            characterObj.stats[traitOne[0]] += 1;
             break;
     }
     return characterObj;

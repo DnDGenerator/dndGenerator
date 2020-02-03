@@ -67,6 +67,14 @@ module.exports = (baseRace, eberronOrNot)=>{
                     {'scourge':'con'},
                     {'fallen':'str'}
                 ]
+                break;
+            case 'shifter':
+                options = [
+                    {'beasthide':['con', 'str'],},
+                    {'longtooth':['str', 'dex']},
+                    {'swiftstride':['dex','cha']},
+                    {'wildhunt':['wis', 'dex']}
+                ]
             default:
                 return {'noSubrace':'noSubrace'}
         }
@@ -109,7 +117,7 @@ module.exports = (baseRace, eberronOrNot)=>{
                 ]
                 break;
             case 'dwarf':
-                options=[
+                option4s=[
                     'Mark of Warding'
                 ]
                 break;
