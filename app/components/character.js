@@ -36,6 +36,14 @@ class Character extends React.Component {
                         eberronRaces={this.props.eberronRaces} 
                         eberronRacesChange={this.props.eberronRacesFunc} 
                     />
+                    <ClassicRollsCheckBox 
+                        classicRolls={this.props.characterGen.classicRolls} 
+                        classicRollsChange={this.props.classicRolls}
+                    />
+                    <UsePointBuyInstead
+                        pointBuyStatus={this.props.characterGen.usePointBuy}
+                        onChangeForPointBuyHanlder={this.props.onChangeForPointBuyHanlder}
+                    />
                 </div>
                 Character Information:
                 <div id="racicalInfo">
@@ -48,14 +56,7 @@ class Character extends React.Component {
                     <CharBackground background={this.props.characterGen.background} />
                 </div>
                 <h4>Character Stats</h4>
-                <ClassicRollsCheckBox 
-                    classicRolls={this.props.characterGen.classicRolls} 
-                    classicRollsChange={this.props.classicRolls}
-                />
-                <UsePointBuyInstead
-                    pointBuyStatus={this.props.characterGen.usePointBuy}
-                    onChangeForPointBuyHanlder={this.props.onChangeForPointBuyHanlder}
-                />
+                
                 <div id="modifiedstats">
                     <ul>
                         <Stats stats={this.props.characterGen.stats} />
