@@ -49,8 +49,8 @@ module.exports = (baseRace, eberronOrNot)=>{
                 break;
             case 'gith':
                 options = [
-                    {'gityanki':'str'},
-                    {'gitzerai':'wis'}
+                    {'githyanki':'str'},
+                    {'githzerai':'wis'}
                 ]
                 break;
             case 'genasi':
