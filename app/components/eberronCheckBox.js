@@ -7,7 +7,7 @@ class EberronCheckBox extends React.Component {
         return(
             <div>
                 <h4>
-                    Include Ebberon Dragonmark subraces (currently unavailable)
+                    Use only Ebberon Dragonmark subraces
                     <input type="checkbox" checked={this.props.eberron} onChange={this.props.eberronChange} />
                 </h4>
             </div>

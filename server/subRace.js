@@ -72,80 +72,47 @@ module.exports = (baseRace, eberronOrNot)=>{
         }
     }else{
         switch(baseRace){
-            case 'dwarf':
-                options = [
-                    {'hill':'wis'},
-                    {'mountain':'str'},
-                    {'duergar':'str'}
-                    ]
+            case 'half-elf':
+                options=[
+                    'Mark of Detection',
+                    'Mark of Storm'
+                ]
                 break;
-            case 'elf':
-                options = [
-                    {'high':'int'},
-                    {'wood':'wis'}, 
-                    {'drow':'cha'},
-                    {'eladrin':'cha'},
-                    {'sea':'con'},
-                    {'shadar-kai':'con'}
+            case 'half-orc':
+                options=[
+                    'Mark of Finding'
+                ]
+                break;
+            case 'human':
+                options=[
+                    'Mark of Finding',
+                    'Mark of Handling',
+                    'Mark of Making',
+                    'Mark of Passage',
+                    'Mark of Sentinel'
                 ]
                 break;
             case 'halfling':
-                options = [
-                    {'lightfoot':'cha'}, 
-                    {'stout':'con'}
+                options=[
+                    'Mark of Healing',
+                    'Mark of Hospitality'
                 ]
                 break;
             case 'gnome':
-                options = [
-                    {'forest':'dex'},
-                    {'rock':'con'},
-                    {'deep':'dex'}
-                ]
-                break;            
-            case 'tiefling':
-                options = [
-                    {'Asmodeus':'int'},
-                    {'Baalzebul':'int'},
-                    {'Dispater':'dex'},
-                    {'Fierna':'wis'},
-                    {'Glasya':'dex'},
-                    {'Levistus':'con'},
-                    {'Mammon':'int'},
-                    {'Mephistopheles':'int'},
-                    {'Zariel':'str'}
+                options=[
+                    'Mark of Scribing'
                 ]
                 break;
-            case 'gith':
-                options = [
-                    {'gityanki':'str'},
-                    {'gitzerai':'wis'}
+            case 'elf':
+                options=[
+                    'Mark of Shadow'
                 ]
                 break;
-            case 'genasi':
-                options = [
-                    {'air':'dex'},
-                    {'earth':'str'},
-                    {'fire':'int'},
-                    {'water':'wis'}
+            case 'dwarf':
+                options=[
+                    'Mark of Warding'
                 ]
                 break;
-            case 'aasimar':
-                options = [
-                    {'protector':'wis'},
-                    {'scourge':'con'},
-                    {'fallen':'str'}
-                ]
-                break;
-            // case 'half-elf':
-            //     options = [
-            //         {'Mark of Detection':'special'}
-            //     ]
-            //     break;
-            // case 'half-orc':
-            //     options = [
-            //         {'Mark of Finding':''}
-            //     ]
-            //     break;
             default:
                 return {'noSubrace':'noSubrace'}
         }

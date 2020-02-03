@@ -17,12 +17,16 @@ class App extends React.Component{
             originalStats:{},
             eberron:false,
             ravnica:false,
-            classicRolls:false
+            classicRolls:false,
+            ravnicaRaces:false,
+            eberronRaces:false
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
         this.handleRavnicaChange = this.handleRavnicaChange.bind(this);
         this.handleClassicRollsChange = this.handleClassicRollsChange.bind(this);
+        this.handleRavnicaRacesChange = this.handleRavnicaRacesChange.bind(this);
+        this.handleEberronRacesChange = this.handleEberronRacesChange.bind(this);
     }
     handleClick(){
         //https://dndcharactergenerator.herokuapp.com
@@ -30,7 +34,9 @@ class App extends React.Component{
             params:{
                 eberronInclude: this.state.eberron,
                 ravnicaInclude: this.state.ravnica,
-                classicRolls: this.state.classicRolls
+                classicRolls: this.state.classicRolls,
+                includeEberronRaces: this.state.eberronRaces,
+                includeRavnicaRaces: this.state.ravnicaRaces
             }
         })
             .then(({data})=>{
@@ -63,13 +69,23 @@ class App extends React.Component{
             classicRolls: !state.classicRolls
         }))
     }
+    handleRavnicaRacesChange(){
+        this.setState(state=>({
+            ravnicaRaces: !state.ravnicaRaces
+        }))
+    }
+    handleEberronRacesChange(){
+        this.setState(state =>({
+            eberronRaces: !state.eberronRaces
+        }))
+    }
     componentDidUpdate() {
         console.log('Component re-rendered.');
     }
     render(){
         return(
             <div>
-                <Character characterGen={this.state} ravnicaOnChange={this.handleRavnicaChange} eberron={this.handleEberronChange} classicRolls={this.handleClassicRollsChange}/>
+                <Character characterGen={this.state} eberronRacesFunc={this.handleEberronRacesChange} ravnicaRacesFunc={this.handleRavnicaRacesChange} ravnicaOnChange={this.handleRavnicaChange} eberron={this.handleEberronChange} classicRolls={this.handleClassicRollsChange}/>
                 <button onClick={this.handleClick}>Click for Fodder</button>
             </div>
         )

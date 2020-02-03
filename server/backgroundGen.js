@@ -40,8 +40,11 @@ const ravnicaGuilds = [
     'Izzet League',
     'Boros Legion'
 ];
-module.exports = (useRavnicaGuilds)=>{
+module.exports = (useRavnicaGuilds, addHouseAgent)=>{
     try{
+        if(addHouseAgent==='true' && useRavnicaGuilds==='false'){
+            backgrounds.push('House Agent');
+        }
         if(useRavnicaGuilds==='false'){
             return backgrounds[dice.roll(`1d${backgrounds.length}`).result - 1]
         }else{

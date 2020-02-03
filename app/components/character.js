@@ -6,6 +6,7 @@ import Adventurer from './adventurer';
 import RacialInfo from './racialInfo';
 import Stats from './stats';
 import ClassicRollsCheckBox from './classicRollsCheckBox';
+import ExtraSettingsRacesCheckboxes from './extraSettingsRacesCheckboxes'
 class Character extends React.Component {
     constructor(props){
         super(props)
@@ -17,6 +18,12 @@ class Character extends React.Component {
         console.log(this.props);
         return(
             <div id='character'>
+                <div id="options">
+                    Optional choices
+                    <RavnicaCheckBox ravnica={this.props.characterGen.ravnica} ravnicaChange={this.props.ravnicaOnChange} />
+                    <EberronCheckBox eberron={this.props.characterGen.eberron} eberronChange={this.props.eberron} />
+                    <ExtraSettingsRacesCheckboxes ravnicaRaces={this.props.characterGen.ravnicaRaces} ravnicaRacesChange={this.props.ravnicaRacesFunc} eberronRaces={this.props.eberronRaces} eberronRacesChange={this.props.eberronRacesFunc} />
+                </div>
                 Character Information:
                 <div id="racicalInfo">
                     <RacialInfo racial={this.props.characterGen} />
@@ -25,7 +32,6 @@ class Character extends React.Component {
                     <Adventurer adventureClass={this.props.characterGen.adventureClass} />
                 </div>
                 <div id="charbackground">
-                    <RavnicaCheckBox ravnica={this.props.characterGen.ravnica} ravnicaChange={this.props.ravnicaOnChange} />
                     <CharBackground background={this.props.characterGen.background} />
                 </div>
                 <h4>Character Stats</h4>
@@ -41,9 +47,7 @@ class Character extends React.Component {
                         <Stats stats={this.props.characterGen.originalStats} />
                     </ul>
                 </div>
-                <div>
-                    <EberronCheckBox eberron={this.props.characterGen.eberron} eberronChange={this.props.eberron} />
-                </div>
+                
             </div>
         )
     }
