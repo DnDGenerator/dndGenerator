@@ -78,13 +78,15 @@ class App extends React.Component{
     handleEberronChange(){
         console.log('handles eberron')
         this.setState(state =>({
-            eberron: !state.eberron
+            eberron: !state.eberron,
+            ravnica: false
         }))
     }
     handleRavnicaChange(){
         console.log('handles ravnica')
         this.setState(state =>({
-            ravnica: !state.ravnica
+            ravnica: !state.ravnica,
+            eberron: false
         }))
     }
     handleClassicRollsChange(){
