@@ -204,7 +204,305 @@ module.exports = (table)=>{
                 return "Sovereign glue";
             }
         case 'F':
+            if(precentileResult < 16){
+                return "Weapon, +1";
+            }else if(precentileResult < 19){
+                return "Shield,+ 1";
+            }else if(precentileResult < 22){
+                return "Sentinel shield"
+            }else if(precentileResult < 24){
+                return "Amulet of proof against detection and location";
+            }else if(precentileResult < 26){
+                return "Boots of elvenkind";
+            }else if(precentileResult < 28){
+                return "Boots of striding and springing";
+            }else if(precentileResult < 30){
+                return "Bracers of archery";
+            }else if(precentileResult < 32){    
+                return "Brooch of shielding";
+            }else if(precentileResult < 34){
+                return "Broom of flying";
+            }else if(precentileResult < 36){
+                return "Cloak of elvenkind";
+            }else if(precentileResult < 38){
+                return "Cloak of protection";
+            }else if(precentileResult < 40){
+                return "Gauntlets of ogre power";
+            }else if(precentileResult < 42){
+                return "Hat of disguise";
+            }else if(precentileResult < 44){
+                return "Javelin of lightning";
+            }else if(precentileResult < 46){
+                return "Pearl of power";
+            }else if(precentileResult < 48){
+                return "Rod of the pact keeper, +1";
+            }else if(precentileResult < 50){
+                return "Slippers of spider climbing";
+            }else if(precentileResult < 52){
+                return "Staff of the adder";
+            }else if(precentileResult < 54){
+                return "Staff of the python";
+            }else if(precentileResult < 56){
+                return "Sword of vengeance";
+            }else if(precentileResult < 58){
+                return "Trident of fish command";
+            }else if(precentileResult < 60){
+                return "Wand of magic missiles";
+            }else if(precentileResult < 62){
+                return "Wand of the war mage, +1";
+            }else if(precentileResult < 64){
+                return "Wand of web";
+            }else if(precentileResult < 66){
+                return "Weapon of warning";
+            }else if(precentileResult === 66){
+                return "Adamantine armor (chain mail)";
+            }else if(precentileResult === 67){
+                return "Adamantine armor (chain shirt)";
+            }else if(precentileResult === 68){
+                return "Adamantine armor (scale mail)";
+            }else if(precentileResult === 69){
+                return "Bag of tricks (gray)";
+            }else if(precentileResult === 70){
+                return "Bag of tricks (rust)";
+            }else if(precentileResult === 71){
+                return "Bag of tricks (tan)";
+            }else if(precentileResult === 72){
+                return "Boots of the winterlands";
+            }else if(precentileResult === 73){
+                return "Circlet of blasting";
+            }else if(precentileResult === 74){
+                return "Deck of illusions";
+            }else if(precentileResult === 75){
+                return "Eversmoking bottle";
+            }else if(precentileResult === 76){
+                return "Eyes of charming";
+            }else if(precentileResult === 77){
+                return "Eyes of the eagle";
+            }else if(precentileResult === 78){
+                return "Figurine of wondrous power (silver raven)";
+            }else if(precentileResult === 79){
+                return "Gem of brightness";
+            }else if(precentileResult === 80){
+                return "Gloves of missile snaring";
+            }else if(precentileResult === 81){
+                return "Gloves of swimming and climbing";
+            }else if(precentileResult === 82){
+                return "Gloves of thievery";
+            }else if(precentileResult === 83){
+                return "Headband of intellect";
+            }else if(precentileResult === 84){
+                return "Helm of telepathy";
+            }else if(precentileResult === 85){
+                return "Instrument of the bards (Doss lute)";
+            }else if(precentileResult === 86){
+                return "Instrument of the bards (Fochlucan bandore)";
+            }else if(precentileResult === 87){
+                return "Instrument of the bards (Mac-Fuimidh cittern)";
+            }else if(precentileResult === 88){
+                return "Medallion of thoughts";
+            }else if(precentileResult === 89){
+                return "Necklace of adaptation";
+            }else if(precentileResult === 90){
+                return "Periapt of wound closure";
+            }else if(precentileResult === 91){
+                return "Pipes of haunting";
+            }else if(precentileResult === 92){
+                return "Pipes of the sewers";
+            }else if(precentileResult === 93){
+                return "Ring of jumping";
+            }else if(precentileResult === 94){ 
+                return "Ring of mind shielding";
+            }else if(precentileResult === 95){
+                return "Ring of warmth";
+            }else if(precentileResult === 96){
+                return "Ring of water walking";
+            }else if(precentileResult === 97){
+                return "Quiver of Ehlonna";
+            }else if(precentileResult === 98){
+                return "Stone of good luck";
+            }else if(precentileResult === 99){
+                return "Wind fan";
+            }else{
+                return "Winged boots";
+            }
         case 'G':
+            if(precentileResult < 12){
+                return "Weapon, +2";
+            }else if(precentileResult < 15){
+
+            }else if(precentileResult === 15){
+
+            }else if(precentileResult === 16){
+
+            }else if(precentileResult === 17){
+
+            }else if(precentileResult === 18){
+
+            }else if(precentileResult === 19){
+
+            }else if(precentileResult === 20){
+
+            }else if(precentileResult === 21){
+
+            }else if(precentileResult === 22){
+
+            }else if(precentileResult === 23){
+
+            }else if(precentileResult === 24){
+
+            }else if(precentileResult === 25){
+
+            }else if(precentileResult === 26){
+
+            }else if(precentileResult === 27){
+
+            }else if(precentileResult === 28){
+
+            }else if(precentileResult === 29){
+
+            }else if(precentileResult === 30){
+
+            }else if(precentileResult === 31){
+
+            }else if(precentileResult === 32){
+
+            }else if(precentileResult === 33){
+
+            }else if(precentileResult === 34){
+
+            }else if(precentileResult === 35){
+
+            }else if(precentileResult === 36){
+
+            }else if(precentileResult === 37){
+
+            }else if(precentileResult === 38){
+
+            }else if(precentileResult === 39){
+
+            }else if(precentileResult === 40){
+
+            }else if(precentileResult === 41){
+
+            }else if(precentileResult === 42){
+
+            }else if(precentileResult === 43){
+
+            }else if(precentileResult === 44){
+
+            }else if(precentileResult === 45){
+
+            }else if(precentileResult === 46){
+
+            }else if(precentileResult === 47){
+
+            }else if(precentileResult === 48){
+
+            }else if(precentileResult === 49){
+
+            }else if(precentileResult === 50){
+
+            }else if(precentileResult === 51){
+
+            }else if(precentileResult === 52){
+
+            }else if(precentileResult === 53){
+
+            }else if(precentileResult === 54){
+
+            }else if(precentileResult === 55){
+
+            }else if(precentileResult === 56){
+
+            }else if(precentileResult === 57){
+
+            }else if(precentileResult === 58){
+
+            }else if(precentileResult === 59){
+
+            }else if(precentileResult === 60){
+
+            }else if(precentileResult === 61){
+
+            }else if(precentileResult === 62){
+
+            }else if(precentileResult === 63){
+
+            }else if(precentileResult === 64){
+
+            }else if(precentileResult === 65){
+
+            }else if(precentileResult === 66){
+
+            }else if(precentileResult === 67){
+
+            }else if(precentileResult === 68){
+
+            }else if(precentileResult === 69){
+
+            }else if(precentileResult === 70){
+
+            }else if(precentileResult === 71){
+
+            }else if(precentileResult === 72){
+
+            }else if(precentileResult === 73){
+
+            }else if(precentileResult === 74){
+
+            }else if(precentileResult === 75){
+
+            }else if(precentileResult === 76){
+
+            }else if(precentileResult === 77){
+
+            }else if(precentileResult === 78){
+
+            }else if(precentileResult === 79){
+
+            }else if(precentileResult === 80){
+
+            }else if(precentileResult === 81){
+
+            }else if(precentileResult === 82){
+
+            }else if(precentileResult === 83){
+
+            }else if(precentileResult === 84){
+
+            }else if(precentileResult === 85){
+
+            }else if(precentileResult === 86){
+
+            }else if(precentileResult === 87){
+
+            }else if(precentileResult === 88){
+
+            }else if(precentileResult === 89){
+
+            }else if(precentileResult === 90){
+
+            }else if(precentileResult === 91){
+
+            }else if(precentileResult === 92){
+
+            }else if(precentileResult === 93){
+
+            }else if(precentileResult === 94){
+
+            }else if(precentileResult === 95){
+
+            }else if(precentileResult === 96){
+
+            }else if(precentileResult === 97){
+
+            }else if(precentileResult === 98){
+
+            }else if(precentileResult === 99){
+
+            }else{
+
+            }
         case 'H':
         case 'I':
         default:
