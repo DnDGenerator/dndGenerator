@@ -5,7 +5,11 @@ import './index.css';
 import axios from 'axios';
 import Character from './components/character'
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card'
+import Accordion from 'react-bootstrap/Accordion'
+import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 
+const decoratedOnClick = useAccordionToggle(eventKey, onClick);
 
 class App extends React.Component{
     constructor(props){
@@ -114,6 +118,22 @@ class App extends React.Component{
     componentDidUpdate() {
         console.log('Component re-rendered.');
     }
+    customToggle({ children, eventKey }){
+        const decoratedOnClick = useAccordionToggle(eventKey, () =>
+            console.log('totally custom!'),
+            );
+        
+            return (
+            <button
+                type="button"
+                style={{ backgroundColor: 'blue' }}
+                onClick={decoratedOnClick}
+            >
+                {children}
+            </button>
+            );
+        }
+
     render(){
         return(
             
@@ -124,16 +144,38 @@ class App extends React.Component{
                     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
                     crossorigin="anonymous"
                 />
-                <Character 
-                    characterGen={this.state} 
-                    eberronRacesFunc={this.handleEberronRacesChange} 
-                    ravnicaRacesFunc={this.handleRavnicaRacesChange} 
-                    ravnicaOnChange={this.handleRavnicaChange} 
-                    eberron={this.handleEberronChange} 
-                    classicRolls={this.handleClassicRollsChange}
-                    onChangeForPointBuyHanlder={this.handlePointBuyChange}
-                />
-                <Button variant="primary" size="lg" onClick={this.handleClick} block="true">Click for Fodder</Button>
+                <Accordion defaultActiveKey="0">
+                    <Card>
+                        <Card.Header>
+                            <this.customToggle eventKey="0">Character Creator!</this.customToggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                            <Card.Body>
+                                <Character 
+                                    characterGen={this.state} 
+                                    eberronRacesFunc={this.handleEberronRacesChange} 
+                                    ravnicaRacesFunc={this.handleRavnicaRacesChange} 
+                                    ravnicaOnChange={this.handleRavnicaChange} 
+                                    eberron={this.handleEberronChange} 
+                                    classicRolls={this.handleClassicRollsChange}
+                                    onChangeForPointBuyHanlder={this.handlePointBuyChange}
+                                />
+                                <Button variant="primary" size="lg" onClick={this.handleClick} block="true">Click for Fodder</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <this.customToggle eventKey="1">Loot Generator!</this.customToggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                            <Card.Body>
+
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                </Accordion>
+                
             </div>
         )
     }
