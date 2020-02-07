@@ -18,7 +18,7 @@ module.exports = (CR)=>{
             gold: dice.roll(`2d6`).result * 10
         }
         if(precentileResult < 7){
-            return {coins};
+            console.log('do nothing!');
         }else if(precentileResult < 17){
             const gemRolls = dice.roll(`2d6`).result;
 
@@ -163,10 +163,197 @@ module.exports = (CR)=>{
         }
         return {coins, gemsArray, artsArray, magicItemsArray};
     }else if(CR < 11){
-
+        const coins = {
+            copper: dice.roll(`2d6`).result * 100,
+            silver: dice.roll(`2d6`).result * 1000,
+            gold: dice.roll(`6d6`).result * 100,
+            platinum: dice.roll(`3d6`).result * 10
+        };
+        const artRolls = dice.roll(`2d4`).result;
+        const gemRolls = dice.roll(`3d6`).result;
+        const dSixMagicRoll = dice.roll(`1d6`).result;
+        const dFourMagicRoll = dice.roll(`1d4`).result;
+        if(precentileResult < 5){
+            console.log('do nothing!');
+        }else if(precentileResult < 11){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts(`25gp`));
+            }
+        }else if(precentileResult < 17){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems(`50gp`));
+            }
+        }else if(precentileResult < 23){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+        }else if(precentileResult < 29){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts(`250gp`))
+            }
+        }else if(precentileResult < 33){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts(`25gp`));
+            }
+            for(let i = 0; i < dSixMagicRoll; i++){
+                magicItemsArray.push(magicItems('A'));
+            }
+        }else if(precentileResult < 37){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems(`50gp`));
+            }
+            for(let i = 0; i < dSixMagicRoll; i++){
+                magicItemsArray.push(magicItems('A'));
+            }
+        }else if(precentileResult < 41){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems(`100gp`));
+            }
+            for(let i = 0; i < dSixMagicRoll; i++){
+                magicItemsArray.push(magicItems('A'));
+            }
+        }else if(precentileResult < 45){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts(`250gp`));
+            }
+            for(let i = 0; i < dSixMagicRoll; i++){
+                magicItemsArray.push(magicItems(`A`));
+            }
+        }else if(precentileResult < 50){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('25gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('B'));
+            }
+        }else if(precentileResult < 55){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('50gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('B'));
+            }
+        }else if(precentileResult < 60){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('B'));
+            }
+        }else if(precentileResult < 64){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('250gp'))
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('B'));
+            }
+        }else if(precentileResult < 67){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('25gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('C'));
+            }
+        }else if(precentileResult < 70){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('50gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('C'));
+            }
+        }else if(precentileResult < 73){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+            for(let i = 0; i< dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('C'));
+            }
+        }else if(precentileResult < 75){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('250gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('C'));
+            }
+        }else if(precentileResult < 77){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('25gp'));
+            }
+            magicItemsArray.push(magicItems('D'));
+        }else if(precentileResult < 79){
+            magicItemsArray.push(magicItems('D'));
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('50gp'));
+            }
+        }else if(precentileResult === 79){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+            magicItemsArray.push(magicItems('D'));
+        }else if(precentileResult === 80){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('250gp'));
+            }
+            magicItemsArray.push(magicItems('D'));
+        }else if(precentileResult < 85){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('25gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('F'));
+            }
+        }else if(precentileResult < 89){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('50gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('F'));
+            }
+        }else if(precentileResult < 92){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('F'));
+            }
+        }else if(precentileResult < 95){
+            for(let i= 0; i < artRolls; i++){
+                artsArray.push(arts('250gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('F'));
+            }
+        }else if(precentileResult < 97){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('G'));
+            }
+        }else if(precentileResult < 99){
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('G'));
+            }
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('250gp'))
+            }
+        }else if(precentileResult === 99){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('100gp'));
+            }
+            magicItemsArray.push(magicItems('H'));
+        }else{
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('250gp'));
+            }
+            magicItemsArray.push(magicItems('H'));
+        }
+        return {coins, gemsArray, artsArray, magicItemsArray};
     }else if(CR < 17){
 
+        return {coins, gemsArray, artsArray, magicItemsArray};
     }else{
 
-    }
+        return {coins, gemsArray, artsArray, magicItemsArray};
+    }  
 }
