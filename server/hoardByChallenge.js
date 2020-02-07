@@ -350,7 +350,124 @@ module.exports = (CR)=>{
         }
         return {coins, gemsArray, artsArray, magicItemsArray};
     }else if(CR < 17){
+        const coins ={
+            gold: dice.roll(`4d6`).result * 1000,
+            platinum: dice.roll(`5d6`).result * 100
+        };
+        const artRolls = dice.roll(`2d4`).result;
+        const gemRolls = dice.roll(`3d6`).result;
+        const dSixMagicRoll = dice.roll(`1d6`).result;
+        const dFourMagicRoll = dice.roll(`1d4`).result;
 
+        if(precentileResult < 4){
+            console.log('do nothing!')
+        }else if(precentileResult < 7){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts(`250gp`))
+            }
+        }else if(precentileResult < 10){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('750gp'));
+            }
+        }else if(precentileResult < 13){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('500gp'));
+            }
+        }else if(precentileResult < 16){
+            for(let i = 0; i < gemRolls; i++){
+                gemsArray.push(gems('1000gp'))
+            }
+        }else if(precentileResult < 20){
+            for(let i = 0; i < artRolls; i++){
+                artsArray.pus(arts('250gp'));
+            }
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('A'));
+            }
+            for(let i = 0; i < dSixMagicRoll; i++){
+                magicItemsArray.push(magicItems('B'))
+            }
+        }else if(precentileResult){
+            for(let i = 0; i < dFourMagicRoll; i++){
+                magicItemsArray.push(magicItems('A'));
+            }
+            for(let i = 0; i < dSixMagicRoll; i++){
+                magicItemsArray.push(magicItems('B'))
+            }
+            for(let i = 0; i < artRolls; i++){
+                artsArray.push(arts('750gp'));
+            }
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }else if(precentileResult){
+            
+        }
         return {coins, gemsArray, artsArray, magicItemsArray};
     }else{
 
