@@ -39,23 +39,23 @@ class App extends React.Component{
         this.handleRavnicaRacesChange = this.handleRavnicaRacesChange.bind(this);
         this.handleEberronRacesChange = this.handleEberronRacesChange.bind(this);
         this.handlePointBuyChange = this.handlePointBuyChange.bind(this);
-        this.handleLootClick = this.handleLootClick.bind(this);
-        this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
+        // this.handleLootClick = this.handleLootClick.bind(this);
+        // this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
     }
-    handleLootClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
-            params:{
-                CR: this.state.cr,
-                lootType: this.state.lootType
-            }
-        }).then(({data})=>{
-            this.setState({
-                loot: data
-            })
-        }).catch((e)=>{
-            console.error(e);
-        })
-    }
+    // handleLootClick(){
+    //     axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
+    //         params:{
+    //             CR: this.state.cr,
+    //             lootType: this.state.lootType
+    //         }
+    //     }).then(({data})=>{
+    //         this.setState({
+    //             loot: data
+    //         })
+    //     }).catch((e)=>{
+    //         console.error(e);
+    //     })
+    // }
 
     handleClick(){
         console.log(this.state.ravnicaRaces)
@@ -198,8 +198,8 @@ class App extends React.Component{
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
-                                <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
-                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
+                                {/* <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
+                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button> */}
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
