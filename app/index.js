@@ -7,7 +7,6 @@ import Character from './components/character'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
-import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import Loot from './components/loot';
 
 
@@ -38,23 +37,23 @@ class App extends React.Component{
         this.handleRavnicaRacesChange = this.handleRavnicaRacesChange.bind(this);
         this.handleEberronRacesChange = this.handleEberronRacesChange.bind(this);
         this.handlePointBuyChange = this.handlePointBuyChange.bind(this);
-        // this.handleLootClick = this.handleLootClick.bind(this);
-        // this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
+        this.handleLootClick = this.handleLootClick.bind(this);
+        this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
     }
-    // handleLootClick(){
-    //     axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
-    //         params:{
-    //             CR: this.state.cr,
-    //             lootType: this.state.lootType
-    //         }
-    //     }).then(({data})=>{
-    //         this.setState({
-    //             loot: data
-    //         })
-    //     }).catch((e)=>{
-    //         console.error(e);
-    //     })
-    // }
+    handleLootClick(){
+        axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
+            params:{
+                CR: this.state.cr,
+                lootType: this.state.lootType
+            }
+        }).then(({data})=>{
+            this.setState({
+                loot: data
+            })
+        }).catch((e)=>{
+            console.error(e);
+        })
+    }
 
     handleClick(){
         console.log(this.state.ravnicaRaces)
