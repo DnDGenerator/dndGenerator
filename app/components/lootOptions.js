@@ -1,5 +1,7 @@
 import React from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
+import ToggleButton from 'react-bootstrap/ToggleButton';
+import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup';
+
 class LootOptions extends React.Component{
     constructor(props){
         super(props)
@@ -8,17 +10,12 @@ class LootOptions extends React.Component{
 
     render(){
         return(
-            <Dropdown>
-                <Dropdown.Toggle variant="primary" id="challenge-rating">
-                    Select CR range
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item eventKey="0-4" onSelect={this.props.handleCRSelection}>0-4</Dropdown.Item>
-                    <Dropdown.Item eventKey="5-10" onSelect={this.props.handleCRSelection}>5-10</Dropdown.Item>
-                    <Dropdown.Item eventKey="11-16" onSelect={this.props.handleCRSelection}>11-16</Dropdown.Item>
-                    <Dropdown.Item eventKey="17+" onSelect={this.props.handleCRSelection}>17+</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <ToggleButtonGroup type="radio" name="cr" defaultValue={0}>
+                <ToggleButton value={0}>CR 0-4</ToggleButton>
+                <ToggleButton value={5}>CR 5-10</ToggleButton>
+                <ToggleButton value={11}>CR 11-16</ToggleButton>
+                <ToggleButton value={17}>CR 17+</ToggleButton>
+            </ToggleButtonGroup>
         )
     }
 }
