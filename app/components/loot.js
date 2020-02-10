@@ -12,7 +12,7 @@ class Loot extends React.Component{
         const lootKeys= Object.keys(this.props.lootObj);
         return(
             <div id="loot">
-                <LootOptions handleLootTypeInput={this.handleLootTypeInput} />
+                <LootOptions handleLootTypeInput={this.props.handleLootTypeInput} handleCRSelection={this.props.handleCRSelection} />
                 <Container>
                     <Row>
                         <Col>HERE BE THE SHINEIES!</Col>
