@@ -39,6 +39,7 @@ class App extends React.Component{
         this.handlePointBuyChange = this.handlePointBuyChange.bind(this);
         this.handleLootClick = this.handleLootClick.bind(this);
         this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
+        this.handleCRSelection = this.handleCRSelection.bind(this);
     }
     handleLootClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
@@ -101,14 +102,15 @@ class App extends React.Component{
 
     handleLootTypeInput(e){
         console.log(e)
-        this.setState(state =>({
-            lootType: e.target.lootType
-        }))
+        // this.setState(state =>({
+        //     lootType: e.target.lootType
+        // }))
     }
-    handleCRSelection(){
-        this.setState(state=>{
-
-        })
+    handleCRSelection(e){
+        console.log(e);
+        // this.setState(state=>{
+        //     cr: e.target.value;
+        // })
     }
     handleEberronChange(){
         console.log('handles eberron')
@@ -185,7 +187,7 @@ class App extends React.Component{
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
                                 in progress!
-                                <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
+                                <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput} handleCRSelection={this.handleCRSelection}/>
                                 <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
                             </Card.Body>
                         </Accordion.Collapse>

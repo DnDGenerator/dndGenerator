@@ -2,8 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-
+import LootOptions from './lootOptions';
 class Loot extends React.Component{
     constructor(props){
         super(props)
@@ -13,7 +12,7 @@ class Loot extends React.Component{
         const lootKeys= Object.keys(this.props.lootObj);
         return(
             <div id="loot">
-
+                <LootOptions handleLootTypeInput={this.handleLootTypeInput} />
                 <Container>
                     <Row>
                         <Col>HERE BE THE SHINEIES!</Col>

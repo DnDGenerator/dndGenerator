@@ -115,7 +115,7 @@ module.exports = (table)=>{
             }else if(precentileResult < 58){
                 return 'Potion of heroism';
             }else if(precentileResult < 63){
-                return 'Potion of invu lnerability';
+                return 'Potion of invulnerability';
             }else if(precentileResult < 68){
                 return 'Potion of mind reading';
             }else if(precentileResult < 73){
