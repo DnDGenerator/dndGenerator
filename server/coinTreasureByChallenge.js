@@ -10,6 +10,7 @@ module.exports = (challengeRating)=>{
         silver:0,
         copper:0
     }
+
     if(challengeRating < 5){
         if(precentileResult < 31){
             coins.copper = dice.roll(`5d6`).result;
@@ -64,5 +65,5 @@ module.exports = (challengeRating)=>{
             coins.platinum = dice.roll(`2d6`).result * 100;
         }
     }
-    return coins;
+    return {coins};
 }
