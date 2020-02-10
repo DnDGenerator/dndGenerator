@@ -18,7 +18,7 @@ class LootOptions extends React.Component{
                     <ToggleButton value={17}>CR 17+</ToggleButton>
                 </ToggleButtonGroup>
                 <ToggleButtonGroup type="radio" name="loot-type" defaultValue={"hoard"} onChange={this.props.handleLootTypeInput}>
-                    <ToggleButton value={"Hoard"}>Hoard</ToggleButton>
+                    <ToggleButton value={"hoard"}>Hoard</ToggleButton>
                     <ToggleButton value={"Idividual"}>Individual</ToggleButton>
                 </ToggleButtonGroup>
             </div>
