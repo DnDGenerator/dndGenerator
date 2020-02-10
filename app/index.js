@@ -10,7 +10,6 @@ import Accordion from 'react-bootstrap/Accordion'
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
 import Loot from './components/loot';
 
-const decoratedOnClick = useAccordionToggle(eventKey, onClick);
 
 class App extends React.Component{
     constructor(props){
@@ -143,24 +142,7 @@ class App extends React.Component{
             classicRolls:false
         }))
     }
-    componentDidUpdate() {
-        console.log('Component re-rendered.');
-    }
-    customToggle({ children, eventKey }){
-        const decoratedOnClick = useAccordionToggle(eventKey, () =>
-            console.log('totally custom!'),
-            );
         
-            return (
-            <button
-                type="button"
-                style={{ backgroundColor: 'blue' }}
-                onClick={decoratedOnClick}
-            >
-                {children}
-            </button>
-            );
-        }
 
     render(){
         return(
@@ -175,7 +157,7 @@ class App extends React.Component{
                 <Accordion defaultActiveKey="0">
                     <Card>
                         <Card.Header>
-                            <this.customToggle eventKey="0">Character Creator!</this.customToggle>
+                            <Accordion.Toggle as={Button} eventKey="0">Character Creator!</Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
@@ -194,7 +176,7 @@ class App extends React.Component{
                     </Card>
                     <Card>
                         <Card.Header>
-                            <this.customToggle eventKey="1">Loot Generator!</this.customToggle>
+                            <Accordion.Toggle as={Button} eventKey="1">Loot Generator!</Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
