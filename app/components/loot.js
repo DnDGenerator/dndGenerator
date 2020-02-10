@@ -13,17 +13,16 @@ class Loot extends React.Component{
         const lootKeys= Object.keys(this.props.lootObj);
         return(
             <div id="loot">
-                
+
                 <Container>
                     <Row>
                         <Col>HERE BE THE SHINEIES!</Col>
                     </Row>
                     <Row>
-                        {lootKeys.map(keyValue=>{
-                            return(
-                                <Col>{keyValue}</Col>
-                            )
-                        })}
+                        <Col>Coins</Col>
+                        <Col>Gems</Col>
+                        <Col>Art Pieces</Col>
+                        <Col>Magic Items</Col>
                     </Row>
                     <Row>
                         {lootKeys.map(keyValue=>{
@@ -41,7 +40,13 @@ class Loot extends React.Component{
                                 )
                             }
                             return(
-                                <Col>{this.props.lootObj[keyValue]}</Col>
+                                <Col>{this.props.lootObj[keyValue].map(loot=>{
+                                    return(
+                                        <Row>
+                                            <Col>{loot}</Col>
+                                        </Row>
+                                    )
+                                })} </Col>
                             )
                         })}
                     </Row>
