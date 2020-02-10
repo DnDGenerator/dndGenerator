@@ -42,20 +42,20 @@ class App extends React.Component{
         this.handleLootClick = this.handleLootClick.bind(this);
         this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
     }
-    // handleLootClick(){
-    //     axios.get('https://dndcharactergenerator.herokuapp.com/', {
-    //         params:{
-    //             CR: this.state.cr,
-    //             lootType: this.state.lootType
-    //         }
-    //     }).then(({data})=>{
-    //         this.setState({
-    //             loot: data
-    //         })
-    //     }).catch((e)=>{
-    //         console.error(e);
-    //     })
-    // }
+    handleLootClick(){
+        // axios.get('https://dndcharactergenerator.herokuapp.com/', {
+        //     params:{
+        //         CR: this.state.cr,
+        //         lootType: this.state.lootType
+        //     }
+        // }).then(({data})=>{
+        //     this.setState({
+        //         loot: data
+        //     })
+        // }).catch((e)=>{
+        //     console.error(e);
+        // })
+    }
 
     handleClick(){
         console.log(this.state.ravnicaRaces)
