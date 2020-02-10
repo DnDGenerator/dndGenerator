@@ -28,7 +28,7 @@ class App extends React.Component{
             usePointBuy:false,
             loot:{},
             cr:0,
-            lootType:''
+            lootType:'hoard'
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
