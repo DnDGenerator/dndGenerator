@@ -101,16 +101,16 @@ class App extends React.Component{
     }
 
     handleLootTypeInput(e){
-        console.log(e)
-        // this.setState(state =>({
-        //     lootType: e.target.lootType
-        // }))
+        console.log(e, 'this fired! handleLootTypeInput')
+        this.setState({
+            lootType: e
+        })
     }
     handleCRSelection(e){
-        console.log(e);
-        // this.setState(state=>{
-        //     cr: e.target.value;
-        // })
+        console.log(e, 'this fired! this fired!');
+        this.setState({
+            cr: e
+        })
     }
     handleEberronChange(){
         console.log('handles eberron')
