@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import { useAccordionToggle } from 'react-bootstrap/AccordionToggle';
+import Loot from './components/loot';
 
 const decoratedOnClick = useAccordionToggle(eventKey, onClick);
 
@@ -26,7 +27,10 @@ class App extends React.Component{
             classicRolls:false,
             ravnicaRaces:false,
             eberronRaces:false,
-            usePointBuy:false
+            usePointBuy:false,
+            loot:{},
+            cr:0,
+            lootType:''
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
@@ -35,7 +39,24 @@ class App extends React.Component{
         this.handleRavnicaRacesChange = this.handleRavnicaRacesChange.bind(this);
         this.handleEberronRacesChange = this.handleEberronRacesChange.bind(this);
         this.handlePointBuyChange = this.handlePointBuyChange.bind(this);
+        this.handleLootClick = this.handleLootClick.bind(this);
+        this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
     }
+    handleLootClick(){
+        axios.get('https://dndcharactergenerator.herokuapp.com/', {
+            params:{
+                CR: this.state.cr,
+                lootType: this.state.lootType
+            }
+        }).then(({data})=>{
+            this.setState({
+                loot: data
+            })
+        }).catch((e)=>{
+            console.error(e);
+        })
+    }
+
     handleClick(){
         console.log(this.state.ravnicaRaces)
         //https://dndcharactergenerator.herokuapp.com
@@ -78,6 +99,13 @@ class App extends React.Component{
                 console.error(e);
                 console.log('axios failed')
             })
+    }
+
+    handleLootTypeInput(e){
+        console.log(e.target)
+        this.setState(state =>({
+            lootType: e.target.lootType
+        }))
     }
     handleEberronChange(){
         console.log('handles eberron')
@@ -170,7 +198,8 @@ class App extends React.Component{
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
-
+                                <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
+                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
