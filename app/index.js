@@ -181,7 +181,7 @@ class App extends React.Component{
                             <Card.Body>
                                 in progress!
                                 {JSON.stringify(this.state)}
-                                {/* <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/> */}
+                                <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
                                 <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
                             </Card.Body>
                         </Accordion.Collapse>
