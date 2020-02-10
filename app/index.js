@@ -180,6 +180,7 @@ class App extends React.Component{
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
                                 in progress!
+                                {console.log(this.state)}
                                 {/* <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/> */}
                                 <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
                             </Card.Body>
