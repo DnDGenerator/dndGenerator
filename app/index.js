@@ -157,7 +157,7 @@ class App extends React.Component{
                 <Accordion defaultActiveKey="0">
                     <Card>
                         <Card.Header>
-                            <Accordion.Toggle as={Button} eventKey="0">Character Creator!</Accordion.Toggle>
+                            <Accordion.Toggle as={Button}  variant="link" eventKey="0">Character Creator!</Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
@@ -174,17 +174,7 @@ class App extends React.Component{
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                    <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} eventKey="1">Loot Generator!</Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="1">
-                            <Card.Body>
-                                {/* <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
-                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button> */}
-                            </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
+                   
                 </Accordion>
                 
             </div>
