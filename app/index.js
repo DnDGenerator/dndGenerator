@@ -174,7 +174,18 @@ class App extends React.Component{
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                   
+                    <Card>
+                        <Card.Header>
+                            <Accordion.Toggle as={Button}  variant="link" eventKey="1">Loot Generator!</Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="1">
+                            <Card.Body>
+                                in progress!
+                                {/* <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput}/>
+                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button> */}
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
                 </Accordion>
                 
             </div>
