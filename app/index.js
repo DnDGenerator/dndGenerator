@@ -43,18 +43,18 @@ class App extends React.Component{
         this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
     }
     handleLootClick(){
-        // axios.get('https://dndcharactergenerator.herokuapp.com/', {
-        //     params:{
-        //         CR: this.state.cr,
-        //         lootType: this.state.lootType
-        //     }
-        // }).then(({data})=>{
-        //     this.setState({
-        //         loot: data
-        //     })
-        // }).catch((e)=>{
-        //     console.error(e);
-        // })
+        axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
+            params:{
+                CR: this.state.cr,
+                lootType: this.state.lootType
+            }
+        }).then(({data})=>{
+            this.setState({
+                loot: data
+            })
+        }).catch((e)=>{
+            console.error(e);
+        })
     }
 
     handleClick(){
