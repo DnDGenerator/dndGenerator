@@ -3,50 +3,66 @@ const dice = require('./dice');
 module.exports = (challengeRating)=>{
 
     const precentileResult = dice.roll(`1d100`).result;
-
+    const coins = {
+        platinum:0,
+        gold:0,
+        electrum:0,
+        silver:0,
+        copper:0
+    }
     if(challengeRating < 5){
         if(precentileResult < 31){
-            return {coins: dice.roll(`5d6`).result + 'CP'};
+            coins.copper = dice.roll(`5d6`).result;
         }else if(precentileResult < 61){
-            return {coins:dice.roll(`4d6`).result + 'SP'};
+            coins.silver = dice.roll(`4d6`).result;
         }else if(precentileResult < 71){
-            return {coins:dice.roll(`3d6`).result + 'EP'};
+            coins.electrum= dice.roll(`3d6`).result;
         }else if(precentileResult < 96){
-            return {coins:dice.roll(`3d6`).result + 'GP'};
+            coins.gold = dice.roll(`3d6`).result;
         }else{
-            return {coins:dice.roll(`1d6`).result + 'PP'};
+            coins.platinum = dice.roll(`1d6`).result;
         }
-
     }else if(challengeRating < 11){
         if(precentileResult < 31){
-            return {coins:(dice.roll(`4d6`).result * 100) + 'CP ' + (dice.roll(`1d6`).result * 10) + 'EP'};
+            coins.copper = dice.roll(`4d6`).result * 100;
+            coins.electrum= dice.roll(`1d6`).result * 10;
         }else if(precentileResult < 61){
-            return {coins:(dice.roll(`6d6`).result * 10) + 'SP ' + (dice.roll(`2d6`).result * 10) + 'EP'};
+            coins.silver = dice.roll(`6d6`).result * 10
+            coins.electrum =dice.roll(`2d6`).result * 10;
         }else if(precentileResult < 71){
-            return {coins:(dice.roll(`3d6`).result * 10) + 'EP ' + (dice.roll(`2d6`).result * 10) + 'GP'};
+            coins.electrum = dice.roll(`3d6`).result * 10;
+            coins.gold = dice.roll(`2d6`).result * 10;
         }else if(precentileResult < 96){
-            return {coins:(dice.roll(`4d6`).result * 10) + 'GP'};
+            coins.gold = dice.roll(`4d6`).result * 10;
         }else{
-            return {coins:(dice.roll(`2d6`).result *10) + 'GP ' + (dice.roll(`3d6`).result) + 'PP'};
+            coins.gold = dice.roll(`2d6`).result * 10;
+            coins.platinum = dice.roll(`3d6`).result;
         }
     }else if(challengeRating < 17){
         if(precentileResult < 21){
-            return {coins:(dice.roll(`4d6`).result * 100) + 'SP ' + (dice.roll(`1d6`).result * 100) + 'GP'};
+            coins.silver = dice.roll(`4d6`).result * 100;
+            coins.gold = dice.roll(`1d6`).result * 100;
         }else if(precentileResult < 36){
-            return {coins:(dice.roll(`1d6`).result * 100) + 'EP ' + (dice.roll(`1d6`).result * 100) + 'GP'};
+            coins.electrum = dice.roll(`1d6`).result * 100;
+            coins.gold = dice.roll(`1d6`).result * 100;
         }else if(precentileResult < 76){
-            return {coins:(dice.roll(`2d6`).result * 100) + 'GP ' + (dice.roll(`1d6`).result * 10) + 'PP'};
+            coins.gold = dice.roll(`2d6`).result * 100; 
+            coins.platinum= dice.roll(`1d6`).result * 10;
         }else{
-            return {coins:(dice.roll(`2d6`).result * 100) + 'GP ' + (dice.roll(`2d6`).result * 10) + 'PP'};
+            coins.gold = dice.roll(`2d6`).result * 100;
+            coins.platinum = dice.roll(`2d6`).result * 10;
         }
     }else{
         if(precentileResult < 16){
-            return {coins:(dice.roll(`2d6`).result * 1000) + 'EP ' + (dice.roll(`8d6`).result * 100) + 'GP'};
+            coins.electrum = dice.roll(`2d6`).result * 1000;
+            coins.gold = dice.roll(`8d6`).result * 100;
         }else if(precentileResult < 56){
-            return {coins:(dice.roll(`1d6`).result * 1000) + 'GP ' + (dice.roll(`1d6`).result * 100) + 'PP'};
+            coins.gold = dice.roll(`1d6`).result * 1000;
+            coins.platinum = dice.roll(`1d6`).result * 100;
         }else{
-            return {coins:(dice.roll(`1d6`).result * 1000) + 'GP ' + (dice.roll(`2d6`).result * 100) + 'PP'};
+            coins.gold = dice.roll(`1d6`).result * 1000;
+            coins.platinum = dice.roll(`2d6`).result * 100;
         }
-
     }
+    return coins;
 }
