@@ -102,10 +102,10 @@ class App extends React.Component{
     }
 
     handleLootTypeInput(e){
-        console.log(e.target)
-        this.setState(state =>({
-            lootType: e.target.lootType
-        }))
+        console.log(e)
+        // this.setState(state =>({
+        //     lootType: e.target.lootType
+        // }))
     }
     handleEberronChange(){
         console.log('handles eberron')
