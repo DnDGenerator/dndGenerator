@@ -37,16 +37,17 @@ class Loot extends React.Component{
                                         })}
                                     </Col>
                                 )
+                            }else {
+                                return(
+                                    <Col>{this.props.lootObj[keyValue].map(loot=>{
+                                        return(
+                                            <Row>
+                                                <Col>{loot}</Col>
+                                            </Row>
+                                        )
+                                    })} </Col>
+                                )
                             }
-                            return(
-                                <Col>{this.props.lootObj[keyValue].map(loot=>{
-                                    return(
-                                        <Row>
-                                            <Col>{loot}</Col>
-                                        </Row>
-                                    )
-                                })} </Col>
-                            )
                         })}
                     </Row>
                 </Container>
