@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import Loot from './components/loot';
+import NPC from './components/npc';
 
 
 class App extends React.Component{
@@ -28,7 +29,18 @@ class App extends React.Component{
             usePointBuy:false,
             loot:{},
             cr:0,
-            lootType:'hoard'
+            lootType:'hoard',
+            npc:{
+                appearance:"",
+                highAbility:"",
+                lowAbility:"",
+                talent:"",
+                mannerism:"",
+                interaction:"",
+                ideals:"",
+                bonds:"",
+                flawAndOrSecret:""
+            }
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
@@ -40,6 +52,17 @@ class App extends React.Component{
         this.handleLootClick = this.handleLootClick.bind(this);
         this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
         this.handleCRSelection = this.handleCRSelection.bind(this);
+        this.handleNPCClick = this.handleNPCClick.bind(this);
+    }
+    handleNPCClick(){
+        axios.get('https://dndcharactergenerator.herokuapp.com/npc')
+            .then(({data}) =>{
+                this.setState({
+                    npc: data
+                })
+            }).catch(e=>{
+                console.error(e);
+            })
     }
     handleLootClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
@@ -55,7 +78,6 @@ class App extends React.Component{
             console.error(e);
         })
     }
-
     handleClick(){
         console.log(this.state.ravnicaRaces)
         //https://dndcharactergenerator.herokuapp.com
@@ -186,9 +208,19 @@ class App extends React.Component{
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
-                                in progress!
                                 <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput} handleCRSelection={this.handleCRSelection}/>
                                 <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="2">NPC Details Generator</Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="2">
+                            <Card.Body>
+                                <NPC npc={this.state.npc}/>
+                                <Button variant="primary" size="lg" onClick={this.handleNPCClick} block="true">Click for "Intresting" NPC</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>

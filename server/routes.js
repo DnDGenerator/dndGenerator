@@ -3,6 +3,7 @@ const characterObj = require('./randomStats');
 const path = require('path');
 const express = require('express');
 const loot = require('./lootBranch');
+const npc = require('./npcGenerator');
 const cors = require('cors');
 app.use(cors())
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -18,4 +19,8 @@ app.get('/character', (req, res)=>{
 
 app.get('/loot', (req, res)=>{
     res.send(loot(req.query));
+})
+
+app.get('/npc', (req, res)=>{
+    res.send(npc());
 })
