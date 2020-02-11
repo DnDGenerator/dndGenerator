@@ -12,7 +12,7 @@ class NPC extends React.Component{
     render(){
 
         return(
-            <div id="npc">
+            <div>
                 <Container>
                     <Row>
                         <Col>Intresting Tid Bits!</Col>
@@ -28,7 +28,7 @@ class NPC extends React.Component{
                         <Col>Bonds</Col>
                         <Col>Flaw and/or Secret</Col>
                     </Row>
-                    {/* <Row>
+                    <Row>
                         <Col>{this.props.appearance}</Col>
                         <Col>{this.props.highAbility}</Col>
                         <Col>{this.props.lowAbility}</Col>
@@ -38,9 +38,11 @@ class NPC extends React.Component{
                         <Col>{this.props.ideals}</Col>
                         <Col>{this.props.bonds}</Col>
                         <Col>{this.props.flawAndOrSecret}</Col>
-                    </Row> */}
+                    </Row>
                 </Container>
             </div>
         )
     }
 }
+
+export default NPC;
