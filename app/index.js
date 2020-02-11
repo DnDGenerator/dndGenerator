@@ -10,6 +10,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import Loot from './components/loot';
 import NPC from './components/npc';
 import Villian from './components/villian';
+import Dungeon from './components/dungeon';
 
 
 class App extends React.Component{
@@ -46,6 +47,12 @@ class App extends React.Component{
                 objective:"",
                 method:"",
                 weakness:""
+            },
+            dungeon:{
+                location:"",
+                creator:"",
+                purpose:"",
+                history:""
             }
         }
         this.handleClick = this.handleClick.bind(this);
@@ -60,6 +67,17 @@ class App extends React.Component{
         this.handleCRSelection = this.handleCRSelection.bind(this);
         this.handleNPCClick = this.handleNPCClick.bind(this);
         this.handleVillianClick = this.handleVillianClick.bind(this);
+        this.handleDungeonClick = this.handleDungeonClick.bind(this);
+    }
+    handleDungeonClick(){
+        axios.get('https://dndcharactergenerator.herokuapp.com/dungeon')
+            .then(({data})=>{
+                this.setState({
+                    dungeon: data
+                })
+            }).catch(e=>{
+                console.error(e);
+            })
     }
     handleVillianClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/villian')
@@ -249,6 +267,17 @@ class App extends React.Component{
                             <Card.Body>
                                 <Villian villian={this.state.villian} />
                                 <Button variant="primary" size="lg" onClick={this.handleVillianClick} block="true">Click for THE Bad Guy</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="4">Dungeon Info Generator</Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="4">
+                            <Card.Body>
+                                <Dungeon dungeon={this.state.dungeon} />
+                                <Button variant="primary" onClick={this.handleDungeonClick} block="true">Click for Dungeon Ideas</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
