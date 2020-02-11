@@ -29,15 +29,15 @@ class NPC extends React.Component{
                         <Col>Flaw and/or Secret</Col>
                     </Row>
                     <Row>
-                        <Col>{this.props.appearance}</Col>
-                        <Col>{this.props.highAbility}</Col>
-                        <Col>{this.props.lowAbility}</Col>
-                        <Col>{this.props.talent}</Col>
-                        <Col>{this.props.mannerism}</Col>
-                        <Col>{this.props.interaction}</Col>
-                        <Col>{this.props.ideals}</Col>
-                        <Col>{this.props.bonds}</Col>
-                        <Col>{this.props.flawAndOrSecret}</Col>
+                        <Col>{this.props.npc.appearance}</Col>
+                        <Col>{this.props.npc.highAbility}</Col>
+                        <Col>{this.props.npc.lowAbility}</Col>
+                        <Col>{this.props.npc.talent}</Col>
+                        <Col>{this.props.npc.mannerism}</Col>
+                        <Col>{this.props.npc.interaction}</Col>
+                        <Col>{this.props.npc.ideals}</Col>
+                        <Col>{this.props.npc.bonds}</Col>
+                        <Col>{this.props.npc.flawAndOrSecret}</Col>
                     </Row>
                 </Container>
             </div>
