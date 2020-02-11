@@ -4,6 +4,8 @@ const path = require('path');
 const express = require('express');
 const loot = require('./lootBranch');
 const npc = require('./npcGenerator');
+const villian = require('./villian');
+const dungeon = require('./dungeonBuilder');
 const cors = require('cors');
 app.use(cors())
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -23,4 +25,12 @@ app.get('/loot', (req, res)=>{
 
 app.get('/npc', (req, res)=>{
     res.send(npc());
+})
+
+app.get('/villian', (req, res)=>{
+    res.send(villian());
+})
+
+app.get('/dungeon', (req, res)=>{
+    res.send(dungeon());
 })
