@@ -219,7 +219,7 @@ class App extends React.Component{
                         </Card.Header>
                         <Accordion.Collapse eventKey="2">
                             <Card.Body>
-                                {/* <NPC npc={this.state.npc}/> */}
+                                <NPC npc={this.state.npc}/>
                                 <Button variant="primary" size="lg" onClick={this.handleNPCClick} block="true">Click for "Intresting" NPC</Button>
                             </Card.Body>
                         </Accordion.Collapse>
