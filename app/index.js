@@ -9,6 +9,7 @@ import Card from 'react-bootstrap/Card'
 import Accordion from 'react-bootstrap/Accordion'
 import Loot from './components/loot';
 import NPC from './components/npc';
+import Villian from './components/villian';
 
 
 class App extends React.Component{
@@ -40,6 +41,11 @@ class App extends React.Component{
                 ideals:"",
                 bonds:"",
                 flawAndOrSecret:""
+            },
+            villian:{
+                objective:"",
+                method:"",
+                weakness:""
             }
         }
         this.handleClick = this.handleClick.bind(this);
@@ -53,6 +59,17 @@ class App extends React.Component{
         this.handleLootTypeInput = this.handleLootTypeInput.bind(this);
         this.handleCRSelection = this.handleCRSelection.bind(this);
         this.handleNPCClick = this.handleNPCClick.bind(this);
+        this.handleVillianClick = this.handleVillianClick.bind(this);
+    }
+    handleVillianClick(){
+        axios.get('https://dndcharactergenerator.herokuapp.com/villian')
+            .then(({data})=>{
+                this.setState({
+                    villian: data
+                })
+            }).catch(e=>{
+                console.error(e);
+            })
     }
     handleNPCClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/npc')
@@ -221,6 +238,17 @@ class App extends React.Component{
                             <Card.Body>
                                 <NPC npc={this.state.npc}/>
                                 <Button variant="primary" size="lg" onClick={this.handleNPCClick} block="true">Click for "Intresting" NPC</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Card.Header>
+                            <Accordion.Toggle as={Button} variant="link" eventKey="3">Villian Generator</Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="3">
+                            <Card.Body>
+                                <Villian villian={this.state.villian} />
+                                <Button variant="primary" size="lg" onClick={this.handleVillianClick} block="true">Click for THE Bad Guy</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
