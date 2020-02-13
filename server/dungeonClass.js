@@ -5,6 +5,10 @@ const Passage = require('./passagesClass');
 
 class Dungeon{
     constructor(mapWidth, mapHeight){
+        this.numDoors = 0;
+        this.numChambers = 0;
+        this.numPassages = 0;
+        this.numStairs = 0;
         this.unusedSpace = 0;
         this.door = 2;
         this.chamber = 1;
