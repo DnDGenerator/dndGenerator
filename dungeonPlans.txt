@@ -1,0 +1,7 @@
+so pieces to a dungeon:
+    stairs
+    doors
+    passages
+    chambers
+    exits
+    connections
