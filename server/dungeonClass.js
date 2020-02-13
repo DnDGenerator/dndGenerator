@@ -1,5 +1,6 @@
 const dice = require('./dice');
 const Door = require('./doorsClass');
+const Chamer = require('./chamberClass');
 
 class Dungeon{
     constructor(mapWidth, mapHeight){
