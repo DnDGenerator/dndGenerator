@@ -131,7 +131,7 @@ class Chamber{
         this.getChamberDimentions = this.getChamberDimentions.bind(this);
     }
     getChamberDimentions(){
-        return {width:this.width, height:this.height, diameter:this.diameter, shape:this.chamberShape, exitLocAndTypeArray:this.exitLocAndType};
+        return {width:this.width, height:this.height, diameter:this.diameter, shape:this.chamberShape, exitLocAndTypeArray:this.exitLocAndType, numberOfConnections:this.exitLocAndType.length};
     }
 }
 

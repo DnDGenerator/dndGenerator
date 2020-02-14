@@ -5,3 +5,22 @@ so pieces to a dungeon:
     chambers
     exits
     connections
+
+How they interact:
+    doors either lead nowhere or to a chamber or passages
+    passages lead to dead ends, other passages, chambers, or doors, and often more than one
+    chambers lead to passages, or doors, also often more than one.
+
+What properties does a chamber have:
+    width and height
+    number of connectors
+    attached to walls
+
+what do passages have:
+    width and a relative height, can and often contains turns and splits
+    number of connectors
+
+what do doors have:
+    doors are always at a connection point, sometimes may end connection with false door
+    
+    
