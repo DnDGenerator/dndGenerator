@@ -105,33 +105,39 @@ class Chamber{
             let exitTypeRoll = dice.roll(`1d20`).result;
             this.exitLocAndType[i] = {};
             if(exitTypeRoll < 11){
-                this.exitLocAndType[i].exitType = "Door (roll on the Door Type table)";
+                this.exitLocAndType[i].exitType = "door";
                 if(exitLocRoll < 8){
-                    this.exitLocAndType[i].loc = "Wall opposite entrance";
+                    this.exitLocAndType[i].loc = "opp";
                 }else if(exitLocRoll < 13){
-                    this.exitLocAndType[i].loc = "Wall left of entrance";
+                    this.exitLocAndType[i].loc = "l";
                 }else if(exitLocRoll < 18){
-                    this.exitLocAndType[i].loc = "Wall right of entrance";
+                    this.exitLocAndType[i].loc = "r";
                 }else{
-                    this.exitLocAndType[i].loc = "Same wall as entrance";
+                    this.exitLocAndType[i].loc = "same";
                 }
             }else{
-                this.exitLocAndType[i].exitType = "Corridor/passage, 10ft. long"
+                this.exitLocAndType[i].exitType = "passage"
                 if(exitLocRoll < 8){
-                    this.exitLocAndType[i].loc = "Wall opposite entrance";
+                    this.exitLocAndType[i].loc = "opp";
                 }else if(exitLocRoll < 13){
-                    this.exitLocAndType[i].loc = "Wall left of entrance";
+                    this.exitLocAndType[i].loc = "l";
                 }else if(exitLocRoll < 18){
-                    this.exitLocAndType[i].loc = "Wall right of entrance";
+                    this.exitLocAndType[i].loc = "r";
                 }else{
-                    this.exitLocAndType[i].loc = "Same wall as entrance";
+                    this.exitLocAndType[i].loc = "same";
                 }
             }
         }
         this.getChamberDimentions = this.getChamberDimentions.bind(this);
     }
     getChamberDimentions(){
-        return {width:this.width, height:this.height, diameter:this.diameter, shape:this.chamberShape, exitLocAndTypeArray:this.exitLocAndType, numberOfConnections:this.exitLocAndType.length};
+        return {
+            width:this.width, 
+            height:this.height, 
+            diameter:this.diameter, 
+            shape:this.chamberShape, 
+            exitLocAndTypeArray:this.exitLocAndType, 
+            numberOfConnections:this.exitLocAndType.length};
     }
 }
 

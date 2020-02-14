@@ -16,6 +16,7 @@ class Dungeon{
         this.passage = 3;
         this.exit = 4;
         this.stairs = 5;
+        this.startingSpace = 6;
         this.mapArea = mapHeight * mapWidth;
         this.map = [];
         for(let i = 0; i < mapWidth; i++){
@@ -24,7 +25,50 @@ class Dungeon{
                 this.map[i][j] = unusedSpace;
             }
         }
-        
+        this.startingArea = {};
+        this.startingArea.shape = "";
+        this.startingArea.width = 0;
+        this.startingArea.height = 0;
+        this.startingArea.exitLocations = [];
+        this.startingArea.exitType = [];
+        const startingRoll = dice.roll(`1d10`).result;
+
+        switch(startingRoll){
+            case 1:
+                this.startingArea.shape = "square";
+                this.startingArea.width = 20;
+                this.startingArea.height = 20;
+                this.numPassages += 4;
+                this.startingArea.exitLocations = ["each"];
+                this.startingArea.exitType = ["passage"];
+                break;
+            case 2:
+                this.startingArea.shape = "square";
+                this.startingArea.width = 20;
+                this.startingArea.height = 20;
+                this.numPassages += 1;
+                this.numDoors += 2;
+                this.startingArea.exitLocations = ["l", "r", "opp"];
+                this.startingArea.exitType = ["door", "passage", "door"];
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+        }
+
         this.makeADoor = this.makeADoor.bind(this);
         this.makeAPassage = this.makeAPassage.bind(this);
         this.makeAChamber = this.makeAChamber.bind(this);
@@ -32,6 +76,11 @@ class Dungeon{
         this.getCurrentMap = this.getCurrentMap.bind(this);
         this.updateMap = this.updateMap.bind(this);
         this.translatedMap = this.translatedMap.bind(this);
+        this.getCurrentNumDoorsLeftToPlace = this.getCurrentNumDoorsLeftToPlace.bind(this);
+        this.doorWasPlaced = this.doorWasPlaced.bind(this);
+        this.getCurrentNumPassagesLeftToPlace = this.getCurrentNumPassagesLeftToPlace.bind(this);
+        this.passageWasPlaced = this.passageWasPlaced.bind(this);
+        this.getStartingInfo = this.getStartingInfo.bind(this);
     }
     makeADoor(){
         const door = new Door();
@@ -81,9 +130,37 @@ class Dungeon{
                     case this.exit:
                         translatedMap[i][j] = "exit";
                         break;
+                    case this.startingSpace:
+                        translatedMap[i][j] = "startingSpace"
+                        break;
                 }
             }
         }
         return translatedMap;
     }
+    getCurrentNumDoorsLeftToPlace(){
+        return this.numDoors;
+    }
+    doorWasPlaced(){
+        if(this.numDoors < 0){
+            this.numDoors === 0;
+        }else{
+            this.numDoors -=1;
+        }
+    }
+    getCurrentNumPassagesLeftToPlace(){
+        return this.numPassages;
+    }
+    passageWasPlaced(){
+        if(this.numPassages < 0){
+            this.numPassages === 0;
+        }else{
+            this.numPassages -=1;
+        }
+    }
+    getStartingInfo(){
+        return this.startingArea;
+    }
 }
+
+module.exports = Dungeon;
