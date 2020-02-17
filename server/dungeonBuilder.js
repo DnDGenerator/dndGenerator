@@ -58,10 +58,10 @@ module.exports = ()=>{
         return recursiveConstruction(dungeonMap.getCurrentNumDoorsLeftToPlace(), dungeonMap.getCurrentNumPassagesLeftToPlace(), room);
     }
 
-    recursiveConstruction(dungeonMap.getCurrentNumDoorsLeftToPlace(), dungeonMap.getCurrentNumPassagesLeftToPlace(), startingObj)
+    // recursivgit eConstruction(dungeonMap.getCurrentNumDoorsLeftToPlace(), dungeonMap.getCurrentNumPassagesLeftToPlace(), startingObj)
 
     // recursiveConstruction(dungeonMap.getCurrentNumDoorsLeftToPlace(), dungeonMap.getCurrentNumPassagesLeftToPlace());
-    dungeon.mapObj = dungeonMap;
+    // dungeon.mapObj = dungeongMap;
 
     return dungeon;
 }
