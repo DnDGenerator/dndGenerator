@@ -244,7 +244,7 @@ class App extends React.Component{
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
                                 <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput} handleCRSelection={this.handleCRSelection}/>
-                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
+                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shinies</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>

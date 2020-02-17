@@ -15,7 +15,7 @@ class Loot extends React.Component{
                 <LootOptions handleLootTypeInput={this.props.handleLootTypeInput} handleCRSelection={this.props.handleCRSelection} />
                 <Container>
                     <Row>
-                        <Col>HERE BE THE SHINEIES!</Col>
+                        <Col>HERE BE THE SHINIES!</Col>
                     </Row>
                     <Row>
                         <Col>Coins</Col>
