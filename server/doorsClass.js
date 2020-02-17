@@ -28,16 +28,17 @@ class Door{
             this.type = 'secret door, barred or locked';
         }
         if(beyondRoll < 3){
-            this.beyond = "Passage extending 10ft., then T intersection extending 10ft. to the right and left"
+            this.beyond = "passage"
         }else if(beyondRoll < 9){
-            this.beyond = "Passage 20 ft. straight ahead"
+            this.beyond = "passage"
         }else if(beyondRoll < 19){
-            this.beyond = "Chamber (roll on the Chamber table)"
-        }else if(beyondRoll === 19){
-            this.beyond = "Stairs (roll on the Stairs table)"
-        }else{
-            this.beyond = "False door with trap"
+            this.beyond = "chamber"
         }
+        // else if(beyondRoll === 19){
+        //     this.beyond = "stairs"
+        // }else{
+        //     this.beyond = "trap"
+        // }
         this.getType = this.getType.bind(this);
         this.getBeyond = this.getBeyond.bind(this);
     }

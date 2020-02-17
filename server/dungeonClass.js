@@ -3,9 +3,19 @@ const Door = require('./doorsClass');
 const Chamber = require('./chamberClass');
 const Passage = require('./passagesClass');
 
+
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
 class Dungeon{
     constructor(mapWidth, mapHeight){
+        this.lastX = 0;
+        this.lastY = 0;
         this.piecesOfDungeon = [];
+        this.startingCord = {x:0,y:0,farX:0,topY:0};
         this.numDoors = 0;
         this.numChambers = 0;
         this.numPassages = 0;
@@ -18,6 +28,8 @@ class Dungeon{
         this.stairs = 5;
         this.startingSpace = 6;
         this.mapArea = mapHeight * mapWidth;
+        this.mapHeight = mapHeight;
+        this.mapWidth = mapWidth;
         this.map = [];
         for(let i = 0; i < mapWidth; i++){
             this.map[i]=[];
@@ -25,12 +37,15 @@ class Dungeon{
                 this.map[i][j] = unusedSpace;
             }
         }
-        this.startingArea = {};
-        this.startingArea.shape = "";
-        this.startingArea.width = 0;
-        this.startingArea.height = 0;
-        this.startingArea.exitLocations = [];
-        this.startingArea.exitType = [];
+        this.mappedCords = {};
+        this.startingArea = {
+            shape:"",
+            width:0,
+            height:0,
+            exitLocations:[],
+            exitType:[],
+            exits:[]
+        };
         const startingRoll = dice.roll(`1d10`).result;
 
         switch(startingRoll){
@@ -39,8 +54,8 @@ class Dungeon{
                 this.startingArea.width = 20;
                 this.startingArea.height = 20;
                 this.numPassages += 4;
-                this.startingArea.exitLocations = ["each"];
-                this.startingArea.exitType = ["passage"];
+                this.startingArea.exitLocations = ["l","opp","r","same"];
+                this.startingArea.exitType = ["passage","passage","passage","passage"];
                 break;
             case 2:
                 this.startingArea.shape = "square";
@@ -52,22 +67,110 @@ class Dungeon{
                 this.startingArea.exitType = ["door", "passage", "door"];
                 break;
             case 3:
+                this.startingArea.shape = "square";
+                this.startingArea.width = 40;
+                this.startingArea.height = 40;
+                this.numDoors += 3;
+                this.startingArea.exitLocations = ["l","r","opp"];
+                this.startingArea.exitType = ["door","door","door"];
                 break;
             case 4:
+                this.startingArea.shape = "rectangle";
+                this.startingArea.width = 80;
+                this.startingArea.height = 20;
+                this.numPassages += 2;
+                this.numDoors += 2;
+                this.startingArea.exitLocations = ["l","opp","r","same"];
+                this.startingArea.exitType = ["passage","door","passage", "door"];
                 break;
             case 5:
+                this.startingArea.shape = "rectangle";
+                this.startingArea.width = 20;
+                this.startingArea.height = 40;
+                this.numPassages += 4;
+                this.startingArea.exitLocations = ["l","opp","r","same"];
+                this.startingArea.exitType = ["passage","passage","passage","passage"];
                 break;
             case 6:
-                break;
+                //need to figure out how to think with circles
             case 7:
-                break;
             case 8:
+                this.startingArea.shape = "square";
+                this.startingArea.width = 20;
+                this.startingArea.height = 20;
+                this.numPassages +=1;
+                this.numDoors += 3;
+                this.startingArea.exitLocations = ["l","opp","r","same"];
+                this.startingArea.exitType = ["door", "door", "passage", "door"];
                 break;
             case 9:
-                break;
             case 10:
+                this.startingArea.shape = "passage";
+                this.numPassages += 1;
                 break;
         }
+        const startingX = dice.roll(`1d${this.mapWidth}`).result;
+        const startingY = dice.roll(`1d${this.mapHeight}`).result;
+        if(startingX < this.startingArea.width){
+            this.startingCord.x = startingX + this.startingArea.width;
+        }else if(startingX + this.startingArea.width > this.mapWidth){
+            this.startingCord.x = this.mapWidth - this.startingArea.width;
+        }else{
+            this.startingCord.x = startingX;
+        }
+        if(startingY < this.startingArea.height){
+            this.startingCord.y = startingX + this.startingArea.height;
+        }else if(startingY + this.startingArea.height > this.mapHeight){
+            this.startingCord.y = this.mapHeight - this.startingArea.height;
+        }else{
+            this.startingCord.y = startingY;
+        }
+        
+        this.startingCord.farX = this.startingCord.x + this.startingArea.width;
+        this.startingCord.topY = this.startingCord.y + this.startingArea.height;
+        for(let i = this.startingCord.x; i < this.startingCord.farX; i++){
+            for(let j = this.startingCord.y; i < this.startingCord.topY; j++){
+                this.map[i][j]= this.startingSpace;
+            }
+        }
+        for(let i = 0; i < this.startingArea.exitLocations.length; i++){
+            const exitCord = {
+                x:0,y:0
+            }
+            const decsion = this.startingArea.exitLocations[i];
+            switch(decsion){
+                case "opp":
+                    exitCord.x = getRandomInt(this.startingCord.x, this.startingCord.farX),
+                    exitCord.y = this.startingCord.y;
+                    break;
+                case "same":
+                    exitCord.x = getRandomInt(this.startingCord.x, this.startingCord.farX),
+                    exitCord.y = this.startingCord.topY;
+                    break;
+                case "l":
+                    exitCord.x = this.startingCord.x;
+                    exitCord.y = getRandomInt(this.startingCord.y, this.startingCord.topY);
+                    break;
+                default:
+                    exitCord.x = this.startingCord.farX;
+                    exitCord.y = getRandomInt(this.startingCord.y, this.startingCord.topY);
+                    break;
+            }
+            this.map[exitCord.x][exitCord.y] = this.startingArea.exitType[i];
+            switch(this.startingArea.exitType[i]){
+                case "door":
+                    this.mappedCords[exitCord.x + "And" + exitCord.y] = this.makeADoor();
+                    this.doorWasPlaced();
+                    break;
+                case "passage":
+                    this.mappedCords[exitCord.x + "And" + exitCord.y] = this.makeAPassage(this.startingArea.shape);
+                    this.passageWasPlaced();
+                    break;
+            }
+            this.startingArea.exits.push(exitCord);
+        }
+        this.lastXY(this.startingCord.x, this.startingCord.y);
+
 
         this.makeADoor = this.makeADoor.bind(this);
         this.makeAPassage = this.makeAPassage.bind(this);
@@ -81,20 +184,56 @@ class Dungeon{
         this.getCurrentNumPassagesLeftToPlace = this.getCurrentNumPassagesLeftToPlace.bind(this);
         this.passageWasPlaced = this.passageWasPlaced.bind(this);
         this.getStartingInfo = this.getStartingInfo.bind(this);
+        this.updateChamberCount = this.updateChamberCount.bind(this);
+        this.updateDoorCount = this.updateDoorCount.bind(this);
+        this.updatePassageCount = this.updatePassageCount.bind(this);
+        this.updateStairsCount = this.updateStairsCount.bind(this);
+        this.lastXY = this.lastXY.bind(this);
+    }
+
+    lastXY(x,y){
+        this.lastX = x;
+        this.lastY = y;
+    }
+    updateChamberCount(amount){
+        this.numChambers += amount;
+    }
+    updateDoorCount(amount){
+        this.numDoors += amount;
+    }
+    updatePassageCount(amount){
+        this.numPassages += amount;
+    }
+    updateStairsCount(amount){
+        this.numStairs += amount;
     }
     makeADoor(){
         const door = new Door();
-        this.numDoors+=1;
+        switch(door.beyond()){
+            case "passage":
+                this.numPassages(1);
+                break;
+            case "chamber":
+                this.numChambers(1);
+        }
         return door;
     }
     makeAChamber(){
         const chamber = new Chamber();
-        this.numChambers+=1;
+        this.updateDoorCount(chamber.numDoors);
+        this.updatePassageCount(chamber.numPassages);
         return chamber;
     }
     makeAPassage(origin){
         const passage = new Passage(origin);
-        this.numPassages+=1;
+        this.updateDoorCount(passage.numDoors);
+        this.updatePassageCount(passage.numSidePassages);
+        if(passage.toChamber()){
+            this.updateChamberCount(1);
+        }
+        if(passage.toStairs()){
+            this.updateStairsCount(1);
+        }
         return passage;
     }
     storePieceOfDungeon(piece){

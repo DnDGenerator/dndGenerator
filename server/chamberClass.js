@@ -6,11 +6,15 @@ class Chamber{
         this.width = 0;
         this.height = 0;
         this.diameter = 0;
+        this.numDoors = 0;
+        this.numPassages = 0;
         const chamberRoll = dice.roll(`1d20`);
         const chamberExitRoll = dice.roll(`1d20`);
         let chamberSize = '';
         let numExits = 0;
         this.exitLocAndType = [];
+        this.exits = [];
+        this.exitType = []
         
         if(chamberRoll < 3){
             this.chamberShape = 'square';
@@ -106,6 +110,7 @@ class Chamber{
             this.exitLocAndType[i] = {};
             if(exitTypeRoll < 11){
                 this.exitLocAndType[i].exitType = "door";
+                this.numDoors += 1;
                 if(exitLocRoll < 8){
                     this.exitLocAndType[i].loc = "opp";
                 }else if(exitLocRoll < 13){
@@ -117,6 +122,7 @@ class Chamber{
                 }
             }else{
                 this.exitLocAndType[i].exitType = "passage"
+                this.numPassages += 1;
                 if(exitLocRoll < 8){
                     this.exitLocAndType[i].loc = "opp";
                 }else if(exitLocRoll < 13){
@@ -136,8 +142,10 @@ class Chamber{
             height:this.height, 
             diameter:this.diameter, 
             shape:this.chamberShape, 
-            exitLocAndTypeArray:this.exitLocAndType, 
-            numberOfConnections:this.exitLocAndType.length};
+            exitLocAndTypeArray:this.exitLocAndType,
+            numDoors:this.numDoors,
+            numPassages:this.numPassages
+        }
     }
 }
 
