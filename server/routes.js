@@ -33,19 +33,7 @@ app.get('/villian', (req, res)=>{
 })
 
 app.get('/dungeon', (req, res)=>{
-    const mapObj = new Map(100,100);
-    mapObj.setStartingArea();
-    mapObj.setStartingArea();
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    const map = mapObj.getMap();
-    const dungeonObj = dungeon();
-    dungeonObj.map = map
-    res.send(dungeonObj);
+    res.send(dungeon());
 })
 
 app.get(`/map`, (req, res)=>{
