@@ -219,9 +219,9 @@ class App extends React.Component{
                 />
                 <Accordion defaultActiveKey="0">
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button}  variant="link" eventKey="0">Character Creator!</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header}  eventKey="0">Character Creator!</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
                                 <Character 
@@ -238,9 +238,9 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button}  variant="link" eventKey="1">Loot Generator!</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header}  eventKey="1">Loot Generator!</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
                                 <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput} handleCRSelection={this.handleCRSelection}/>
@@ -249,9 +249,9 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="2">NPC Details Generator</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header} eventKey="2">NPC Details Generator</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="2">
                             <Card.Body>
                                 <NPC npc={this.state.npc}/>
@@ -260,9 +260,9 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="3">Villian Generator</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header} eventKey="3">Villian Generator</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="3">
                             <Card.Body>
                                 <Villian villian={this.state.villian} />
@@ -271,9 +271,9 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="4">Dungeon Info Generator</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header} eventKey="4">Dungeon Info Generator</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="4">
                             <Card.Body>
                                 <Dungeon dungeon={this.state.dungeon} />
