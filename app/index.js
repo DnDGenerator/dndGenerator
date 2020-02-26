@@ -53,7 +53,8 @@ class App extends React.Component{
                 creator:"",
                 purpose:"",
                 history:""
-            }
+            },
+            map:null
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
@@ -68,6 +69,10 @@ class App extends React.Component{
         this.handleNPCClick = this.handleNPCClick.bind(this);
         this.handleVillianClick = this.handleVillianClick.bind(this);
         this.handleDungeonClick = this.handleDungeonClick.bind(this);
+        this.handleMapClick = this.handleMapClick.bind(this);
+    }
+    handleMapClick(){
+        axios.get(`https://dndcharactergenerator.herokuapp.com/map`)
     }
     handleDungeonClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/dungeon')
@@ -278,6 +283,16 @@ class App extends React.Component{
                             <Card.Body>
                                 <Dungeon dungeon={this.state.dungeon} />
                                 <Button variant="primary" onClick={this.handleDungeonClick} block="true">Click for Dungeon Ideas</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey="5">Map Maker</Accordion.Toggle>
+
+                        <Accordion.Collapse eventKey="5">
+                            <Card.Body>
+
+                                <Button variant="primary" onClick={} block="true">Click for Random Map</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>

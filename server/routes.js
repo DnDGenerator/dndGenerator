@@ -6,6 +6,7 @@ const loot = require('./lootBranch');
 const npc = require('./npcGenerator');
 const villian = require('./villian');
 const dungeon = require('./dungeonBuilder');
+const Map = require('./dndMapMaker');
 const cors = require('cors');
 app.use(cors())
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -32,5 +33,31 @@ app.get('/villian', (req, res)=>{
 })
 
 app.get('/dungeon', (req, res)=>{
-    res.send(dungeon());
+    const mapObj = new Map(100,100);
+    mapObj.setStartingArea();
+    mapObj.setStartingArea();
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    const map = mapObj.getMap();
+    const dungeonObj = dungeon();
+    dungeonObj.map = map
+    res.send(dungeonObj);
+})
+
+app.get(`/map`, (req, res)=>{
+    const mapObj = new Map(100,100);
+    mapObj.setStartingArea();
+    mapObj.setStartingArea();
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    mapObj.upDateMap(mapObj.getMap());
+    const map = mapObj.getMap();
+    res.send(map)
 })
