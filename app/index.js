@@ -73,6 +73,13 @@ class App extends React.Component{
     }
     handleMapClick(){
         axios.get(`https://dndcharactergenerator.herokuapp.com/map`)
+            .then(({data})=>{
+                this.setState({
+                    map:data
+                })
+            }).catch(e=>{
+                console.error(e);
+            })
     }
     handleDungeonClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/dungeon')
@@ -292,7 +299,7 @@ class App extends React.Component{
                         <Accordion.Collapse eventKey="5">
                             <Card.Body>
 
-                                <Button variant="primary" onClick={} block="true">Click for Random Map</Button>
+                                <Button variant="primary" onClick={this.handleMapClick} block="true">Click for Random Map</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
