@@ -80,7 +80,8 @@ class DungeonMap{
         const newMap = InitStart.getMapWithStartingLocation()
         this.numDoors += InitStart.startingArea.numDoors;
         this.numPassages += InitStart.startingArea.numPassages;
-        this.upDateMap(newMap)
+        this.twoDMap = newMap;
+        this.upDateMap()
     }
     placePassages(x, y){
         const passage = new Passage(this.getMap(), x , y);
@@ -114,8 +115,8 @@ class DungeonMap{
         door.runDoorUpdates();
         this.numDoors -=1;
     }
-    upDateMap(map){
-        this.twoDMap = map.map((yArray, x)=>{
+    upDateMap(){
+        this.twoDMap = this.twoDMap.map((yArray, x)=>{
             return yArray.map((tile, y)=>{
                 if(tile.getTileInfo().type === 'chamber'){
                     this.placeChamber(x,y);
