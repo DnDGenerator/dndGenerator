@@ -46,5 +46,5 @@ app.get(`/map`, (req, res)=>{
             return tile.getTileInfo().type;
         })
     });
-    res.send(map)
+    res.send({map})
 })
