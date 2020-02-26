@@ -39,11 +39,8 @@ app.get('/dungeon', (req, res)=>{
 app.get(`/map`, (req, res)=>{
     const mapObj = new Map(100,100);
     mapObj.setStartingArea();
-    mapObj.setStartingArea();
     mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
-    mapObj.upDateMap(mapObj.getMap());
+
     mapObj.upDateMap(mapObj.getMap());
     mapObj.upDateMap(mapObj.getMap());
     const map = mapObj.getMap();
