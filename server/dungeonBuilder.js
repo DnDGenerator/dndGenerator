@@ -14,8 +14,6 @@ module.exports = ()=>{
     mapMaker.upDateMap();
     mapMaker.upDateMap();
     mapMaker.upDateMap();
-    mapMaker.upDateMap();
-    mapMaker.upDateMap()
     dungeon.map = mapMaker.getMap();
     return dungeon;
 }
