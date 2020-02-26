@@ -41,8 +41,6 @@ app.get(`/map`, (req, res)=>{
     mapObj.setStartingArea();
     mapObj.upDateMap();
 
-    mapObj.upDateMap();
-    mapObj.upDateMap();
     const map = mapObj.getMap();
     res.send(map)
 })
