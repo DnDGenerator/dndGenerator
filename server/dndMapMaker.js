@@ -133,21 +133,4 @@ class DungeonMap{
     
 }
 
-const test = new DungeonMap(100, 100);
-test.setStartingArea();
-let testOutput = '';
-test.upDateMap(test.getMap());
-test.upDateMap(test.getMap());
-test.upDateMap(test.getMap());
-test.upDateMap(test.getMap());
-test.upDateMap(test.getMap());
-const testMap = test.getMap();
-
-testMap.forEach((yArray, x)=>{
-    yArray.forEach((tile, y)=>{
-        testOutput += '|'+tile.getTileInfo().type;
-    })
-    testOutput += '\n'
-})
-
-console.log(testOutput);
+module.exports = DungeonMap;
