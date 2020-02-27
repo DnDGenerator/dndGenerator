@@ -4,7 +4,6 @@ import React from 'react';
 class Map extends React.Component{
     constructor(props){
         super(props);
-        this.twoDMap = this.props.map;
         this.canvas = null;
         this.ctx = null;
     }
@@ -17,7 +16,7 @@ class Map extends React.Component{
         let topX = 0;
         let topY = 0;
         this.ctx.strokeRect(topX,topY,500,500)
-        this.twoDMap.forEach((yArray, x) => {
+        this.props.map.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
                 const adjustedX = x * 5;
                 const adjustedY = y * 5;
