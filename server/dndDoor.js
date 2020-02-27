@@ -33,9 +33,7 @@ class Door{
         }else{
             this.type = 'secret door, barred or locked';
         }
-        if(exitRoll < 3){
-            this.exit = "door"
-        }else if(exitRoll < 9){
+        if(exitRoll < 9){
             this.exit = "passage"
         }else if(exitRoll < 19){
             this.exit = "chamber"
