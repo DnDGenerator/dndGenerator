@@ -60,7 +60,7 @@ class Map extends React.Component{
                     this.ctxLeg.fillText('starting room', topX + 40, y+40);
                     break;
                 case 4:
-                    this.ctxLeg.fillText('empty/unused tile. ie wall, rock, the void', topX + 40, y+40);
+                    this.ctxLeg.fillText('empty/unused tile', topX + 40, y+40);
                     break;
                 case 5:
                     this.ctxLeg.fillText('stairs', topX + 40, y+40);
