@@ -17,9 +17,6 @@ class Map extends React.Component{
         let topX = 0;
         let topY = 0;
         this.ctx.strokeRect(topX,topY,500,500)
-        if(this.twoDMap === null){
-            return;
-        }
         this.twoDMap.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
                 const adjustedX = x * 5;
