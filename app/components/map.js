@@ -39,12 +39,12 @@ class Map extends React.Component{
             '#656565'
         ];
         this.ctx.strokeStyle = 'black';
-        this.ctxLeg.strokeRect(topX,topY, 200, 200);
+        this.ctxLeg.strokeRect(topX,topY, 500, 500);
         fillColors.forEach((color, i)=>{
-            let x = i * 10;
+            let y = i * 30;
             this.ctxLeg.fillStyle = color;
-            this.ctxLeg.strokeRect(x, topY, x+10, topY+10)
-            this.ctxLeg.fillRect(x, topY, x+10, topY+10)
+            this.ctxLeg.strokeRect(topX, y, topX+30, y+30)
+            this.ctxLeg.fillRect(topX, y, topX+30, y+30)
         })
         this.props.map.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
