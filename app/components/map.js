@@ -48,52 +48,52 @@ class Map extends React.Component{
             this.ctxLeg.fillRect(topX, y, topX+30, y+30)
             switch(i){
                 case 0:
-                    this.ctxLeg.fillText('wooden door', topX + 40, y);
+                    this.ctxLeg.fillText('wooden door', topX + 40, y + 20);
                     break;
                 case 1:
-                    this.ctxLeg.fillText('passage', topX + 40, y);
+                    this.ctxLeg.fillText('passage', topX + 40, y + 20);
                     break;
                 case 2:
-                    this.ctxLeg.fillText('chamber', topX + 40, y);
+                    this.ctxLeg.fillText('chamber', topX + 40, y + 20);
                     break;
                 case 3:
-                    this.ctxLeg.fillText('starting room', topX + 40, y);
+                    this.ctxLeg.fillText('starting room', topX + 40, y + 20);
                     break;
                 case 4:
-                    this.ctxLeg.fillText('empty/unused tile', topX + 40, y);
+                    this.ctxLeg.fillText('empty/unused tile', topX + 40, y + 20);
                     break;
                 case 5:
-                    this.ctxLeg.fillText('stairs', topX + 40, y);
+                    this.ctxLeg.fillText('stairs', topX + 40, y +20);
                     break;
                 case 6:
-                    this.ctxLeg.fillText('trap', topX + 40, y);
+                    this.ctxLeg.fillText('trap', topX + 40, y +20);
                     break;
                 case 7:
-                    this.ctxLeg.fillText('wooden door, barred or locked', topX + 40, y);
+                    this.ctxLeg.fillText('wooden door, barred or locked', topX + 40, y+20);
                     break;
                 case 8:
-                    this.ctxLeg.fillText('stone door', topX + 40, y);
+                    this.ctxLeg.fillText('stone door', topX + 40, y+20);
                     break;
                 case 9:
-                    this.ctxLeg.fillText('stone door, barred or locked', topX + 40, y);
+                    this.ctxLeg.fillText('stone door, barred or locked', topX + 40, y+20);
                     break;
                 case 10:
-                    this.ctxLeg.fillText('iron door', topX + 40, y);
+                    this.ctxLeg.fillText('iron door', topX + 40, y+20);
                     break;
                 case 11:
-                    this.ctxLeg.fillText('iron door, barred or locked', topX + 40, y);
+                    this.ctxLeg.fillText('iron door, barred or locked', topX + 40, y+20);
                     break;
                 case 12:
-                    this.ctxLeg.fillText('portcullis', topX + 40, y);
+                    this.ctxLeg.fillText('portcullis', topX + 40, y+20);
                     break;
                 case 13:
-                    this.ctxLeg.fillText('portcullis, locked in place', topX + 40, y);
+                    this.ctxLeg.fillText('portcullis, locked in place', topX + 40, y+20);
                     break;
                 case 14:
-                    this.ctxLeg.fillText('secret door', topX + 40, y);
+                    this.ctxLeg.fillText('secret door', topX + 40, y+20);
                     break;
                 case 15:
-                    this.ctxLeg.fillText('secret door, barred or locked', topX + 40, y);
+                    this.ctxLeg.fillText('secret door, barred or locked', topX + 40, y+20);
                     break;
             }
         })
