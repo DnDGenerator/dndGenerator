@@ -16,6 +16,7 @@ class Map extends React.Component{
         let topX = 0;
         let topY = 0;
         this.ctx.strokeRect(topX,topY,500,500)
+        this.ctx.strokeStyle = 'black';
         this.props.map.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
                 const adjustedX = x * 10;
@@ -73,6 +74,7 @@ class Map extends React.Component{
                         this.ctx.fillStyle = '#656565'
                         break;
                 }
+                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+10, adjustedY+10)
                 this.ctx.fillRect(adjustedX, adjustedY, adjustedX+10,adjustedY+10)
             })
         });
