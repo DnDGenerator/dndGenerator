@@ -44,7 +44,30 @@ app.get(`/map`, (req, res)=>{
     mapObj.upDateMap();
     mapObj.upDateMap();
     mapObj.upDateMap();
-
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();   
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();    
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();    
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
     const map = mapObj.getMap().map(yArray=>{
         return yArray.map(tile=>{
             return tile.getTileInfo().type;
