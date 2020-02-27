@@ -80,7 +80,7 @@ class Map extends React.Component{
     render(){
         return(
             <div>
-                <canvas ref="canvas" width={500} height={500} />
+                <canvas ref="canvas" width={500*2} height={500*2} />
             </div>
         )
     }
