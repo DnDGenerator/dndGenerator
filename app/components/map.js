@@ -18,8 +18,8 @@ class Map extends React.Component{
         this.ctx.strokeRect(topX,topY,500,500)
         this.props.map.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
-                const adjustedX = x * 5;
-                const adjustedY = y * 5;
+                const adjustedX = x * 10;
+                const adjustedY = y * 10;
                 switch(tile){
                     case "door":
                     case "wooden":
@@ -73,7 +73,7 @@ class Map extends React.Component{
                         this.ctx.fillStyle = '#656565'
                         break;
                 }
-                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+5,adjustedY+5)
+                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+10,adjustedY+10)
             })
         });
     }
