@@ -37,7 +37,7 @@ app.get('/dungeon', (req, res)=>{
 })
 
 app.get(`/map`, (req, res)=>{
-    const mapObj = new Map(100,100);
+    const mapObj = new Map(500,500);
     mapObj.setStartingArea();
     mapObj.upDateMap();
     mapObj.upDateMap();
