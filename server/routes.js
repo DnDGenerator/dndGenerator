@@ -40,7 +40,16 @@ app.get(`/map`, (req, res)=>{
     const mapObj = new Map(100,100);
     mapObj.setStartingArea();
     mapObj.upDateMap();
-
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
+    mapObj.upDateMap();
     const map = mapObj.getMap().map(yArray=>{
         return yArray.map(tile=>{
             return tile.getTileInfo().type;
