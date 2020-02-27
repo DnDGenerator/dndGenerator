@@ -11,7 +11,7 @@ import Loot from './components/loot';
 import NPC from './components/npc';
 import Villian from './components/villian';
 import Dungeon from './components/dungeon';
-
+import Map from './components/map';
 
 class App extends React.Component{
     constructor(props){
@@ -75,7 +75,7 @@ class App extends React.Component{
         axios.get(`https://dndcharactergenerator.herokuapp.com/map`)
             .then(({data})=>{
                 this.setState({
-                    map:data
+                    map:data.map
                 })
             }).catch(e=>{
                 console.error(e);
@@ -298,7 +298,7 @@ class App extends React.Component{
 
                         <Accordion.Collapse eventKey="5">
                             <Card.Body>
-
+                                <Map map={this.state.map} />
                                 <Button variant="primary" onClick={this.handleMapClick} block="true">Click for Random Map</Button>
                             </Card.Body>
                         </Accordion.Collapse>
