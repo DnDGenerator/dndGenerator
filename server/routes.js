@@ -7,6 +7,7 @@ const npc = require('./npcGenerator');
 const villian = require('./villian');
 const dungeon = require('./dungeonBuilder');
 const Map = require('./dndMapMaker');
+const MapDescription = require('./mapDescription');
 const cors = require('cors');
 app.use(cors())
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -73,5 +74,12 @@ app.get(`/map`, (req, res)=>{
             return tile.getTileInfo().type;
         })
     });
-    res.send({map})
+    res.send({map, pieces:mapObj.getNumPieces()});
+})
+
+app.get('./description', (req, res)=>{
+    const numChambers = req.query.numChambers;
+    const purpose = req.query.purpose;
+    const description = new MapDescription(numChambers, purpose);
+    res.send(description.chamberDescriptions());
 })

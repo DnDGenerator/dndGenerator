@@ -3,7 +3,6 @@ const Door = require('./dndDoor');
 const Passage = require('./dndPassage');
 const TileClass = require('./tile');
 const Chamber = require('./dndChamber');
-const dice = require('./dice');
 
 
 
@@ -64,8 +63,12 @@ class DungeonMap{
         this.placeDoors = this.placeDoors.bind(this);
         this.placePassages = this.placePassages.bind(this);
         this.placeChamber = this.placeChamber.bind(this);
+        this.getNumPieces = this.getNumPieces.bind(this);
     }
 
+    getNumPieces(){
+        return {numChambers:this.numChambers + 1, numDoors:this.numDoors, numPassages:this.numPassages}
+    }
     getMap(){
         return this.twoDMap;
     }
@@ -78,8 +81,6 @@ class DungeonMap{
     setStartingArea(){
         const InitStart = new StartingLocation(this.getMap(), this.getMaxX(), this.getMaxY());
         const newMap = InitStart.getMapWithStartingLocation()
-        this.numDoors += InitStart.startingArea.numDoors;
-        this.numPassages += InitStart.startingArea.numPassages;
         this.twoDMap = newMap;
         this.upDateMap()
     }
@@ -91,9 +92,6 @@ class DungeonMap{
         const shortDirection = passage.determineDirection('y') || passage.determineDirection('x');
         if(longDirection !== null && shortDirection !== null){
             passage.tileLayer(this.twoDMap[x][y], long, longDirection, short, shortDirection);
-            this.numPassages -= 1;
-            this.numDoors += passage.getNumOfAdditionals().numDoors;
-            this.numPassages += passage.getNumOfAdditionals().numSidePassages;
             passage.placeSidePassagesAndDoors();
         }
         passage.checkForStairsOrChambers();
@@ -113,19 +111,21 @@ class DungeonMap{
     placeDoors(x, y){
         const door = new Door(this.getMap(),x,y);
         door.runDoorUpdates();
-        this.numDoors -=1;
     }
     upDateMap(){
         this.twoDMap = this.twoDMap.map((yArray, x)=>{
             return yArray.map((tile, y)=>{
                 if(tile.getTileInfo().type === 'chamber'){
                     this.placeChamber(x,y);
+                    this.numChambers += 1;
                 }
                 else if(tile.getTileInfo().type === 'door'){
                     this.placeDoors(x,y);
+                    this.numDoors += 1;
                 }
                 else if(tile.getTileInfo().type === 'passage'){
                     this.placePassages(x, y);
+                    this.numPassages += 1;
                 } 
                 return tile;
             })

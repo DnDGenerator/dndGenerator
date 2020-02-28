@@ -12,6 +12,7 @@ import NPC from './components/npc';
 import Villian from './components/villian';
 import Dungeon from './components/dungeon';
 import Map from './components/map';
+import MapDescription from './components/mapDescription';
 
 class App extends React.Component{
     constructor(props){
@@ -54,7 +55,17 @@ class App extends React.Component{
                 purpose:"",
                 history:""
             },
-            map:[]
+            map:[],
+            pieces:{
+                numChambers:0,
+                numDoors:0,
+                numPassages:0
+            },
+            description:{
+                chambers:[],
+                currentChamberState:[],
+                contents:[]
+            }
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
@@ -70,12 +81,14 @@ class App extends React.Component{
         this.handleVillianClick = this.handleVillianClick.bind(this);
         this.handleDungeonClick = this.handleDungeonClick.bind(this);
         this.handleMapClick = this.handleMapClick.bind(this);
+        this.handleDescriptionClick = this.handleDescriptionClick.bind(this);
     }
     handleMapClick(){
         axios.get(`https://dndcharactergenerator.herokuapp.com/map`)
             .then(({data})=>{
                 this.setState({
-                    map:data.map
+                    map:data.map,
+                    pieces:data.pieces
                 })
             }).catch(e=>{
                 console.error(e);
@@ -110,6 +123,20 @@ class App extends React.Component{
             }).catch(e=>{
                 console.error(e);
             })
+    }
+    handleDescriptionClick(){
+        axios.get('https://dndcharactergenerator.herokuapp.com/description', {
+            params:{
+                numChambers:this.state.pieces.numChambers,
+                purpose:this.state.dungeon.purpose
+            }
+        }).then(({data})=>{
+            this.setState({
+                description: data
+            })
+        }).catch(e=>{
+            console.error(e);
+        })
     }
     handleLootClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
@@ -300,6 +327,18 @@ class App extends React.Component{
                             <Card.Body>
                                 <Map map={this.state.map} />
                                 <Button variant="primary" onClick={this.handleMapClick} block="true">Click for Random Map</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey="6">Populate the dungeon!</Accordion.Toggle>
+
+                        <Accordion.Collapse eventKey="6">
+                            <Card.Body>
+                                <div>
+                                    <MapDescription description={this.state.description} />
+                                    <Button variant="primary" onClick={this.handleDescriptionClick} block="true" />
+                                </div>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
