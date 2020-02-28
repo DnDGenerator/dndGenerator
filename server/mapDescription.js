@@ -18,6 +18,15 @@ class MapDescription{
         this.randomTraps = this.randomTraps.bind(this);
         this.monsterMotivation = this.monsterMotivation.bind(this);
         this.randomTricks = this.randomTricks.bind(this);
+        this.lairDescription = this.lairDescription.bind(this);
+        this.mazeDescription = this.mazeDescription.bind(this);
+        this.mineDescription = this.mineDescription.bind(this);
+        this.planarGateDescription = this.planarGateDescription.bind(this);
+        this.strongholdDescription = this.strongholdDescription.bind(this);
+        this.templeDescription = this.templeDescription.bind(this);
+        this.tombDescription = this.tombDescription.bind(this);
+        this.treasureVultDescription = this.treasureVultDescription.bind(this);
+
     }
     monsterMotivation(){
         const roll = this.dice.roll(`1d20`).result;
@@ -325,10 +334,10 @@ class MapDescription{
             return "Yellow mold"
         }
     }
-
     chamberDescriptions(){
-        this.purposeSwitchStation();
-        for(let i = 0; i < this.numChambers; i++){    
+        
+        for(let i = 0; i < this.numChambers; i++){
+            this.purposeSwitchStation();    
             const currentStateRoll = this.dice.roll(`1d20`).result;
             const contentsRoll = this.dice.roll(`1d100`).result;
             if(currentStateRoll < 4){
@@ -506,8 +515,6 @@ class MapDescription{
         }
     }
     deathTrapDescriptions(){
-        
-        
         for(let i = 0; i < this.numChambers; i++){
             const roll = this.dice.roll(`1d20`).result;
             if(roll < 2){
@@ -530,27 +537,369 @@ class MapDescription{
             
         }
     }
+    lairDescription(){
+        for(let i = 0; i < this.numChambers; i++){
+            const roll = this.dice.roll(`1d20`).result;
+            if(roll === 1){
+                this.descriptions.chambers.push('Armory stocked with weaponry and armor');
+            }else if(roll === 2){
+                this.descriptions.chambers.push("Audience chamber, used to recieve guests");
+            }else if(roll === 3){
+                this.descriptions.chambers.push("Banquet room for important celebrations");
+            }else if(roll === 4){
+                this.descriptions.chambers.push("Barracks where the lair's defenders are quartered");
+            }else if(roll === 5){
+                this.descriptions.chambers.push("Bedroom, for use by leaders");
+            }else if(roll === 6){
+                this.descriptions.chambers.push("Chapel where the lair's inhabitants worship");
+            }else if(roll === 7){
+                this.descriptions.chambers.push("Cistern or well for drinking water");
+            }else if(roll < 10){
+                this.descriptions.chambers.push("Guardroom for the defense of the lair");
+            }else if(roll === 10){
+                this.descriptions.chambers.push("Kennel for pets or guard beasts");
+            }else if(roll === 11){
+                this.descriptions.chambers.push("Kitchen for food storage and preperation");
+            }else if(roll === 12){
+                this.descriptions.chambers.push("Pen or prison where captivates are held");
+            }else if(roll < 15){
+                this.descriptions.chambers.push("Storage, mostly nonperishable goods");
+            }else if(roll === 15){
+                this.descriptions.chambers.push("Throne room where the lair's leaders hold court");
+            }else if(roll === 16){
+                this.descriptions.chambers.push("Torture chamber");
+            }else if(roll === 17){
+                this.descriptions.chambers.push("Training and exercise room");
+            }else if(roll === 18){
+                this.descriptions.chambers.push("Trophy room or museum");
+            }else if(roll === 19){
+                this.descriptions.chambers.push("Latrine or bath");
+            }else{
+                this.descriptions.chambers.push("Workshop for the construction of weapons, armor, tools, and other goods");
+            }
+        }
+    }
+    mazeDescription(){
+        const roll = dice.roll(`1d20`).result;
 
+        if(roll < 2){
+            this.descriptions.chambers.push("Conjuring room, used to summon creatures that guard the maze");
+        }else if(roll < 6){
+            this.descriptions.chambers.push("Guardroom for sentinels that patrol the maze");
+        }else if(roll < 11){
+            this.descriptions.chambers.push("Lair for guard beasts that patrol the maze");
+        }else if(roll === 11){
+            this.descriptions.chambers.push("Pen or prision accessible only by secret door, used to hold captives condemned to the maze");
+        }else if(roll === 12){
+            this.descriptions.chambers.push("Shrine dedicated to a god or other entity");
+        }else if(roll < 15){
+            this.descriptions.chambers.push("Storage for food, as well as tools used by the maze's guardians to keep the complex in working order");
+        }else if(roll < 19){
+            this.descriptions.chambers.push("Trap to confound or kill those sent into the maze");
+        }else if(roll === 19){
+            this.descriptions.chambers.push("Well that provides drinking water");
+        }else{
+            this.descriptions.chambers.push("Workshop where doors, torch sconces, and other furnishings are repaired and maintained");
+        }
+    }
+    mineDescription(){
+        const roll = dice.roll(`1d20`).result;
+
+        if(roll < 3){
+            this.descriptions.chambers.push("Barracks for miners");
+        }else if(roll === 3){
+            this.descriptions.chambers.push("Bedroom for a supervisor or manager");
+        }else if(roll === 4){
+            this.descriptions.chambers.push("Chapel dedicated to a patron deity of miners, earth, or protection");
+        }else if(roll === 5){
+            this.descriptions.chambers.push("Cistern providing drinking water for miners");
+        }else if(roll < 8){
+            this.descriptions.chambers.push("Guardroom");
+        }else if(roll === 8){
+            this.descriptions.chambers.push("Kitchen used to feed workers");
+        }else if(roll === 9){
+            this.descriptions.chambers.push("Laboratory used to conduct tests on strange minerals extracted from the mine");
+        }else if(roll < 16){
+            this.descriptions.chambers.push("Lode where metal ore is mines (75 percent chance of being depeleted)");
+        }else if(roll === 16){
+            this.descriptions.chambers.push("Office used by the mine supervisor");
+        }else if(roll === 17){
+            this.descriptions.chambers.push("Smithy for repairing damaged tools");
+        }else if(roll < 20){
+            this.descriptions.chambers.push("Storage for tools and other equipment");
+        }else{
+            this.descriptions.chambers.push("Strong room or vault used to store ore for transport to the surface");
+        }
+    }
+    planarGateDescription(){
+        const roll = dice.roll(`1d100`).result;
+
+        if(roll < 4){
+            this.descriptions.chambers.push("Decorated foyer or antechamber");
+        }else if(roll < 9){
+            this.descriptions.chambers.push("Armory used by the portal's guardians");
+        }else if(roll < 11){
+            this.descriptions.chambers.push("Audience chamber for receiving vistors");
+        }else if(roll < 20){
+            this.descriptions.chambers.push("Barracks used by the portal's guards");
+        }else if(roll < 24){
+            this.descriptions.chambers.push("Bedroom for use by the high-ranking members of the order that guards the portal");
+        }else if(roll < 31){
+            this.descriptions.chambers.push("Chapel dedicated to a diety or deities related to the portal and its defenders");
+        }else if(roll < 36){
+            this.descriptions.chambers.push("Cistern providing fresh water");
+        }else if(roll < 39){
+            this.descriptions.chambers.push("Classroom for use of initiates learning about the portal's secrets");
+        }else if(roll === 39){
+            this.descriptions.chambers.push("Conjuring room for summoning creatures used to investigate or defend the portal");
+        }else if(roll < 42){
+            this.descriptions.chambers.push("Crypt where the remains of those that died guarding the portal are kept");
+        }else if(roll < 48){
+            this.descriptions.chambers.push("Dining room");
+        }else if(roll < 51){
+            this.descriptions.chambers.push("Divination room used to investigate the portal and events tied to it");
+        }else if(roll < 56){
+            this.descriptions.chambers.push("Dormitory for visitors guards");
+        }else if(roll < 58){
+            this.descriptions.chambers.push("Entry room or vestibule");
+        }else if(roll < 60){
+            this.descriptions.chambers.push("Gallery for displaying trophies and objects related to the portal and those that guard it");
+        }else if(roll < 68){
+            this.descriptions.chambers.push("Guardroom to protect or watch over the portal");
+        }else if(roll < 73){
+            this.descriptions.chambers.push("Kitchen");
+        }else if(roll < 78){
+            this.descriptions.chambers.push("Laboratory for conducting experiments relating to the portal and creatures that emerge from it");
+        }else if(roll < 81){
+            this.descriptions.chambers.push("Library holding books about the portal's history");
+        }else if(roll < 86){
+            this.descriptions.chambers.push("Pen or prision for holding captives or creatures that emerge from the portal");
+        }else if(roll < 88){
+            this.descriptions.chambers.push("Planar junction, where the gate to another plane once stood (25 percent chance of being active)");
+        }else if(roll < 91){
+            this.descriptions.chambers.push("Storage");
+        }else if(roll === 91){
+            this.descriptions.chambers.push("Strong room or wault, for guarding valuable treasures connected to the portal or funds used to pay the planar gate's guardians");
+        }else if(roll < 94){
+            this.descriptions.chambers.push("Study");
+        }else if(roll === 94){
+            this.descriptions.chambers.push("Torture chamber, for questioning creatures that pass through the portal or attempt to cladestinely use it");
+        }else if(roll < 99){
+            this.descriptions.chambers.push("Latrine or bath");
+        }else{
+            this.descriptions.chambers.push("Workshop for constructing tools and gear needed to study the portal");
+        }
+    }
+    strongholdDescription(){
+        const roll = dice.roll(`1d100`).result;
+
+        if(roll < 3){
+            this.descriptions.chambers.push("Antechamber where visitors seeking to the stronghold wait");
+        }else if(roll < 6){
+            this.descriptions.chambers.push("Armory holding high-quality gear, including siege weapons such as ballistas");
+        }else if(roll === 6){
+            this.descriptions.chambers.push("Audience chamber used by the master of the stronghold to receive vistors");
+        }else if(roll === 7){
+            this.descriptions.chambers.push("Aviary or zoo for keeping exotic creatures");
+        }else if(roll < 12){
+            this.descriptions.chambers.push("Banquet room for hosting celebrations and guests");
+        }else if(roll < 16){
+            this.descriptions.chambers.push("Barracks used by elite guards");
+        }else if(roll === 16){
+            this.descriptions.chambers.push("Bath outfitted with a marble floor and other luxurious accoutrements");
+        }else if(roll === 17){
+            this.descriptions.chambers.push("Bedroom for use by the stronghold's master or important guests");
+        }else if(roll === 18){
+            this.descriptions.chambers.push("Chapel dedicated to a deity associated with the stronghold's master");
+        }else if(roll < 22){
+            this.descriptions.chambers.push("Cistern providing drinking water");
+        }else if(roll < 26){
+            this.descriptions.chambers.push("Dining room for intimate gatherings or informal meals");
+        }else if(roll === 26){
+            this.descriptions.chambers.push("Dressing room featuring a number of wardrobes");
+        }else if(roll < 30){
+            this.descriptions.chambers.push("Gallery for the display of expensive works of art and trophies");
+        }else if(roll < 33){
+            this.descriptions.chambers.push("Game room used to entertain visitors");
+        }else if(roll < 51){
+            this.descriptions.chambers.push("Guardroom");
+        }else if(roll === 51){
+            this.descriptions.chambers.push("Kennel where monsters or trained animals that protect the stronghold are kepts");
+        }else if(roll < 58){
+            this.descriptions.chambers.push("Kitchen designed to prepare exotic foods for large numbers of guests");
+        }else if(roll < 62){
+            this.descriptions.chambers.push("Library with an extensive collection of rare books");
+        }else if(roll === 62){
+            this.descriptions.chambers.push("Lounge used to entertain guests");
+        }else if(roll < 71){
+            this.descriptions.chambers.push("Pantry, including cellar fo rwine or spirits");
+        }else if(roll < 75){
+            this.descriptions.chambers.push("Sitting room for family and initmate guests");
+        }else if(roll < 79){
+            this.descriptions.chambers.push("Stable");
+        }else if(roll < 87){
+            this.descriptions.chambers.push("Storage of mundane goods supplies");
+        }else if(roll === 87){
+            this.descriptions.chambers.push("Storage room or vault for protecting important treasures (757 percent chance of behing hidden behind a secret door)");
+        }else if(roll < 93){
+            this.descriptions.chambers.push("Study, including a writing desk");
+        }else if(roll === 93){
+            this.descriptions.chambers.push("Throne room, elaborately decorated");
+        }else if(roll < 97){
+            this.descriptions.chambers.push("waiting room where lesser guests are held before receiving an audience");
+        }else if(roll < 99){
+            this.descriptions.chambers.push("Latrine or bath");
+        }else{
+            this.descriptions.chambers.push("Crypt belonging to the stronghold's master or someone else of importance");
+        }
+    }
+    templeDescription(){
+        const roll = dice.roll(`1d100`).result;
+
+        if(roll < 4){
+            this.descriptions.chambers.push("Armory filled with weapons and armor, battle banners, and pennants");
+        }else if(roll < 6){
+            this.descriptions.chambers.push("Audience chamber where priests of the temple receive commonors and low-ranking visitors");
+        }else if(roll < 8){
+            this.descriptions.chambers.push("Banquet room used for celebrations and holy days");
+        }else if(roll < 11){
+            this.descriptions.chambers.push("Barracks for the temple's military arm or its hired guards");
+        }else if(roll < 15){
+            this.descriptions.chambers.push("Cells where the faithful can sit in quiet contemplation");
+        }else if(roll < 25){
+            this.descriptions.chambers.push("Central temple built to accommodate rituals");
+        }else if(roll < 29){
+            this.descriptions.chambers.push("Chapel dedicated to a lesser deity associated with the temple's major deity");
+        }else if(roll < 32){
+            this.descriptions.chambers.push("Classroom used to train initiates and priests");
+        }else if(roll < 35){
+            this.descriptions.chambers.push("Conjuring room, specially sanctified and used to summon extraplanar creatures");
+        }else if(roll < 41){
+            this.descriptions.chambers.push("Crypt for a high priest or similar figure, hidden and heavily guarded by creatures and traps");
+        }else if(roll < 43){
+            this.descriptions.chambers.push("Dining room (large) for the temple's servants and lesser priests");
+        }else if(roll === 43){
+            this.descriptions.chambers.push("Dining room (small) for the temple's high priests");
+        }else if(roll < 47){
+            this.descriptions.chambers.push("Divination room, inscribed with runes and stocked with soothsaying implements");
+        }else if(roll < 51){
+            this.descriptions.chambers.push("Dormitory for lesser priests and students");
+        }else if(roll < 57){
+            this.descriptions.chambers.push("Guardroom");
+        }else if(roll === 57){
+            this.descriptions.chambers.push("Kennel for animals or monsters associated with the temple's deity");
+        }else if(roll < 61){
+            this.descriptions.chambers.push("Kitchen (might bear a disturbing resemblance to a torture chambe in an evil temple)");
+        }else if(roll < 66){
+            this.descriptions.chambers.push("Library, well stocked with religious treatises");
+        }else if(roll < 69){
+            this.descriptions.chambers.push("Prison for captuared enemies (in good or neutral temples) or those designated as sacrifices(in evil temples)");
+        }else if(roll < 74){
+            this.descriptions.chambers.push("Robing room containing ceremonial outfits and items");
+        }else if(roll === 74){
+            this.descriptions.chambers.push("Stable for riding horses and mounts belonging to the temple or for visiting messengers and caravans");
+        }else if(roll < 80){
+            this.descriptions.chambers.push("Storage holding mundane supplies");
+        }else if(roll === 80){
+            this.descriptions.chambers.push("Strong room or vault holding important relics and ceremonial items, heavily trapped");
+        }else if(roll < 83){
+            this.descriptions.chambers.push("Torture chamber, used in inquistions (in good or neutral temples with a lawful bent) or for sheer joy of causing pain(evil temple)") ;
+        }else if(roll < 90){
+            this.descriptions.chambers.push("Trophy room where art celebrating key figures and events from mythology is displayed");
+        }else if(roll === 90){
+            this.descriptions.chambers.push("Latrine or bath");
+        }else if(roll < 95){
+            this.descriptions.chambers.push("Well for drinking water, defendable in the case of attack or siege");
+        }else{
+            this.descriptions.chambers.push("Workshop for repairing or creating weapons, religious items, and tools");
+        }
+    }
+    tombDescription(){
+        const roll = dice.roll(`1d20`).result;
+
+        if(roll === 1){
+            this.descriptions.chambers.push("Antechamber for those that have come to pay respect to the dead or prepare themselves for burial rituals");
+        }else if(roll < 4){
+            this.descriptions.chambers.push("Chapel dedicated to deities that watch over the dead and protect their resting places");
+        }else if(roll < 9){
+            this.descriptions.chambers.push("Crypt for less important burials");
+        }else if(roll === 9){
+            this.descriptions.chambers.push("Divination room, used in rituals to contact the dead for guidance");
+        }else if(roll === 10){
+            this.descriptions.chambers.push("False crypt (trapped) to kill or capture thieves");
+        }else if(roll === 11){
+            this.descriptions.chambers.push("Gallery to display the deeds of the deceased through trophies, statues, paintings and so forth");
+        }else if(roll === 12){
+            this.descriptions.chambers.push("Grand crypt for a noble, high priest, or other important individual");
+        }else if(roll < 15){
+            this.descriptions.chambers.push("Guardroom, usually guarded by undead, constructs, or other creatures that don't need to eat or sleep");
+        }else if(roll === 15){
+            this.descriptions.chambers.push("Robing room for priests to prepare for burial rituals");
+        }else if(roll < 18){
+            this.descriptions.chambers.push("Storage, stocked with tools for maintaining the tomb and preparing the dead for burial");
+        }else if(roll === 18){
+            this.descriptions.chambers.push("Tomb where the wealthiest and most important folk are interred, protected by secret doors and traps");
+        }else{
+            this.descriptions.chambers.push("Workshop for embalming the dead");
+        }
+    }
+    treasureVultDescription(){
+        const roll = dice.roll(`1d20`).result;
+
+        if(roll === 1){
+            this.descriptions.chambers.push("Antechamber for visiting dignitaries");
+        }else if(roll === 2){
+            this.descriptions.chambers.push("Armory containing mundane and magic gear used by the treasure vaul'ts guards");
+        }else if(roll < 5){
+            this.descriptions.chambers.push("Barracks for guards");
+        }else if(roll === 5){
+            this.descriptions.chambers.push("Cistern providing fresh water");
+        }else if(roll < 10){
+            this.descriptions.chambers.push("Guardroom to defend against intruders");
+        }else if(roll === 10){
+            this.descriptions.chambers.push("Kennel for trained beasts to guard the treasure vault");
+        }else if(roll === 11){
+            this.descriptions.chambers.push("Kitchen for feeding guards");
+        }else if(roll === 12){
+            this.descriptions.chambers.push("Watch room that allows guards to observe those who approach the dungeon");
+        }else if(roll === 13){
+            this.descriptions.chambers.push("Prison for holding captured intruders");
+        }else if(roll < 16){
+            this.descriptions.chambers.push("Strong room or vault, for guarding the treasure hidden in the dungeon, accessible only by locked or secret door");
+        }else if(roll === 16){
+            this.descriptions.chambers.push("Torture chamber for extracting information from captured intruders");
+        }else{
+            this.descriptions.chambers.push("Trap or other trick designed to kill or capture creatures that enter the dungeon " + this.randomTraps());
+        }
+    }
     purposeSwitchStation(){
         switch(this.purpose){
             case "Death trap":
                 this.deathTrapDescriptions();
                 break;
             case "Lair":
+                this.lairDescription();
                 break;
             case "Maze":
+                this.mazeDescription();
                 break;
             case "Mine":
+                this.mineDescription();
                 break;
             case "Planar gate":
+                this.planarGateDescription();
                 break;
             case "Stronghold":
+                this.strongholdDescription();
                 break;
             case "Temple or shrine":
+                this.templeDescription();
                 break;
             case "Tomb":
+                this.tombDescription();
                 break;
             case "Treasure vault":
+                this.treasureVultDescription()
                 break;
         }
     }
