@@ -54,7 +54,7 @@ class App extends React.Component{
                 purpose:"",
                 history:""
             },
-            map:null
+            map:[]
         }
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
