@@ -65,5 +65,8 @@ module.exports = (challengeRating)=>{
             coins.platinum = dice.roll(`2d6`).result * 100;
         }
     }
-    return {coins};
+    return {coins,
+        gemsArray:[],
+        artsArray:[],
+        magicItemsArray:[]};
 }
