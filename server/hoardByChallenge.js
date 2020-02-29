@@ -15,7 +15,9 @@ module.exports = (CR)=>{
         const coins = {
             copper: dice.roll(`6d6`).result * 100,
             silver: dice.roll(`3d6`).result * 100,
-            gold: dice.roll(`2d6`).result * 10
+            gold: dice.roll(`2d6`).result * 10,
+            platinum:0,
+            electrum:0,
         }
         if(precentileResult < 7){
             console.log('do nothing!');
@@ -167,7 +169,8 @@ module.exports = (CR)=>{
             copper: dice.roll(`2d6`).result * 100,
             silver: dice.roll(`2d6`).result * 1000,
             gold: dice.roll(`6d6`).result * 100,
-            platinum: dice.roll(`3d6`).result * 10
+            platinum: dice.roll(`3d6`).result * 10,
+            electrum:0
         };
         const artRolls = dice.roll(`2d4`).result;
         const gemRolls = dice.roll(`3d6`).result;
@@ -351,8 +354,12 @@ module.exports = (CR)=>{
         return {coins, gemsArray, artsArray, magicItemsArray};
     }else if(CR < 17){
         const coins ={
+            electrum:0,
+            silver:0,
+            copper:0,
             gold: dice.roll(`4d6`).result * 1000,
-            platinum: dice.roll(`5d6`).result * 100
+            platinum: dice.roll(`5d6`).result * 100,
+            
         };
         const artRolls = dice.roll(`2d4`).result;
         const gemRolls = dice.roll(`3d6`).result;
@@ -585,6 +592,9 @@ module.exports = (CR)=>{
         return {coins, gemsArray, artsArray, magicItemsArray};
     }else{
         const coins = {
+            electrum:0,
+            silver:0,
+            copper:0,
             gold:dice.roll('12d6').result * 1000,
             platinum:dice.roll('8d6').result * 1000
         };
