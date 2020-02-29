@@ -5,10 +5,6 @@ import Item from './chamberDesc';
 class MapDescription extends React.Component{
     constructor(props){
         super(props);
-        this.state={
-            description:this.props.description
-        }
-        
     }
     
 
@@ -17,13 +13,13 @@ class MapDescription extends React.Component{
             <div>
                 <table>
                     {console.log(this.state)}
-                    <Item items={this.state.description.description.chambers} />
+                    <Item items={this.props.description.chambers} />
                     
                     
-                    <Item items={this.state.description.description.currentChamberState} />
+                    <Item items={this.props.description.currentChamberState} />
                     
                     
-                    <Item items={this.state.description.description.contents} />
+                    <Item items={this.props.description.contents} />
                     
                 </table>
             </div>
