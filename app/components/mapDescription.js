@@ -17,7 +17,7 @@ class MapDescription extends React.Component{
                         <Item items={this.props.description.chambers} />
                     </ListGroup.Item>
                     <ListGroup.Item>
-                        If the original creators are gone, this may be the current state of affairs
+                        If owners have changed
                         <Item items={this.props.description.currentChamberState} />
                     </ListGroup.Item>
                     <ListGroup.Item>
