@@ -93,6 +93,7 @@ class DungeonMap{
         if(longDirection !== null && shortDirection !== null){
             passage.tileLayer(this.twoDMap[x][y], long, longDirection, short, shortDirection);
             passage.placeSidePassagesAndDoors();
+        this.twoDMap[x][y].updateType('P');
         }
         passage.checkForStairsOrChambers();
     }
@@ -106,6 +107,7 @@ class DungeonMap{
             chamber.tileLayer(this.twoDMap[x][y], width, widthDirection, height, heightDirection);
             chamber.placeExits();
         }
+        this.twoDMap[x][y].updateType('C');
 
     }
     placeDoors(x, y){
