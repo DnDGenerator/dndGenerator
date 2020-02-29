@@ -15,17 +15,17 @@ class MapDescription extends React.Component{
     render(){
         return(
             <div>
-                <ListGroup horizontal>
-                    <ListGroup.Item>
+                <table>
+                    <tr>
                         <Item items={this.state.description.chambers} />
-                    </ListGroup.Item>
-                    <ListGroup.Item>
+                    </tr>
+                    <tr>
                         <Item items={this.state.description.currentChamberState} />
-                    </ListGroup.Item>
-                    <ListGroup.Item>
+                    </tr>
+                    <tr>
                         <Item items={this.state.description.contents} />
-                    </ListGroup.Item>
-                </ListGroup>
+                    </tr>
+                </table>
             </div>
         )
     }

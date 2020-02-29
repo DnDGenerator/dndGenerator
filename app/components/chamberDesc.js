@@ -9,15 +9,17 @@ class Item extends React.Component{
 
     createItems(){
         const formatedList = this.props.items.map(item=>{
-            return(<ListGroup.Item>{item}</ListGroup.Item>)
+            return(<td>{item}</td>)
         })
         return formatedList;
     }
     render(){
         return(
-            <ListGroup variant="flush">
-                {this.createItems()}
-            </ListGroup>
+            
+                <div>
+                    {this.createItems()}
+                </div>
+                
         )
     }
 }
