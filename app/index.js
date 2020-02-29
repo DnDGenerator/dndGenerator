@@ -30,7 +30,18 @@ class App extends React.Component{
             ravnicaRaces:false,
             eberronRaces:false,
             usePointBuy:false,
-            loot:{},
+            loot:{
+                coins:{
+                    platinum:0,
+                    gold:0,
+                    electrum:0,
+                    silver:0,
+                    copper:0
+                },
+                gemsArray:[],
+                artsArray:[],
+                magicItemsArray:[]
+            },
             cr:0,
             lootType:'hoard',
             npc:{
