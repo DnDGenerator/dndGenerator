@@ -3,6 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import LootOptions from './lootOptions';
+import LootItem from './lootItems';
+import { ListGroup } from 'react-bootstrap';
 class Loot extends React.Component{
     constructor(props){
         super(props)
@@ -17,7 +19,31 @@ class Loot extends React.Component{
                     <Row>
                         <Col>HERE BE THE SHINIES!</Col>
                     </Row>
-                    <Row>
+                    <ListGroup horizontal='md'>
+                        <ListGroup.Item>
+                            Coins
+                            {Object.keys(this.props.lootObj.coins).map(coinage=>{
+                                            return(
+                                                <ListGroup>
+                                                    {this.props.lootObj.coins[coinage]}
+                                                </ListGroup>
+                                            )
+                                        })}
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Gems
+                            <LootItem items={this.props.lootObj.gemsArray}/>
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Art Pieces
+                            <LootItem items={this.props.lootObj.artsArray} />
+                        </ListGroup.Item>
+                        <ListGroup.Item>
+                            Magic Items
+                            <LootItem items={this.props.lootObj.magicItemsArray} />
+                        </ListGroup.Item>
+                    </ListGroup>
+                    {/* <Row>
                         <Col>Coins</Col>
                         <Col>Gems</Col>
                         <Col>Art Pieces</Col>
@@ -49,7 +75,7 @@ class Loot extends React.Component{
                                 )
                             }
                         })}
-                    </Row>
+                    </Row> */}
                 </Container>
             </div>
         )
