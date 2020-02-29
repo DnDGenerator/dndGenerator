@@ -22,13 +22,15 @@ class Loot extends React.Component{
                     <ListGroup horizontal='md'>
                         <ListGroup.Item>
                             Coins
-                            {Object.keys(this.props.lootObj.coins).map(coinage=>{
-                                            return(
-                                                <ListGroup>
-                                                    {coinage} {this.props.lootObj.coins[coinage]}
-                                                </ListGroup>
-                                            )
-                                        })}
+                            <ListGroup>
+                                {Object.keys(this.props.lootObj.coins).map(coinage=>{
+                                    return(
+                                        <ListGroup.Item>
+                                            {coinage}: {this.props.lootObj.coins[coinage]}
+                                        </ListGroup.Item>
+                                    )
+                                })}
+                            </ListGroup>
                         </ListGroup.Item>
                         <ListGroup.Item>
                             Gems
