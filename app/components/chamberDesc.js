@@ -10,16 +10,16 @@ class Item extends React.Component{
     createItems(){
         const formatedList = this.props.items.map(item=>{
             console.log(item);
-            return(<tr><td>{item}</td></tr>)
+            return(<ListGroup.Item>{item}</ListGroup.Item>)
         })
         return formatedList;
     }
     render(){
         return(
 
-                <table>
-                    {this.createItems()};
-                </table>
+                <ListGroup>
+                    {this.createItems()}
+                </ListGroup>
                 
                 
         )
