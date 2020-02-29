@@ -77,7 +77,7 @@ app.get(`/map`, (req, res)=>{
     res.send({map, pieces:mapObj.getNumPieces()});
 })
 
-app.get('./description', (req, res)=>{
+app.get('/description', (req, res)=>{
     const numChambers = req.query.numChambers;
     const purpose = req.query.purpose;
     const description = new MapDescription(numChambers, purpose);

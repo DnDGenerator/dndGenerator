@@ -337,7 +337,7 @@ class App extends React.Component{
                             <Card.Body>
                                 <div>
                                     <MapDescription description={this.state.description} />
-                                    <Button variant="primary" onClick={this.handleDescriptionClick} block="true" />
+                                    <Button variant="primary" onClick={this.handleDescriptionClick} block="true" >Push this for descriptions of the dungeon you created</Button>
                                 </div>
                             </Card.Body>
                         </Accordion.Collapse>
