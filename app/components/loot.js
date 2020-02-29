@@ -25,7 +25,7 @@ class Loot extends React.Component{
                             {Object.keys(this.props.lootObj.coins).map(coinage=>{
                                             return(
                                                 <ListGroup>
-                                                    {this.props.lootObj.coins[coinage]}
+                                                    {coinage} {this.props.lootObj.coins[coinage]}
                                                 </ListGroup>
                                             )
                                         })}
