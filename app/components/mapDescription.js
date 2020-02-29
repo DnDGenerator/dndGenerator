@@ -16,15 +16,15 @@ class MapDescription extends React.Component{
         return(
             <div>
                 <table>
-                    <tr>
-                        <Item items={this.state.description.chambers} />
-                    </tr>
-                    <tr>
-                        <Item items={this.state.description.currentChamberState} />
-                    </tr>
-                    <tr>
-                        <Item items={this.state.description.contents} />
-                    </tr>
+                    
+                    <Item items={this.state.description.chambers} />
+                    
+                    
+                    <Item items={this.state.description.currentChamberState} />
+                    
+                    
+                    <Item items={this.state.description.contents} />
+                    
                 </table>
             </div>
         )

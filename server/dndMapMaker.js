@@ -117,15 +117,15 @@ class DungeonMap{
     upDateMap(){
         this.twoDMap = this.twoDMap.map((yArray, x)=>{
             return yArray.map((tile, y)=>{
-                if(tile.getTileInfo().type === 'chamber'){
+                if(tile.type === 'chamber'){
                     this.placeChamber(x,y);
                     this.numChambers += 1;
                 }
-                else if(tile.getTileInfo().type === 'door'){
+                else if(tile.type === 'door'){
                     this.placeDoors(x,y);
                     this.numDoors += 1;
                 }
-                else if(tile.getTileInfo().type === 'passage'){
+                else if(tile.type === 'passage'){
                     this.placePassages(x, y);
                     this.numPassages += 1;
                 } 
