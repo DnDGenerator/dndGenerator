@@ -10,17 +10,17 @@ class Item extends React.Component{
     createItems(){
         const formatedList = this.props.items.map(item=>{
             console.log(item);
-            return(<td>{item}</td>)
+            return(<tr><td>{item}</td></tr>)
         })
         return formatedList;
     }
     render(){
         return(
 
-                <tr>
-                    {this.createItems()}
-                    {console.log(this.createItems())}
-                </tr>
+                <table>
+                    {this.createItems()};
+                </table>
+                
                 
         )
     }

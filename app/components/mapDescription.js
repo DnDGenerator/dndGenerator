@@ -11,8 +11,7 @@ class MapDescription extends React.Component{
     render(){
         return(
             <div>
-                <table>
-                    {console.log(this.state)}
+                
                     <Item items={this.props.description.chambers} />
                     
                     
@@ -21,7 +20,6 @@ class MapDescription extends React.Component{
                     
                     <Item items={this.props.description.contents} />
                     
-                </table>
             </div>
         )
     }
