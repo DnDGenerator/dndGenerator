@@ -84,6 +84,7 @@ class App extends React.Component{
         this.handleDescriptionClick = this.handleDescriptionClick.bind(this);
     }
     handleMapClick(){
+        
         axios.get(`https://dndcharactergenerator.herokuapp.com/map`)
             .then(({data})=>{
                 this.setState({

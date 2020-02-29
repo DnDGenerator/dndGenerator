@@ -354,7 +354,7 @@ class MapDescription{
             }else if(currentStateRoll < 17){
                 this.descriptions.currentChamberState.push(`Furniture wrecked but still present`)
             }else if(currentStateRoll < 19){
-                this.descriptions.currentChamberState.push(generalDungeonChambers())
+                this.descriptions.currentChamberState.push(this.generalDungeonChambers())
             }else if(currentStateRoll < 20){
                 this.descriptions.currentChamberState.push("Stripped bare");
             }else{
