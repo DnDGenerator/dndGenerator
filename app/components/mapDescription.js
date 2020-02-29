@@ -16,7 +16,7 @@ class MapDescription extends React.Component{
         return(
             <div>
                 <table>
-                    
+                    {console.log(this.state)}
                     <Item items={this.state.description.chambers} />
                     
                     
