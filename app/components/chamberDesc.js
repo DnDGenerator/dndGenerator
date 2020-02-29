@@ -12,6 +12,9 @@ class Item extends React.Component{
             console.log(item);
             return(<ListGroup.Item>{item}</ListGroup.Item>)
         })
+        if(formatedList.length > 20){
+            formatedList.splice(19, formatedList.length - 20)
+        }
         return formatedList;
     }
     render(){

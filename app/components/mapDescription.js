@@ -11,13 +11,13 @@ class MapDescription extends React.Component{
     render(){
         return(
             <div>
-                
+                    Original room and purpose
                     <Item items={this.props.description.chambers} />
                     
-                    
+                    If the original creators are gone, this may be the current state of affairs
                     <Item items={this.props.description.currentChamberState} />
                     
-                    
+                    The contents of the room
                     <Item items={this.props.description.contents} />
                     
             </div>
