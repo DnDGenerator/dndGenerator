@@ -28,7 +28,7 @@ class MapGen{
         this.checkIfDone = this.checkIfDone.bind(this);
         this.placeChamber = this.placeChamber.bind(this);
         this.placeDoor = this.placeDoor.bind(this);
-        
+        this.getConvertedMap = this.getConvertedMap.bind(this);
     }
 /**
  * @description populates the two dimensional array with tiles, then runs over the tiles setting their neighbors
@@ -103,6 +103,13 @@ class MapGen{
     }
     getMap(){
         return this.tileMap;
+    }
+    getConvertedMap(){
+        return this.getMap().map(yArray=>{
+            return yArray.map(tile=>{
+                return tile.getTileInfo().type;
+            })
+        })
     }
 }
 

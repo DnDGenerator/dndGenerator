@@ -38,43 +38,9 @@ app.get('/dungeon', (req, res)=>{
 })
 
 app.get(`/map`, (req, res)=>{
-    const mapObj = new Map(300,300);
-    mapObj.setStartingArea();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();   
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();    
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();    
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    mapObj.upDateMap();
-    const map = mapObj.getMap().map(yArray=>{
-        return yArray.map(tile=>{
-            return tile.getTileInfo().type;
-        })
-    });
-    res.send({map, pieces:mapObj.getNumPieces()});
+    const map = new Map(200, 200);
+    map.createMap();
+    res.send(map.getConvertedMap())
 })
 
 app.get('/description', (req, res)=>{
