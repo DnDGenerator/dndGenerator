@@ -67,11 +67,6 @@ class App extends React.Component{
                 history:""
             },
             map:[],
-            pieces:{
-                numChambers:0,
-                numDoors:0,
-                numPassages:0
-            },
             description:{
                 chambers:[],
                 currentChamberState:[],
@@ -100,7 +95,6 @@ class App extends React.Component{
             .then(({data})=>{
                 this.setState({
                     map:data.map,
-                    pieces:data.pieces
                 })
             }).catch(e=>{
                 console.error(e);
