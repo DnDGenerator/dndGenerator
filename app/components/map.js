@@ -97,7 +97,7 @@ class Map extends React.Component{
                     this.ctxLeg.fillText('secret door, barred or locked', topX + 40, y+20);
                     break;
                 case 16:
-                    this.ctxLeg.fillText('WC', topX + 40, y+20)
+                    this.ctxLeg.fillText('Chamber wall or edge of chamber', topX + 40, y+20)
             }
         })
         this.props.map.forEach((yArray, x) => {

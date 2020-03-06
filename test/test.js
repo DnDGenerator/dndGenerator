@@ -330,14 +330,14 @@ describe('chamber()',()=>{
 
 describe('mapGen', ()=>{
     beforeEach(()=>{
-        mapGen = new MapGen(200,200);
+        mapGen = new MapGen(500,500);
     });
 
     it('should generate a two dimensional array', ()=>{
         mapGen.initMap();
         const testMap = mapGen.getMap();
-        expect(testMap).to.be.an('array').to.have.lengthOf(200/5);
-        expect(testMap[0]).to.be.an('array').to.have.lengthOf(200/5);
+        expect(testMap).to.be.an('array').to.have.lengthOf(500/5);
+        expect(testMap[0]).to.be.an('array').to.have.lengthOf(500/5);
     });
     it('should when placing the starting area, actualy place the starting area',()=>{
         mapGen.initMap();
@@ -395,6 +395,18 @@ describe('mapGen', ()=>{
                 finalString+=tempString;
                 return finalString;
             },'');
+        // let stringMap = "";
+        // const map = mapGen.getMap();
+        // console.log(map.length)
+        // for(let x = 0; x < map.length; x++){
+        //     for(let y = 0; map[x].length; y++){
+        //         const tile = map[x][y];
+        //         if(tile){
+        //             stringMap+= '|'+ tile.getTileInfo().type +'|';
+        //         }
+                
+        //     }
+        // }
         console.log(stringMap)
         expect(mapGen.getMap()).to.be.an('array');
         expect(mapGen.getMap()[0]).to.be.an('array');
