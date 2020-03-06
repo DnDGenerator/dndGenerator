@@ -165,8 +165,6 @@ class App extends React.Component{
         })
     }
     handleClick(){
-        console.log(this.state.ravnicaRaces)
-        //https://dndcharactergenerator.herokuapp.com
         
         axios.get('https://dndcharactergenerator.herokuapp.com/character', {
             params:{
@@ -209,26 +207,22 @@ class App extends React.Component{
     }
 
     handleLootTypeInput(e){
-        console.log(e, 'this fired! handleLootTypeInput')
         this.setState({
             lootType: e
         })
     }
     handleCRSelection(e){
-        console.log(e, 'this fired! this fired!');
         this.setState({
             cr: e
         })
     }
     handleEberronChange(){
-        console.log('handles eberron')
         this.setState(state =>({
             eberron: !state.eberron,
             ravnica: false
         }))
     }
     handleRavnicaChange(){
-        console.log('handles ravnica')
         this.setState(state =>({
             ravnica: !state.ravnica,
             eberron: false

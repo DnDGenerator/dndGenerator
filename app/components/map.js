@@ -22,21 +22,22 @@ class Map extends React.Component{
         this.ctx.strokeStyle = 'black';
         let fillColors = [
             '#b15e19',
-            '#ebeba1',
-            '#65ea2c',
-            '#f61de6',
+            '#fdcb6e',
+            '#0984e3',
+            '#e84393',
             '#000000',
             '#d4fc15',
-            '#e0262d',
+            '#d63031',
             '#b15e50',
-            '#afaca4',
-            '#9ca1ba',
-            '#b7c8d5',
-            '#b9c9f9',
-            '#7a9916',
-            '#02a258',
-            '#454545',
-            '#656565'
+            '#b2bec3',
+            '#dfe6e9',
+            '#e17055',
+            '#fab1a0',
+            '#58B19F',
+            '#55E6C1',
+            '#2d3436',
+            '#636e72',
+            '#182C61'
         ];
         this.ctx.strokeStyle = 'black';
         this.ctxLeg.strokeRect(topX,topY, 500, 500);
@@ -95,6 +96,8 @@ class Map extends React.Component{
                 case 15:
                     this.ctxLeg.fillText('secret door, barred or locked', topX + 40, y+20);
                     break;
+                case 16:
+                    this.ctxLeg.fillText('WC', topX + 40, y+20)
             }
         })
         this.props.map.forEach((yArray, x) => {
@@ -153,6 +156,8 @@ class Map extends React.Component{
                     case "secret door, barred or locked":
                         this.ctx.fillStyle = fillColors[15];
                         break;
+                    case "WC":
+                        this.ctx.fillStyle = fillColors[16];
                 }
                 this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+10, adjustedY+10)
                 this.ctx.fillRect(adjustedX, adjustedY, adjustedX+10,adjustedY+10)

@@ -1,7 +1,6 @@
 {
-  "name": "reactPlayground",
+  "name": "reactplayground",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "babel": {
     "presets": [
@@ -41,5 +40,14 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexSfamurri/dndGenerator.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexSfamurri/dndGenerator/issues"
+  },
+  "homepage": "https://github.com/AlexSfamurri/dndGenerator#readme",
+  "description": ""
 }
