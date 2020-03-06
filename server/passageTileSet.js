@@ -30,6 +30,9 @@ class PassageTileSet{
         let largestX = 0;
         let largestY = 0;
         this.tileSet.forEach(tile=>{
+            if(tile === null){
+                return;
+            }
             if(tile.getTileInfo().x > largestX){
                 largestX = tile.getTileInfo().x;
             }
@@ -40,6 +43,9 @@ class PassageTileSet{
         let smallestX = largestX;
         let smallestY = largestY;
         this.tileSet.forEach(tile=>{
+            if(tile === null){
+                return;
+            }
             if(tile.getTileInfo().x < smallestX){
                 smallestX = tile.getTileInfo().x;
             }
@@ -48,14 +54,19 @@ class PassageTileSet{
             }
         })
         this.tileSet.forEach(tile=>{
+            if(tile === null){
+                return null;
+            }
             if(tile.getTileInfo().x === largestX){
                 this.wallObj.sWall.push(tile); 
-            }else if(tile.getTileInfo().x === smallestX){
+            }
+            if(tile.getTileInfo().x === smallestX){
                 this.wallObj.nWall.push(tile);
             }
-            else if(tile.getTileInfo().y === largestY){
+            if(tile.getTileInfo().y === largestY){
                 this.wallObj.eWall.push(tile);
-            }else if(tile.getTileInfo().y === smallestY){
+            }
+            if(tile.getTileInfo().y === smallestY){
                 this.wallObj.wWall.push(tile);
             }
         })

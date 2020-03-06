@@ -1,139 +1,109 @@
-const StartingLocation = require('./dndStartingLocation');
-const Door = require('./dndDoor');
+const Tile = require('./tile');
 const Passage = require('./dndPassage');
-const TileClass = require('./tile');
+const Door = require('./dndDoor');
 const Chamber = require('./dndChamber');
+const StartingArea = require('./dndStartingLocation');
 
-
-
-
-class DungeonMap{
-    constructor(width, height){
-        this.x = width/5;
-        this.y = height/5;
-        this.twoDMap = new Array(this.x);
-        this.numDoors = 0;
-        this.numChambers = 0;
-        this.numPassages = 0;
-        this.numStairs = 0;
-        this.mappedCoords = {};
-        this.startingObj = null;
-        this.piecesOfDungeon = {};
-        this.tiles = [];
-        for(let x = 0; x < this.x; x++){
-            this.twoDMap[x] = new Array(this.y);
-        };
-        for(let x = 0; x < this.x; x++){
-            for(let y = 0; y < this.y; y++){
-                const Tile = new TileClass("u", x, y);
-                this.twoDMap[x][y] = Tile;
-                this.tiles.push(Tile);
+class MapGen{
+    constructor(x,y){
+        this.x = x/5;
+        this.y = y/5;
+        this.tileMap = [];
+        for(let i = 0; i < this.x; i++){
+            this.tileMap[i] = [];
+            for(let j = 0; j < this.y; j++){
+                this.tileMap[i][j]='';
             }
         }
-        this.twoDMap = this.twoDMap.map((yArray, x)=>{
-            return yArray.map((tile, y)=>{
+        this.passages = [];
+        this.chambers = [];
+        this.doors = [];
+        
+        
+        this.createMap = this.createMap.bind(this);
+        this.getMap = this.getMap.bind(this);
+        this.layDownAPassage = this.layDownAPassage.bind(this);
+        this.initMap = this.initMap.bind(this);
+        this.placeStartingArea = this.placeStartingArea.bind(this);
+        this.checkIfDone = this.checkIfDone.bind(this);
+        this.placeChamber = this.placeChamber.bind(this);
+        this.placeDoor = this.placeDoor.bind(this);
+        
+    }
+/**
+ * @description populates the two dimensional array with tiles, then runs over the tiles setting their neighbors
+ */
+    initMap(){
+        this.tileMap = this.tileMap.map((yArray, x)=>{
+            return yArray.map((tileLocation, y)=>{
+                const tile = new Tile('*', x, y);
+                return tile;
+            });
+        });
+        this.tileMap.forEach((yArray, x)=>{
+            yArray.forEach((tile, y)=>{
+                const n = (x-1 < 0);
+                const e = (y+1 >= this.y);
+                const s = (x+1 >= this.x);
+                const w = (y-1 < 0)
                 const neighbors = {
-                    n:null,
-                    e:null,
-                    s:null,
-                    w:null
-                }
-                if(y - 1 >= 0){
-                    neighbors.w = this.twoDMap[x][y-1];
-                }
-                if(y + 1 < yArray.length - 1){
-                    neighbors.e = this.twoDMap[x][y+1];
-                }
-                if(x - 1 >= 0){
-                    neighbors.n = this.twoDMap[x-1][y];
-                }
-                if(x + 1 < this.twoDMap.length - 1){
-                    neighbors.s = this.twoDMap[x+1][y];
-                }
-                return tile.setNeightbors(neighbors);
+                    n: n ? null : this.tileMap[x-1][y],
+                    e: e ? null : this.tileMap[x][y+1],
+                    s: s ? null : this.tileMap[x+1][y],
+                    w: w ? null : this.tileMap[x][y-1]
+                };
+                tile.setNeightbors(neighbors);
             })
         })
-
-
-        this.getMap = this.getMap.bind(this);
-        this.getMaxX = this.getMaxX.bind(this);
-        this.getMaxY = this.getMaxY.bind(this);
-        this.setStartingArea = this.setStartingArea.bind(this);
-        this.upDateMap = this.upDateMap.bind(this);
-        this.placeDoors = this.placeDoors.bind(this);
-        this.placePassages = this.placePassages.bind(this);
-        this.placeChamber = this.placeChamber.bind(this);
-        this.getNumPieces = this.getNumPieces.bind(this);
     }
-
-    getNumPieces(){
-        return {numChambers:this.numChambers + 1, numDoors:this.numDoors, numPassages:this.numPassages}
+    createMap(){
+        this.initMap()
+        this.placeStartingArea();
+        this.checkIfDone();
     }
-    getMap(){
-        return this.twoDMap;
-    }
-    getMaxX(){
-        return this.x;
-    }
-    getMaxY(){
-        return this.y
-    }
-    setStartingArea(){
-        const InitStart = new StartingLocation(this.getMap(), this.getMaxX(), this.getMaxY());
-        const newMap = InitStart.getMapWithStartingLocation()
-        this.twoDMap = newMap;
-        this.upDateMap()
-    }
-    placePassages(x, y){
-        const passage = new Passage(this.getMap(), x , y);
-        const long = passage.getDistance();
-        const short = passage.getWidth();
-        const longDirection = passage.determineDirection('x') || passage.determineDirection('y');
-        const shortDirection = passage.determineDirection('y') || passage.determineDirection('x');
-        if(longDirection !== null && shortDirection !== null){
-            passage.tileLayer(this.twoDMap[x][y], long, longDirection, short, shortDirection);
-            passage.placeSidePassagesAndDoors();
-        this.twoDMap[x][y].updateType('P');
+    checkIfDone(){
+        const mapCheck = this.getMap().reduce((oldArray, currentArray)=>{
+            const newArray = oldArray.concat(currentArray);
+            return newArray;
+        },[]).filter(tile=>tile.getTileInfo().type !== '*');
+        const passageList = mapCheck.filter(tile=>tile.getTileInfo().type === 'passage');
+        if(passageList.length > 0){
+            this.layDownAPassage(passageList[0].getTileInfo().x, passageList[0].getTileInfo().y);
         }
-        passage.checkForStairsOrChambers();
+        const doorList = mapCheck.filter(tile=>tile.getTileInfo().type === 'door');
+        if(doorList.length > 0){
+            this.placeDoor(doorList[0].getTileInfo().x, doorList[0].getTileInfo().y);
+        }
+        const chamberList = mapCheck.filter(tile=>tile.getTileInfo().type==='chamber');
+        if(chamberList.length > 0){
+            this.placeChamber(chamberList[0].getTileInfo().x, chamberList[0].getTileInfo().y);
+        }
+    }
+    placeStartingArea(){
+        const startingAra = new StartingArea(this.tileMap, this.x, this.y);
+        startingAra.createStartingArea();
+        startingAra.placeExits();
     }
     placeChamber(x,y){
         const chamber = new Chamber(this.getMap(), x, y);
-        const width = chamber.getWidth();
-        const height = chamber.getHeight();
-        const widthDirection = chamber.determineDirection('x') || chamber.determineDirection('y');
-        const heightDirection = chamber.determineDirection('y') || chamber.determineDirection('x');
-        if(widthDirection !== null && heightDirection !== null){
-            chamber.tileLayer(this.twoDMap[x][y], width, widthDirection, height, heightDirection);
-            chamber.placeExits();
-        }
-        this.twoDMap[x][y].updateType('C');
-
+        chamber.createChamber();
+        chamber.placeExits();
+        this.checkIfDone();
     }
-    placeDoors(x, y){
-        const door = new Door(this.getMap(),x,y);
+    placeDoor(x, y){
+        const door = new Door(this.getMap(), x, y);
         door.runDoorUpdates();
+        this.checkIfDone();
     }
-    upDateMap(){
-        this.twoDMap = this.twoDMap.map((yArray, x)=>{
-            return yArray.map((tile, y)=>{
-                if(tile.type === 'chamber'){
-                    this.placeChamber(x,y);
-                    this.numChambers += 1;
-                }
-                else if(tile.type === 'door'){
-                    this.placeDoors(x,y);
-                    this.numDoors += 1;
-                }
-                else if(tile.type === 'passage'){
-                    this.placePassages(x, y);
-                    this.numPassages += 1;
-                } 
-                return tile;
-            })
-        });
+    layDownAPassage(x,y){
+        const passage = new Passage(this.getMap(), x, y);
+        passage.createPassage();
+        passage.placeDoorsAndPassages();
+        this.checkIfDone();
     }
-    
+    getMap(){
+        return this.tileMap;
+    }
 }
 
-module.exports = DungeonMap;
+module.exports = MapGen;

@@ -1,4 +1,6 @@
 const dice = require('./dice.js');
+const PassageTileSet = require('./passageTileSet');
+
 
 
 /**
@@ -24,9 +26,11 @@ class Passage{
         this.passagePositions = [];
         this.width = 0;
         this.height = 10;
-        this.cardnialDirection=''
-        // this.map[this.x][this.y].updateType('P')
-        this.passageTiles = [];
+        this.startingTile = this.map[x][y];
+        this.startingNeighbors = this.map[this.x][this.y].getNeighbors()
+        this.direction = null;
+        this.sideDirection = null;
+        this.passageTileSet = new PassageTileSet();
 
         const detailRoll = dice.roll(`1d20`).result;
         const fromNonPassageRoll = dice.roll(`1d20`).result;
@@ -95,40 +99,18 @@ class Passage{
         else{
             this.width = 40/5;
         }
-        this.tileLayer = this.tileLayer.bind(this);
-        this.tileShortLayer = this.tileShortLayer.bind(this);
+        this.checkForStairsOrChambers = this.checkForStairsOrChambers.bind(this);
         this.getWidth = this.getWidth.bind(this);
         this.getDistance = this.getDistance.bind(this);
         this.getAdditonalDistance = this.getAdditonalDistance.bind(this);
         this.determineDirection = this.determineDirection.bind(this);
-        this.filterPassageTilesForDimensions = this.filterPassageTilesForDimensions.bind(this);
-        this.placeSidePassagesAndDoors = this.placeSidePassagesAndDoors.bind(this);
+        this.createPassage = this.createPassage.bind(this);
+        this.testDirection = this.testDirection.bind(this);
+        this.determineDirection = this.determineDirection.bind(this);
+        this.getPassageTileSetObj = this.getPassageTileSetObj.bind(this);
+        this.placeDoorsAndPassages = this.placeDoorsAndPassages.bind(this);
     }
-    placeSidePassagesAndDoors(){
-        const filteredList = this.filterPassageTilesForDimensions();
-        if(filteredList.length === 0){
-            return;
-        }
-        for(let i = 0; i < this.numDoors; i++){
-            const randomIndex =  dice.roll(`1d${filteredList.length}`).result - 1;
-            const doorTile = filteredList.splice(randomIndex, 1)[0];
-            doorTile.updateType('door');
-        }
-        for(let i = 0; i < this.numSidePassages; i++){
-            const randomIndex =  dice.roll(`1d${filteredList.length}`).result - 1;
-            const sidePassages = filteredList.splice(randomIndex, 1)[0];
-            sidePassages.updateType('passage')
-        }
-        for(let i = 0; i < this.numTurns; i++){
-            const randomIndex =  dice.roll(`1d${filteredList.length}`).result - 1;
-            const turnTile = filteredList.splice(randomIndex, 1)[0];
-            const longDirection = this.determineDirection('x', turnTile.x, turnTile.y) || this.determineDirection('y',turnTile.x, turnTile.y);
-            const shortDirection = this.determineDirection('y', turnTile.x, turnTile.y) || this.determineDirection('x', turnTile.x, turnTile.y);
-            if(longDirection !== null && shortDirection !== null){
-                this.tileLayer(turnTile, this.getAdditonalDistance(), longDirection, 1, shortDirection);
-            }
-        }
-    }
+
     getNumOfAdditionals(){
         return {numSidePassages:this.numSidePassages, numDoors:this.numDoors, numTurns:this.numTurns};
     }
@@ -141,120 +123,269 @@ class Passage{
     getWidth(){
         return this.width;
     }
-    filterPassageTilesForDimensions(){
-        let maxX = 0;
-        let minX = this.map.length;
-        let maxY = 0;
-        let minY = this.map.length;
-        this.passageTiles.forEach(tile=>{
-            if(maxX < tile.x){
-                maxX = tile.x;
-            }
-            if(minX > tile.x){
-                minX = tile.x;
-            }
-            if(maxY < tile.y){
-                maxY = tile.y;
-            }
-            if(minY > tile.y){
-                minY = tile.y;
-            }
-        });
-        const filteredList = this.passageTiles.filter(tile=>{
-            return tile.type !== 'P' ? false : tile.x === maxX ? true : tile.x === minX ? true : tile.y === maxY ? true : tile.y === minY ? true : false;
-        })
-        return filteredList;
-    }
+
     checkForStairsOrChambers(){
         if(this.isChamber){
             this.map[this.x][this.y].updateType("chamber");
-            return;
+            this.width = 1;
+            this.distance = 1;
+            return true;
         }
         if(this.isStairs){
             this.map[this.x][this.y].updateType('stairs');
+            this.width = 1;
+            this.distance = 1;
+            return true;
         }
+        return false;
     }
-    /**
-     * @description This method is used to determine valid directions that can be used to travel
-     * 
-     * @param {String} axisToCheck  should be x or y to determin which axis needs to be determined for a direction that is valid
-     * 
-     * @returns {String} it will return either n, s, e, or w based one availability
-     */
-    determineDirection(axisToCheck, x = this.x, y = this.y){
-        if(axisToCheck === 'x'){
-            if(x - 1 >= 0 && this.map[x - 1][y].type === 'u'){
-                return 'n';
+    placeDoorsAndPassages(){
+        let doorDirection = '';
+        let options = [];
+        let passageDirection = '';
+        this.passageTileSet.populateWall();
+        if(this.numDoors > 0){
+            switch(this.direction){
+                case 'n':
+                    switch(this.doorPositions[0]){
+                        case 'r':
+                            doorDirection = 'e';
+                            break;
+                        case 'l':
+                            doorDirection = 'w';
+                            break;
+                        case "end":
+                            doorDirection = 's';
+                            break;
+                    }
+                    break;
+                case 'e':
+                    switch(this.doorPositions[0]){
+                        case 'r':
+                            doorDirection = 's';
+                            break;
+                        case 'l':
+                            doorDirection = 'n';
+                            break;
+                        case "end":
+                            doorDirection = 'w';
+                            break;
+                    }
+                    break;
+                case 's':
+                    switch(this.doorPositions[0]){
+                        case 'r':
+                            doorDirection = 'w';
+                            break;
+                        case 'l':
+                            doorDirection = 'e';
+                            break;
+                        case "end":
+                            doorDirection = 'n';
+                            break;
+                    }
+                    break;
+                case 'w':
+                    switch(this.doorPositions[0]){
+                        case 'r':
+                            doorDirection = 'n';
+                            break;
+                        case 'l':
+                            doorDirection = 's';
+                            break;
+                        case "end":
+                            doorDirection = 'e';
+                            break;
+                    }
+                    break;
             }
-            if(x + 1 <= this.map.length - 1 && this.map[x + 1][y].type === 'u'){
-                return 's';
+            switch(doorDirection){
+                case 'n':
+                    options = this.passageTileSet.getWallTiles().nWall
+                    break;
+                case 'e':
+                    options = this.passageTileSet.getWallTiles().eWall
+                    break;
+                case 's':
+                    options = this.passageTileSet.getWallTiles().sWall
+                    break;
+                case 'w':
+                    options = this.passageTileSet.getWallTiles().wWall
+                    break;
+            }
+
+            for(let i = 0; i < this.numDoors; i++){
+                const roll = dice.roll(`1d${options.length}`).result - 1;
+                const doorTile = options.splice(roll,1);
+                if(doorTile.length){
+                    doorTile[0].updateType('door');
+                }
             }
         }
-        if(axisToCheck === 'y'){
-            if(y - 1 >= 0 && this.map[x][y - 1].type === 'u'){
-                return 'w';
+        if(this.numSidePassages > 0){
+            switch(this.direction){
+                case 'n':
+                    switch(this.passagePositions[0]){
+                        case 'r':
+                            passageDirection = 'e';
+                            break;
+                        case 'l':
+                            passageDirection = 'w';
+                            break;
+                        case "end":
+                            passageDirection = 's';
+                            break;
+                    }
+                    break;
+                case 'e':
+                    switch(this.passagePositions[0]){
+                        case 'r':
+                            passageDirection = 's';
+                            break;
+                        case 'l':
+                            passageDirection = 'n';
+                            break;
+                        case "end":
+                            passageDirection = 'w';
+                            break;
+                    }
+                    break;
+                case 's':
+                    switch(this.passagePositions[0]){
+                        case 'r':
+                            passageDirection = 'w';
+                            break;
+                        case 'l':
+                            passageDirection = 'e';
+                            break;
+                        case "end":
+                            passageDirection = 'n';
+                            break;
+                    }
+                    break;
+                case 'w':
+                    switch(this.passagePositions[0]){
+                        case 'r':
+                            passageDirection = 'n';
+                            break;
+                        case 'l':
+                            passageDirection = 's';
+                            break;
+                        case "end":
+                            passageDirection = 'e';
+                            break;
+                    }
+                    break;
             }
-            if(y + 1 <= this.map.length - 1 && this.map[x][y + 1].type === 'u'){
-                return 'e';
+            switch(passageDirection){
+                case 'n':
+                    options = this.passageTileSet.getWallTiles().nWall
+                    break;
+                case 'e':
+                    options = this.passageTileSet.getWallTiles().eWall
+                    break;
+                case 's':
+                    options = this.passageTileSet.getWallTiles().sWall
+                    break;
+                case 'w':
+                    options = this.passageTileSet.getWallTiles().wWall
+                    break;
             }
-        }
-        return null;
-    }
-    /**
-     * @desc so these two methods will work in tandem to move down a row and make a column per row, or vica versa, based on direction
-     * this is the shorter of the two
-     * 
-     * @param {Object} Tile will use the neghbors property to assist in navigation and update type along the way
-     * @param {Number} numTilesToLayShort is the number of tiles that will be decremented that will make up the short side
-     * @param {Number} numTilesToLayLong is the nujmber of tiles that will be decremented that will make up the long side
-     * @param {String} shortDirection is a string that matches the neighbor direction for the short side
-     * @param {String} longDirection is a string that matches the neighbor direction for the slong side
-     * 
-     * @returns {void} the return is used to end the recursion cycle
-     */
-    tileShortLayer(tile, numTilesToLayShort, shortDirection){
-        if(numTilesToLayShort === 0 || tile.getNeighbors()[shortDirection] === null){
-            return;
+            for(let i = 0; i < this.numSidePassages; i++){
+                const roll = dice.roll(`1d${options.length}`).result - 1;
+                const sidePassageTile = options.splice(roll,1);
+                if(sidePassageTile.length){
+                    sidePassageTile[0].updateType('passage');
+                }
+            }
         }
         
-        if(tile.getTileInfo().type !== "passage"){
-            this.passageTiles.push(tile);
-        }
-        tile.updateType('P');
-        
-        if(tile.getNeighbors()[shortDirection].getTileInfo().type === "u"){
-            this.tileShortLayer(tile.getNeighbors()[shortDirection], numTilesToLayShort - 1, shortDirection);
-        }
     }
-
-
-    /**
-     * @desc so these two methods will work in tandem to move down a row and make a column per row, or vica versa, based on direction
-     * 
-     * @param {Object} Tile will use the neghbors property to assist in navigation and update type along the way
-     * @param {Number} numTilesToLayShort is the number of tiles that will be decremented that will make up the short side
-     * @param {Number} numTilesToLayLong is the nujmber of tiles that will be decremented that will make up the long side
-     * @param {String} shortDirection is a string that matches the neighbor direction for the short side
-     * @param {String} longDirection is a string that matches the neighbor direction for the slong side
-     * 
-     * @returns {void} the return is used to end the recursion cycle
-     */
-    tileLayer(tile, numTilesToLayLong, longDirection, numTilesToLayShort, shortDirection){
-        // if(longDirection !== null && shortDirection !== null){
-        //     return;
-        // }
-        if(numTilesToLayLong === 0 || tile.getNeighbors()[longDirection] === null){
-            this.cardnialDirection = longDirection;
+    createPassage(){
+        const height = this.getDistance();
+        const width = this.getWidth()
+        if(this.checkForStairsOrChambers()){
             return;
         }
-        if(tile.getTileInfo().type === "u" || tile.getTileInfo().type === "passage"){
-            this.tileShortLayer(tile, numTilesToLayShort, shortDirection);
+        if(this.determineDirection()){
+            let newTile = this.startingTile.getNeighbors()[this.direction];
+            for(let i = 0; i < height; i++){
+                let sideTile = newTile;
+                if(sideTile !== null){
+                    for(let j = 0; j < width; j++){
+                        if(i===0 || i===height-1){
+                            this.passageTileSet.setProps(sideTile);
+                        }
+                        if(j===0 || j===width-1){
+                            this.passageTileSet.setProps(sideTile);
+                        }
+                        if(sideTile !== null){
+                            sideTile.updateType('P');
+                            sideTile = sideTile.getNeighbors()[this.sideDirection];
+                        }
+                        
+                    }
+                    newTile = newTile.getNeighbors()[this.direction];
+                }
+            }
+        }
+    }
+    getPassageTileSetObj(){
+        return this.passageTileSet;
+    }
+    determineDirection(){
+        const cardinalDirections = Object.keys(this.startingNeighbors);
+        const availableDirections = [];
+
+        for(let i = 0; i < cardinalDirections.length; i++){
+            if(this.startingNeighbors[cardinalDirections[i]] !== null && this.startingNeighbors[cardinalDirections[i]].getTileInfo().type === "*"){
+                availableDirections.push(cardinalDirections[i]);
+            }
+        }
+        for(let i = 0; i < availableDirections.length; i++){
+            if(this.testDirection(this.startingTile, availableDirections[i], this.getDistance())){
+                this.direction = availableDirections[i];
+                if(availableDirections[i]=== 'n' || availableDirections[i] === 's'){
+                    if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'e', this.getWidth())){
+                        this.sideDirection = 'e';
+                        return true;
+                    }else if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'w', this.getWidth())){
+                        this.sideDirection = 'w';
+                        return true;
+                    }
+                }else if(availableDirections[i] === 'e' || availableDirections === 'w'){
+                    if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'n', this.getWidth())){
+                        this.sideDirection = 'n';
+                        return true;
+                    }else if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 's', this.getWidth())){
+                        this.sideDirection = 's';
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    testDirection(tile, direction, count){
+
+        for(let i = 0; i < count; i++){
+            const newTile = tile.getNeighbors()[direction];
+            if(newTile===null){
+                return false;
+            }
+            if(newTile.getTileInfo().type === null){
+                return false;
+            }
+            if(newTile.getTileInfo().type !== '*'){
+                return false;
+            }
+            if(newTile === undefined){
+                return false;
+            }
         }
 
-        if(tile.getNeighbors()[longDirection].getTileInfo().type === "u"){
-            this.tileLayer(tile.getNeighbors()[longDirection], numTilesToLayLong - 1, longDirection, numTilesToLayShort, shortDirection);
-        }
-
+        return true;
     }
 }
 

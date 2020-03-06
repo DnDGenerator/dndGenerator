@@ -1,6 +1,7 @@
 const dice = require('./dice')
 
-const Door = require('./dndDoor');
+const WallAndTileTracker = require('./passageTileSet');
+
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -11,9 +12,8 @@ function getRandomInt(min, max) {
 
 class StartingLocation{
     constructor(map, maxX, maxY){
-        this.startingCord = {x:0,y:0,farX:0,topY:0}
-        this.maxWidth = maxX;
-        this.maxHeight = maxY;
+        this.x = getRandomInt(0, maxX);
+        this.y = getRandomInt(0, maxY);
         this.map = map;
         this.startingArea = {
             shape:"",
@@ -21,12 +21,18 @@ class StartingLocation{
             height:0,
             exitLocations:[],
             exitType:[],
-            exits:[],
             numPassages:0,
             numDoors:0,
             doors:{}
 
         };
+        this.direction = null;
+        this.sideDirection = null;
+        this.numUnableToPlace = 0;
+        this.startingTile = map[this.x][this.y];
+        this.startingNeighbors = this.startingTile.getNeighbors();
+        this.wallTileTracker = new WallAndTileTracker();
+
         const startingRoll = dice.roll(`1d10`).result;
 
         switch(startingRoll){
@@ -94,84 +100,220 @@ class StartingLocation{
                 this.startingArea.exitType = ["passage"];
                 break;
         }
-        const startingX = dice.roll(`1d${this.maxWidth}`).result - 1;
-        const startingY = dice.roll(`1d${this.maxHeight}`).result - 1;
+        
 
-        if(startingX + this.startingArea.width < this.maxWidth){
-            this.startingCord.x = startingX;
-            this.startingCord.farX = this.startingArea.width + startingX;;
-        }else if(startingX + this.startingArea.width > this.maxWidth){
-            this.startingCord.x = this.maxWidth - this.startingArea.width;
-            this.startingCord.farX = this.maxWidth;
-        }else{
-            this.startingCord.x = startingX;
-            this.startingCord.farX = startingX + this.startingArea.width;
-        }
-        if(startingY + this.startingArea.height < this.maxHeight){
-            this.startingCord.y = startingY;
-            this.startingCord.topY = this.startingArea.height +startingY;
-        }else if(startingY + this.startingArea.height > this.maxHeight){
-            this.startingCord.y = this.maxHeight - this.startingArea.height;
-            this.startingCord.topY = this.maxHeight;
-        }else{
-            this.startingCord.y = startingY;
-            this.startingCord.y = startingY + this.startingArea.height;
-        }
-        if(this.startingCord.x >= this.map.length - 1){
-            this.startingCord.x += (this.map.length - 1 - this.startingCord.x);
-        }if(this.startingCord.farX >= this.map.length - 1){
-            this.startingCord.farX += (this.map.length - 1 - this.startingCord.farX);
-        }if(this.startingCord.topY >= this.map.length - 1){
-            this.startingCord.topY += (this.map.length - 1 - this.startingCord.topY);
-        }if(this.startingCord.y >= this.map.length - 1){
-            this.startingCord.y += (this.map.length - 1 - this.startingCord.y);
-        }
-        for(let x = this.startingCord.x; x < this.startingCord.farX; x++){
-            for(let y = this.startingCord.y; y < this.startingCord.topY; y++){
-                this.map[x][y] = this.map[x][y].updateType("R");
-            }
-        }
-        for(let i = 0; i < this.startingArea.exitLocations.length; i++){
-            const exitCord = {
-                x:0,y:0
-            }
-            const decsion = this.startingArea.exitLocations[i];
-            switch(decsion){
-                case "opp":
-                    exitCord.x = getRandomInt(this.startingCord.x, this.startingCord.farX);
-                    exitCord.y = this.startingCord.y;
+        
+        this.testDirection = this.testDirection.bind(this);
+        this.getHeight = this.getHeight.bind(this);
+        this.getWidth = this.getWidth.bind(this);
+        this.determineDirection = this.determineDirection.bind(this);
+        this.createStartingArea = this.createStartingArea.bind(this);
+        this.placeExits = this.placeExits.bind(this);
+        this.getNumberOfExits = this.getNumberOfExits.bind(this);
+    }
+    getNumberOfExits(){
+        return this.startingArea.exitLocations.length;
+    }
+    placeExits(){
+        this.wallTileTracker.populateWall();
+        const exitTypes = this.startingArea.exitType;
+        const exitLocations = this.startingArea.exitLocations;
+        const wOptions = this.wallTileTracker.getWallTiles().wWall;
+        const sOptions = this.wallTileTracker.getWallTiles().sWall;
+        const eOptions = this.wallTileTracker.getWallTiles().eWall;
+        const nOptions = this.wallTileTracker.getWallTiles().nWall;
+        // wOptions.map(tile=>tile.updateType('WR'));
+        // sOptions.map(tile=>tile.updateType('WR'));
+        // eOptions.map(tile=>tile.updateType('WR'));
+        // nOptions.map(tile=>tile.updateType('WR'));
+        for(let i = 0; i < exitTypes.length; i++){
+            let choice;
+            
+            switch(this.direction){
+                case 'n':
+                    switch(exitLocations[i]){
+                        case 'l':
+                            choice = wOptions.splice(getRandomInt(0, wOptions.length), 1);
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'opp':
+                            choice = sOptions.splice(getRandomInt(0, sOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'r':
+                            choice = eOptions.splice(getRandomInt(0, eOptions.length), 1)
+                            try{
+                                choice[0].updateType(exitTypes[i])
+                            }catch(e){
+                                console.error('i:',i,e)
+                            }
+                            break;
+                        case 'same':
+                            choice = nOptions.splice(getRandomInt(0, nOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                    }
                     break;
-                case "same":
-                    exitCord.x = getRandomInt(this.startingCord.x, this.startingCord.farX);
-                    exitCord.y = this.startingCord.topY - 1;
+                case 'e':
+                    switch(exitLocations[i]){
+                        case 'l':
+                            choice = nOptions.splice(getRandomInt(0, nOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'opp':
+                            choice = wOptions.splice(getRandomInt(0, wOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'r':
+                            choice = sOptions.splice(getRandomInt(0, sOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'same':
+                            choice = eOptions.splice(getRandomInt(0, eOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                    }
                     break;
-                case "l":
-                    exitCord.x = this.startingCord.x;
-                    exitCord.y = getRandomInt(this.startingCord.y, this.startingCord.topY);
+                case 's':
+                    switch(exitLocations[i]){
+                        case 'l':
+                            choice = eOptions.splice(getRandomInt(0, eOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'opp':
+                            choice = nOptions.splice(getRandomInt(0, nOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'r':
+                            choice = wOptions.splice(getRandomInt(0, wOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'same':
+                            choice = sOptions.splice(getRandomInt(0, sOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                    }
                     break;
-                default:
-                    exitCord.x = this.startingCord.farX - 1;
-                    exitCord.y = getRandomInt(this.startingCord.y, this.startingCord.topY);
+                case 'w':
+                    switch(exitLocations[i]){
+                        case 'l':
+                            choice = sOptions.splice(getRandomInt(0, sOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'opp':
+                            choice = eOptions.splice(getRandomInt(0, eOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'r':
+                            choice = nOptions.splice(getRandomInt(0, nOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                        case 'same':
+                            choice = wOptions.splice(getRandomInt(0, wOptions.length), 1)
+                            choice[0].updateType(exitTypes[i])
+                            break;
+                    }
                     break;
             }
-            if(exitCord.x === this.startingArea.exitLocations.length){
-                exitCord.x -= 1;
+        }
+    }
+    testDirection(tile, direction, count){
+
+        for(let i = 0; i < count; i++){
+            const newTile = tile.getNeighbors()[direction];
+            if(newTile === null || newTile.getTileInfo().type !== '*'){
+                return false;
             }
-            if(exitCord.y === this.startingArea.exitLocations.length){
-                exitCord.y -= 1;
+        }
+
+        return true;
+    }
+    determineDirection(){
+        const cardinalDirections = Object.keys(this.startingNeighbors);
+        const availableDirections = [];
+
+        for(let i = 0; i < cardinalDirections.length; i++){
+
+            if(this.startingNeighbors[cardinalDirections[i]] !== null && this.startingNeighbors[cardinalDirections[i]].getTileInfo().type === "*"){
+                availableDirections.push(cardinalDirections[i]);
             }
-            if(exitCord.x >=0 && exitCord.x < this.map.length && exitCord.y >=0 && exitCord.y < this.map.length && this.map[exitCord.x][exitCord.y].getTileInfo().type === 'R'){
-                this.map[exitCord.x][exitCord.y] = this.map[exitCord.x][exitCord.y].updateType(this.startingArea.exitType[i]);
-                this.startingArea.exits.push(exitCord);
+        }
+        for(let i = 0; i < availableDirections.length; i++){
+            if(this.testDirection(this.startingTile, availableDirections[i], this.getHeight())){
+                this.direction = availableDirections[i];
+                if(availableDirections[i]=== 'n' || availableDirections[i] === 's'){
+                    if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'e', this.getWidth())){
+                        this.sideDirection = 'e';
+                        return true;
+                    }else if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'w', this.getWidth())){
+                        this.sideDirection = 'w';
+                        return true;
+                    }
+                }else if(availableDirections[i] === 'e' || availableDirections === 'w'){
+                    if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'n', this.getWidth())){
+                        this.sideDirection = 'n';
+                        return true;
+                    }else if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 's', this.getWidth())){
+                        this.sideDirection = 's';
+                        return true;
+                    }
+                }
             }
+        }
+        return false;
+    }
+    createStartingArea(){
+        const height = this.getHeight();
+        const width = this.getWidth();
+        if(this.determineDirection() === true){
+            let newTile = this.startingTile.getNeighbors()[this.direction];
+            if(newTile !== null){
+                for(let i = 0; i < height; i++){
+                    if(newTile !== null){
+                        let sideTile = newTile;
+                        if(sideTile !== null){
+                            for(let j = 0; j < width; j++){
+                                if(i===0 || i===height-1){
+                                    this.wallTileTracker.setProps(sideTile);
+                                }
+                                if(j===0 || j===width-1){
+                                    this.wallTileTracker.setProps(sideTile);
+                                }
+                                if(sideTile !== null){
+                                    sideTile.updateType('R');
+                                    sideTile = sideTile.getNeighbors()[this.sideDirection];
+                                }else{
+                                    this.numUnableToPlace+=1;
+                                }
+                                
+                            }
+                        }else{
+                            this.numUnableToPlace+=width;
+                        }
+                        
+                    }else{
+                        // this.numUnableToPlace+=height;
+                        break;
+                    }
+                    newTile = newTile.getNeighbors()[this.direction];
+                }
+        }}else{
+            this.x = getRandomInt(0, maxX);
+            this.y = getRandomInt(0, maxY);
+            this.createStartingArea();
         }
         
-        this.getMapWithStartingLocation = this.getMapWithStartingLocation.bind(this);
     }
-    getMapWithStartingLocation(){
-        return this.map;
+
+    getWidth(){
+        return this.startingArea.width;
     }
-    
+    getHeight(){
+        return this.startingArea.height;
+    }
+    getNotPlacedNum(){
+        return this.numUnableToPlace
+    }
 }
 
 module.exports = StartingLocation;

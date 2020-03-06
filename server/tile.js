@@ -30,7 +30,6 @@ class Tile{
      */
     setNeightbors(neighbors){
         this.neighbors = neighbors;
-        return this;
     }
     getNeighbors(){
         return this.neighbors;
@@ -57,7 +56,6 @@ class Tile{
      */
     updateType(type){
         this.type = type;
-        return this;
     }
 }
 

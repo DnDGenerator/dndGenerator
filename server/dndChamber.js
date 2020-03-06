@@ -1,4 +1,5 @@
 const dice = require('./dice');
+const WallAndTileTracker = require('./passageTileSet');
 
 class Chamber{
     constructor(map, x, y){
@@ -6,6 +7,11 @@ class Chamber{
         this.x = x;
         this.y = y;
         this.startingTile = map[x][y];
+        this.startingNeighbors = this.startingTile.getNeighbors();
+        this.wallTileTracker = new WallAndTileTracker();
+        this.direction;
+        this.sideDirection;
+        this.numNotPlaced = 0
 
         const chamberRoll = dice.roll(`1d20`);
         const chamberExitRoll = dice.roll(`1d20`);
@@ -14,10 +20,10 @@ class Chamber{
         this.numExits = 0;
         this.width = 0;
         this.height = 0;
-
+        this.exitType = []
         this.numDoors = 0;
         this.numPassages = 0;
-        this.chamberTiles = [];
+        this.exitLocs = [];
         if(chamberRoll < 3){
             chamberSize = 'normal';
             this.width = 20;
@@ -99,60 +105,56 @@ class Chamber{
             }else{
                 this.numExits = 6;
             }
-
+            for(let i = 0; i < this.numExits; i++){
+                const roll = dice.roll(`1d20`).result;
+                const locRoll = dice.roll(`1d20`).result;
+                if(roll < 11){
+                    this.numDoors+=1;
+                    this.exitType.push('door');
+                }else{
+                    this.numPassages+=1;
+                    this.exitType.push('passage');
+                }
+                if(locRoll < 6){
+                    this.exitLocs.push('n')
+                }else if(locRoll < 11){
+                    this.exitLocs.push('s')
+                }else if(locRoll < 16){
+                    this.exitLocs.push('e')
+                }else{
+                    this.exitLocs.push('w')
+                }
+            }
         }
-        this.placeExits = this.placeExits.bind(this);
-        this.tileLayer = this.tileLayer.bind(this);
-        this.tileShortLayer = this.tileShortLayer.bind(this);
+
         this.getHeight = this.getHeight.bind(this);
         this.getWidth = this.getWidth.bind(this);
+        this.getNumDoors = this.getNumDoors.bind(this);
+        this.getNumExits = this.getNumExits.bind(this);
+        this.getExits = this.getExits.bind(this);
+        this.getNumPassages = this.getNumPassages.bind(this);
+        this.testDirection = this.testDirection.bind(this);
         this.determineDirection = this.determineDirection.bind(this);
-        this.filterToWallTiles = this.filterToWallTiles.bind(this);
-    }
-    placeExits(){
-        const wallTiles = this.filterToWallTiles();
+        this.createChamber = this.createChamber.bind(this);
+        this.placeExits = this.placeExits.bind(this);
+        this.populateWallOptions = this.populateWallOptions.bind(this);
+        this.getNumNotPlaced = this.getNumNotPlaced.bind(this);
         
-        for(let i = 0; i < this.numExits; i++){
-            const coinFlip = dice.roll(`1d2`).result;
-            const wallIndex = dice.roll(`1d${wallTiles.length}`).result - 1;
-            if(wallTiles.length === 0){
-                return;
-            }
-            switch(coinFlip){
-                case 1:
-                    const doorTile = wallTiles.splice(wallIndex, 1)[0];
-                    doorTile.updateType('door');
-                    break;
-                case 2:
-                    const passageTile = wallTiles.splice(wallIndex, 1)[0];
-                    passageTile.updateType('passage');
-                    break;
-            }
-        }
     }
-    filterToWallTiles(){
-        let maxX = 0;
-        let minX = this.map.length;
-        let maxY = 0;
-        let minY = this.map.length;
-        this.chamberTiles.forEach(tile=>{
-            if(maxX < tile.x){
-                maxX = tile.x;
-            }
-            if(minX > tile.x){
-                minX = tile.x;
-            }
-            if(maxY < tile.y){
-                maxY = tile.y;
-            }
-            if(minY > tile.y){
-                minY = tile.y;
-            }
-        });
-        const filteredList = this.chamberTiles.filter(tile=>{
-            return tile.type !== 'C' ? false : tile.x === maxX ? true : tile.x === minX ? true : tile.y === maxY ? true : tile.y === minY ? true : false;
-        })
-        return filteredList;
+    getNumNotPlaced(){
+        return this.numNotPlaced;
+    }
+    getExits(){
+        return this.exitLocs;
+    }
+    getNumDoors(){
+        return this.numDoors;
+    }
+    getNumPassages(){
+        return this.numPassages;
+    }
+    getNumExits(){
+        return this.numExits;
     }
     getWidth(){
         return this.width;
@@ -160,54 +162,185 @@ class Chamber{
     getHeight(){
         return this.height;
     }
-    determineDirection(axisToCheck, x = this.x, y = this.y){
-        if(axisToCheck === 'x'){
-            if(x - 1 >= 0 && this.map[x - 1][y].type === 'u'){
-                return 'n';
+    testDirection(tile, direction, count){
+
+        for(let i = 0; i < count; i++){
+            const newTile = tile.getNeighbors()[direction];
+            if(newTile === null || newTile.getTileInfo().type !== '*'){
+                return false;
             }
-            if(x + 1 <= this.map.length - 1 && this.map[x + 1][y].type === 'u'){
-                return 's';
-            }
-        }
-        if(axisToCheck === 'y'){
-            if(y - 1 >= 0 && this.map[x][y - 1].type === 'u'){
-                return 'w';
-            }
-            if(y + 1 <= this.map.length - 1 && this.map[x][y + 1].type === 'u'){
-                return 'e';
-            }
-        }
-        return null;
-    }
-    tileShortLayer(tile, numTilesToLayShort, shortDirection){
-        if(numTilesToLayShort === 0 || tile.getNeighbors()[shortDirection] === null){
-            return;
-        }
-        
-        this.chamberTiles.push(tile);
-        
-        tile.updateType('C');
-        
-        if(tile.getNeighbors()[shortDirection].getTileInfo().type === "u" || tile.getTileInfo().type === "P"){
-            this.tileShortLayer(tile.getNeighbors()[shortDirection], numTilesToLayShort - 1, shortDirection);
-        }
-    }
-    tileLayer(tile, numTilesToLayLong, longDirection, numTilesToLayShort, shortDirection){
-        // if(longDirection !== null && shortDirection !== null){
-        //     return;
-        // }
-        if(numTilesToLayLong === 0 || tile.getNeighbors()[longDirection] === null){
-            this.cardnialDirection = longDirection;
-            return;
-        }
-        if(tile.getTileInfo().type === "u" || tile.getTileInfo().type === "chamber" || tile.getTileInfo().type === "P"){
-            this.tileShortLayer(tile, numTilesToLayShort, shortDirection);
         }
 
-        if(tile.getNeighbors()[longDirection].getTileInfo().type === "u" || tile.getTileInfo().type === "P"){
-            this.tileLayer(tile.getNeighbors()[longDirection], numTilesToLayLong - 1, longDirection, numTilesToLayShort, shortDirection);
-        }
+        return true;
+    }
+    determineDirection(){
+        const cardinalDirections = Object.keys(this.startingNeighbors);
+        const availableDirections = [];
 
+        for(let i = 0; i < cardinalDirections.length; i++){
+
+            if(this.startingNeighbors[cardinalDirections[i]] !== null && this.startingNeighbors[cardinalDirections[i]].getTileInfo().type === "*"){
+                availableDirections.push(cardinalDirections[i]);
+            }
+        }
+        for(let i = 0; i < availableDirections.length; i++){
+            if(this.testDirection(this.startingTile, availableDirections[i], this.getHeight())){
+                this.direction = availableDirections[i];
+                if(availableDirections[i]=== 'n' || availableDirections[i] === 's'){
+                    if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'e', this.getWidth())){
+                        this.sideDirection = 'e';
+                        return true;
+                    }else if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'w', this.getWidth())){
+                        this.sideDirection = 'w';
+                        return true;
+                    }
+                }else if(availableDirections[i] === 'e' || availableDirections === 'w'){
+                    if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 'n', this.getWidth())){
+                        this.sideDirection = 'n';
+                        return true;
+                    }else if(this.testDirection(this.startingTile.getNeighbors()[availableDirections[i]], 's', this.getWidth())){
+                        this.sideDirection = 's';
+                        return true;
+                    }
+                }
+            }
+        }
+        this.numExits -= 1;
+        return false;
+    }
+    createChamber(){
+        const height = this.getHeight();
+        const width = this.getWidth();
+        if(this.determineDirection() === true){
+            let newTile = this.startingTile.getNeighbors()[this.direction];
+            
+            for(let i = 0; i < height; i++){
+                let sideTile = newTile;
+                if(newTile !== null){
+                    for(let j = 0; j < width; j++){
+                        if(i===0 || i===height-1){
+                            this.wallTileTracker.setProps(sideTile);
+                        }
+                        if(j===0 || j===width-1){
+                            this.wallTileTracker.setProps(sideTile);
+                        }
+                        if(sideTile!==null){
+                            sideTile.updateType('C');
+                            sideTile = sideTile.getNeighbors()[this.sideDirection];
+                        }else{
+                            this.numNotPlaced+=1;
+                        }
+                        
+                    }
+                    newTile = newTile.getNeighbors()[this.direction];
+                }else{
+                    this.numNotPlaced+=width;
+                }
+                
+            }
+        }else{
+            this.startingTile.updateType('*')
+        }
+    }
+    populateWallOptions(){
+        this.wallTileTracker.populateWall();
+        const wOptions = this.wallTileTracker.getWallTiles().wWall;
+        const sOptions = this.wallTileTracker.getWallTiles().sWall;
+        const eOptions = this.wallTileTracker.getWallTiles().eWall;
+        const nOptions = this.wallTileTracker.getWallTiles().nWall;
+        return {wOptions, sOptions, eOptions, nOptions};
+    }
+    placeExits(){
+        const exitLocations = this.exitLocs;
+        const {wOptions, sOptions, eOptions, nOptions} = this.populateWallOptions();
+        wOptions.map(tile=>tile.updateType('WC'));
+        sOptions.map(tile=>tile.updateType('WC'));
+        eOptions.map(tile=>tile.updateType('WC'));
+        nOptions.map(tile=>tile.updateType('WC'));
+        const wLength = wOptions.length;
+        const sLength = sOptions.length;
+        const eLength = eOptions.length;
+        const nLength = nOptions.length;
+        const laps = this.numExits;
+        const types = this.exitType;
+        const tilesUpdated = [];
+        let choice;
+        for(let i = 0; i < laps; i++){
+            choice = null;
+            const direction = exitLocations[i];
+            switch(direction){
+                case 'n':
+                    choice = nOptions.splice(dice.roll(`1d${nOptions.length}`).result - 1, 1)[0];
+                    break;
+                case 'e':
+                    choice = eOptions.splice(dice.roll(`1d${eOptions.length}`).result - 1, 1)[0];
+                    break;
+                case 's':
+                    choice = sOptions.splice(dice.roll(`1d${sOptions.length}`).result - 1, 1)[0];
+                    break;
+                case 'w':
+                    choice = wOptions.splice(dice.roll(`1d${wOptions.length}`).result - 1, 1)[0];
+                    break;
+            }
+            if(choice){
+                choice.updateType(types[i]);
+            
+                tilesUpdated.push(choice);
+            }else{
+                this.numExits -= 1;
+                switch(types[i]){
+                    case 'door':
+                        this.numDoors -=1;
+                        break;
+                    case 'passage':
+                        this.numPassages -= 1;
+                        break;
+                }
+            }
+            
+        }
+        const mappedForOverlapCheck = tilesUpdated
+            .map(tile=>{
+                return tile.getTileInfo().x +'|'+tile.getTileInfo().y
+            })
+            .reduce((sum, xY, i, array)=>{
+                if(array.indexOf(xY) === i){
+                    sum += 1;
+                }
+
+                return sum;
+            },0);
+        const mappedForDoor = tilesUpdated
+            .filter(tile=>tile.getTileInfo().type === 'door')
+            .map(tile=>{
+                return tile.getTileInfo().x +'|'+tile.getTileInfo().y
+            })
+            .reduce((sum, xY, i, array)=>{
+                if(array.indexOf(xY) === i){
+                    sum += 1;
+                }
+
+                return sum;
+            },0);
+
+        const mappedForPassage = tilesUpdated
+            .filter(tile=>tile.getTileInfo().type === 'passage')
+            .map(tile=>{
+                return tile.getTileInfo().x +'|'+tile.getTileInfo().y
+            })
+            .reduce((sum, xY, i, array)=>{
+                if(array.indexOf(xY) === i){
+                    sum += 1;
+                }
+
+                return sum;
+            },0);
+
+        this.numExits = mappedForOverlapCheck;
+        this.numDoors = mappedForDoor;
+        this.numPassages = mappedForPassage;
+
+        return {nLength, eLength, sLength, wLength};
     }
 }
 
