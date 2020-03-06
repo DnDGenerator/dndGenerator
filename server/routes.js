@@ -38,7 +38,7 @@ app.get('/dungeon', (req, res)=>{
 })
 
 app.get(`/map`, (req, res)=>{
-    const map = new Map(200, 200);
+    const map = new Map(1000, 1000);
     map.createMap();
     res.send({map:map.getConvertedMap()})
 })
