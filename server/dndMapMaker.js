@@ -86,6 +86,7 @@ class MapGen{
     }
     placeChamber(x,y){
         const chamber = new Chamber(this.getMap(), x, y);
+        this.chambers.push(chamber);
         chamber.createChamber();
         chamber.placeExits();
         this.checkIfDone();
@@ -105,11 +106,11 @@ class MapGen{
         return this.tileMap;
     }
     getConvertedMap(){
-        return this.getMap().map(yArray=>{
+        return {map:this.getMap().map(yArray=>{
             return yArray.map(tile=>{
                 return tile.getTileInfo().type;
             })
-        })
+        }), numChambers: this.chambers.length}
     }
 }
 

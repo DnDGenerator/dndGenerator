@@ -66,6 +66,7 @@ class App extends React.Component{
                 purpose:"",
                 history:""
             },
+            numChambers:0,
             map:[],
             description:{
                 chambers:[],
@@ -95,6 +96,7 @@ class App extends React.Component{
             .then(({data})=>{
                 this.setState({
                     map:data.map,
+                    numChambers:data.numChambers
                 })
             }).catch(e=>{
                 console.error(e);
@@ -133,7 +135,7 @@ class App extends React.Component{
     handleDescriptionClick(){
         axios.get('https://dndcharactergenerator.herokuapp.com/description', {
             params:{
-                numChambers:this.state.pieces.numChambers,
+                numChambers:this.state.numChambers,
                 purpose:this.state.dungeon.purpose
             }
         }).then(({data})=>{
