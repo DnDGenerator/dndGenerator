@@ -102,8 +102,8 @@ class Map extends React.Component{
         })
         this.props.map.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
-                const adjustedX = x * 50;
-                const adjustedY = y * 50;
+                const adjustedX = x*50;
+                const adjustedY = y*50;
                 switch(tile){
                     case "door":
                     case "wooden":
@@ -120,6 +120,8 @@ class Map extends React.Component{
                     case "R":
                         this.ctx.fillStyle = fillColors[3];
                         break;
+                    case "*":
+                    case "U":
                     case "u":
                         this.ctx.fillStyle = fillColors[4];
                         break;
@@ -158,16 +160,19 @@ class Map extends React.Component{
                         break;
                     case "WC":
                         this.ctx.fillStyle = fillColors[16];
+                    default:
+                        this.ctx.fillStyle = fillColors[4];
+                        break;
                 }
-                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+50, adjustedY+50)
-                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+50,adjustedY+50)
+                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+1000, adjustedY+1000)
+                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+1000,adjustedY+1000)
             })
         });
     }
     render(){
         return(
             <div>
-                <canvas ref="canvas" width={500*10} height={500*10} />
+                <canvas ref="canvas" width={1500*2} height={1500*2} />
                 <canvas ref="legend" width={500} height={500} />
             </div>
         )

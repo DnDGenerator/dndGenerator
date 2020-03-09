@@ -328,6 +328,8 @@ class Passage{
                     newTile = newTile.getNeighbors()[this.direction];
                 }
             }
+        }else{
+            this.startingTile.updateType('*')
         }
     }
     getPassageTileSetObj(){

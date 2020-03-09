@@ -74,6 +74,8 @@ class App extends React.Component{
                 contents:[]
             }
         }
+        // this.url = 'https://dndcharactergenerator.herokuapp.com';
+        this.url = 'http://localhost:3000';
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
         this.handleRavnicaChange = this.handleRavnicaChange.bind(this);
@@ -92,7 +94,7 @@ class App extends React.Component{
     }
     handleMapClick(){
         
-        axios.get(`https://dndcharactergenerator.herokuapp.com/map`)
+        axios.get(this.url+`/map`)
             .then(({data})=>{
                 this.setState({
                     map:data.map,
@@ -103,7 +105,7 @@ class App extends React.Component{
             })
     }
     handleDungeonClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/dungeon')
+        axios.get(this.url+'/dungeon')
             .then(({data})=>{
                 this.setState({
                     dungeon: data
@@ -113,7 +115,7 @@ class App extends React.Component{
             })
     }
     handleVillianClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/villian')
+        axios.get(this.url+'/villian')
             .then(({data})=>{
                 this.setState({
                     villian: data
@@ -123,7 +125,7 @@ class App extends React.Component{
             })
     }
     handleNPCClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/npc')
+        axios.get(this.url+'/npc')
             .then(({data}) =>{
                 this.setState({
                     npc: data
@@ -133,7 +135,7 @@ class App extends React.Component{
             })
     }
     handleDescriptionClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/description', {
+        axios.get(this.url+'/description', {
             params:{
                 numChambers:this.state.numChambers,
                 purpose:this.state.dungeon.purpose
@@ -147,7 +149,7 @@ class App extends React.Component{
         })
     }
     handleLootClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
+        axios.get(this.url+'/loot', {
             params:{
                 CR: this.state.cr,
                 lootType: this.state.lootType
@@ -162,7 +164,7 @@ class App extends React.Component{
     }
     handleClick(){
         
-        axios.get('https://dndcharactergenerator.herokuapp.com/character', {
+        axios.get(this.url+'/character', {
             params:{
                 eberronInclude: this.state.eberron,
                 ravnicaInclude: this.state.ravnica,

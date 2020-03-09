@@ -330,14 +330,14 @@ describe('chamber()',()=>{
 
 describe('mapGen', ()=>{
     beforeEach(()=>{
-        mapGen = new MapGen(500,500);
+        mapGen = new MapGen(100,100);
     });
 
     it('should generate a two dimensional array', ()=>{
         mapGen.initMap();
         const testMap = mapGen.getMap();
-        expect(testMap).to.be.an('array').to.have.lengthOf(500/5);
-        expect(testMap[0]).to.be.an('array').to.have.lengthOf(500/5);
+        expect(testMap).to.be.an('array').to.have.lengthOf(100/5);
+        expect(testMap[0]).to.be.an('array').to.have.lengthOf(100/5);
     });
     it('should when placing the starting area, actualy place the starting area',()=>{
         mapGen.initMap();
@@ -370,6 +370,18 @@ describe('mapGen', ()=>{
                 return newArray;
             },[])
             .map(tile=>tile.getTileInfo().type);
+        // let testMap = [];
+        // const twoDMap = mapGen.getMap();
+        // for(let i = 0; i < twoDMap.length; i++){
+        //     const indexer = testMap.length || 0;
+        //     testMap = testMap.concat(twoDMap[i]);
+        //     for(let j = indexer; j < testMap.length; i++){
+        //         if(testMap[j]){
+        //             testMap[j] = testMap[j].type;
+        //         }
+        //     }
+        // }
+        expect(testMap).to.be.an('array').with.length.greaterThan(0)
         expect(testMap).to.be.an('array').to.not.include('chamber');
         expect(testMap).to.be.an('array').to.not.include('door');
         expect(testMap).to.be.an('array').to.not.include('passage');
