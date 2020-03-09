@@ -102,8 +102,8 @@ class Map extends React.Component{
         })
         this.props.map.forEach((yArray, x) => {
             yArray.forEach((tile, y)=>{
-                const adjustedX = x * 10;
-                const adjustedY = y * 10;
+                const adjustedX = x * 50;
+                const adjustedY = y * 50;
                 switch(tile){
                     case "door":
                     case "wooden":
