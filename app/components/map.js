@@ -159,15 +159,15 @@ class Map extends React.Component{
                     case "WC":
                         this.ctx.fillStyle = fillColors[16];
                 }
-                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+10, adjustedY+10)
-                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+10,adjustedY+10)
+                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+50, adjustedY+50)
+                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+50,adjustedY+50)
             })
         });
     }
     render(){
         return(
             <div>
-                <canvas ref="canvas" width={500*2} height={500*2} />
+                <canvas ref="canvas" width={500*10} height={500*10} />
                 <canvas ref="legend" width={500} height={500} />
             </div>
         )
