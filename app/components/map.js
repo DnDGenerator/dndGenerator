@@ -159,8 +159,8 @@ class Map extends React.Component{
                     case "WC":
                         this.ctx.fillStyle = fillColors[16];
                 }
-                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+50, adjustedY+50)
-                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+50,adjustedY+50)
+                this.ctx.strokeRect(adjustedX, adjustedY, adjustedX+10, adjustedY+10)
+                this.ctx.fillRect(adjustedX, adjustedY, adjustedX+10,adjustedY+10)
             })
         });
     }
