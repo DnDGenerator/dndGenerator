@@ -239,7 +239,7 @@ class Chamber{
                 
             }
         }else{
-            this.startingTile.updateType('*')
+            this.startingTile.updateType('*S')
         }
     }
     populateWallOptions(){
@@ -253,10 +253,10 @@ class Chamber{
     placeExits(){
         const exitLocations = this.exitLocs;
         const {wOptions, sOptions, eOptions, nOptions} = this.populateWallOptions();
-        wOptions.map(tile=>tile.updateType('WC'));
-        sOptions.map(tile=>tile.updateType('WC'));
-        eOptions.map(tile=>tile.updateType('WC'));
-        nOptions.map(tile=>tile.updateType('WC'));
+        wOptions.map(tile=>tile.updateType('Wall'));
+        sOptions.map(tile=>tile.updateType('Wall'));
+        eOptions.map(tile=>tile.updateType('Wall'));
+        nOptions.map(tile=>tile.updateType('Wall'));
         const wLength = wOptions.length;
         const sLength = sOptions.length;
         const eLength = eOptions.length;

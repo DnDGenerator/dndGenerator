@@ -158,7 +158,7 @@ class Map extends React.Component{
                     case "secret door, barred or locked":
                         this.ctx.fillStyle = fillColors[15];
                         break;
-                    case "WC":
+                    case "Wall":
                         this.ctx.fillStyle = fillColors[16];
                     default:
                         this.ctx.fillStyle = fillColors[4];
@@ -172,7 +172,7 @@ class Map extends React.Component{
     render(){
         return(
             <div>
-                <canvas ref="canvas" width={1500*2} height={1500*2} />
+                <canvas ref="canvas" width={500*2} height={500*2} />
                 <canvas ref="legend" width={500} height={500} />
             </div>
         )

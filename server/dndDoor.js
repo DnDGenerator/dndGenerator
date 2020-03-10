@@ -69,7 +69,8 @@ class Door{
     }
     updateAppropriateNeighborTile(){
         const options = this.getAvailableDirections();
-        if(options === null){
+        if(options.length < 1){
+            this.tile.type = 'Wall'
             return null;
         }
         const exitTile = options[dice.roll(`1d${options.length}`).result - 1];
@@ -97,9 +98,7 @@ class Door{
         if(neighbors.w !== null && neighbors.w.type === '*'){
             availableTiles.push(neighbors.w);
         }
-        if(availableTiles.length === 0){
-            return null;
-        }
+        
         return availableTiles;
     }
 
