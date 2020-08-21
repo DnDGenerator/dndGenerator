@@ -1,4 +1,4 @@
-const Dice = require('./dice.js');
+const Dice = require('../dice.js');
 
 module.exports = ()=>{
     const appearanceList = [

@@ -1,7 +1,7 @@
-const dice = require('./dice');
-const cults = require('./dungeonCultsAndReligious');
-const npcClass = require('./dungeonNPCClass');
-const npcAlignment = require('./dungeonNPCAlignment');
+const dice = require('../dice');
+const cults = require('../dungeonCultsAndReligious');
+const npcClass = require('../dungeonNPCClass');
+const npcAlignment = require('../dungeonNPCAlignment');
 module.exports = ()=>{
     const dTwenty = dice.roll('1d20').result;
 

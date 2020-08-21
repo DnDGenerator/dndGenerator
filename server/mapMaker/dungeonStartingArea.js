@@ -1,4 +1,4 @@
-const dice = require('./dice');
+const dice = require('../dice');
 
 module.export = (graph, row, col)=>{
     let width = 0;

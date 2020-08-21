@@ -1,4 +1,4 @@
-const dice = require('./dice');
+const dice = require('../dice');
 const start = require('./dungeonStartingArea');
 module.exports = ()=>{
     let graphPaper = [];

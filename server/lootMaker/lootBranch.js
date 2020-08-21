@@ -1,4 +1,4 @@
-const hoard = require('./hoardByChallenge');
+const hoard = require('../hoardByChallenge');
 const individual = require('./coinTreasureByChallenge');
 
 module.exports = ({CR, lootType})=>{

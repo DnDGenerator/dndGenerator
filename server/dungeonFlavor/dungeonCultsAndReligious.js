@@ -1,4 +1,4 @@
-const dice = require('./dice');
+const dice = require('../dice');
 
 module.exports = ()=>{
     const dTwenty = dice.roll('1d20').result;
