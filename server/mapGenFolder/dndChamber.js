@@ -1,8 +1,9 @@
 const dice = require('../dice');
 const WallAndTileTracker = require('./passageTileSet');
-
+//the chamber object
 class Chamber{
     constructor(map, x, y){
+        //this is the map that is being used
         this.map = map;
         this.x = x;
         this.y = y;
@@ -126,7 +127,7 @@ class Chamber{
                 }
             }
         }
-
+        //chamber's methods
         this.getHeight = this.getHeight.bind(this);
         this.getWidth = this.getWidth.bind(this);
         this.getNumDoors = this.getNumDoors.bind(this);
@@ -141,6 +142,7 @@ class Chamber{
         this.getNumNotPlaced = this.getNumNotPlaced.bind(this);
         
     }
+    //returns the number of not placed
     getNumNotPlaced(){
         return this.numNotPlaced;
     }

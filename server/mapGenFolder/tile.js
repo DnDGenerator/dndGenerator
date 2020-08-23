@@ -23,7 +23,7 @@ class Tile{
         this.getNeighbors = this.getNeighbors.bind(this);
     }
     /**
-     * @desc sets an array to keepp track of neighboring tiles
+     * @desc sets an object to keep track of neighboring tiles
      * @param {Object} neighbors an object of the connecting tiles to the n.e.s.w
      * 
      * @return {Object} returns the tile object

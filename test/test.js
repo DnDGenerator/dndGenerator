@@ -4,7 +4,8 @@ const StartingArea = require('../server/mapGenFolder/dndStartingLocation');
 const Door = require('../server/mapGenFolder/dndDoor');
 const Chamber = require('../server/mapGenFolder/dndChamber');
 const MapGen = require('../server/mapGenFolder/dndMapMaker');
-
+const MapGenVTwo = require('../server/mapGenFolder/dndMapMakerv2');
+const { test } = require('mocha');
 var expect = require('chai').expect;
 
 const map = [];
@@ -423,4 +424,41 @@ describe('mapGen', ()=>{
         expect(mapGen.getMap()).to.be.an('array');
         expect(mapGen.getMap()[0]).to.be.an('array');
     });
+
+   
 })
+describe('mapGenV2', ()=>{
+    beforeEach(()=>{
+        mapGen = new MapGenVTwo(100,100);
+    });
+
+    it('should already populate a 2D array with tiles once it has been created, that is 1/5 the value that was entered in', ()=>{
+        const testMap = mapGen.getMap();
+        expect(testMap).to.be.an('array').to.have.lengthOf(100/5);
+        expect(testMap[0]).to.be.an('array').to.have.lengthOf(100/5);
+    });
+    it('should be populated with tiles', ()=>{
+        const testMap = mapGen.getMap();
+        expect(testMap[0][0].getTileInfo().x).to.be.a('number')
+        expect(testMap[10][0].getTileInfo().y).to.be.a('number');
+        expect(testMap[0][10].getTileInfo().type).to.be.a('string')
+    });
+    it('should be populated with tiles that know their neighbors', ()=>{
+        const testMap = mapGen.getMap();
+        expect(testMap[0][0].getNeighbors());
+        expect(testMap[0][0].getNeighbors().n).to.equal(null);
+        expect(testMap[19][19].getNeighbors().e).to.equal(null);
+        // console.log(testMap[0][0].getNeighbors())
+        expect(testMap[10][10].getNeighbors().e.y).to.equal(11)
+    });
+    
+    it('should let tiles keep track of neighbor changes', ()=>{
+        const testMap = mapGen.getMap();
+        const testTile = testMap[5][5];
+        const testNeighbor = testMap[5][6];
+        const preChangeNeighborType = testNeighbor.type;
+        expect(testTile.getNeighbors().e.type).to.equal(preChangeNeighborType);
+        testNeighbor.updateType('changed');
+        expect(testTile.getNeighbors().e.type).to.equal('changed');
+    })
+});
