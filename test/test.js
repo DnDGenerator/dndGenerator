@@ -1,9 +1,9 @@
-const Passage = require('../server/dndPassage');
-const Tile = require('../server/tile');
-const StartingArea = require('../server/dndStartingLocation');
-const Door = require('../server/dndDoor');
-const Chamber = require('../server/dndChamber');
-const MapGen = require('../server/dndMapMaker');
+const Passage = require('../server/mapGenFolder/dndPassage');
+const Tile = require('../server/mapGenFolder/tile');
+const StartingArea = require('../server/mapGenFolder/dndStartingLocation');
+const Door = require('../server/mapGenFolder/dndDoor');
+const Chamber = require('../server/mapGenFolder/dndChamber');
+const MapGen = require('../server/mapGenFolder/dndMapMaker');
 
 var expect = require('chai').expect;
 

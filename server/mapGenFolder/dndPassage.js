@@ -1,4 +1,4 @@
-const dice = require('./dice.js');
+const dice = require('../dice.js');
 const PassageTileSet = require('./passageTileSet');
 
 

@@ -1,4 +1,4 @@
-const dice = require('./dice')
+const dice = require('../dice')
 
 const WallAndTileTracker = require('./passageTileSet');
 

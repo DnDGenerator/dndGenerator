@@ -1,4 +1,4 @@
-const dice = require('./dice');
+const dice = require('../dice');
 
 const baseClasses = ['barbarian', 'bard', 'cleric', 'druid', 'fighter', 'monk', 'paladin', 'ranger', 'rogue', 'sorcerer', 'warlock', 'wizard', 'artificer'];
 

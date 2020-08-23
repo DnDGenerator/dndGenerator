@@ -1,4 +1,4 @@
-const dice = require('./dice');
+const dice = require('../dice');
 const roller = ()=>{
     try{
     var str = dice.roll('2d6+6').result;

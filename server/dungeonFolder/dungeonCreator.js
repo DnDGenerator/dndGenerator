@@ -1,4 +1,4 @@
-const dice = require('./dice');
+const dice = require('../dice');
 const cults = require('./dungeonCultsAndReligious');
 const npcClass = require('./dungeonNPCClass');
 const npcAlignment = require('./dungeonNPCAlignment');
