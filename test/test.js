@@ -527,18 +527,12 @@ describe('StartingRoomV2', ()=>{
         const testMap = mapGen.getMap();
         const mapCompiler = new MapCompiler(testMap);
         const startingRoom = new StartingRoom();
-        const testTile = testMap[0][0];
-        mapCompiler.manipulateThisTile(0,0,startingRoom.buildRoom);
-        const width = startingRoom.getWidth();
-        const length = startingRoom.getLength();
-        let passOrFail = true;
-        for(let i = 0; i < width; i++){
-            for(let j = 0; j < length; j++){
-                if(testMap[i][j].getTileInfo().type !== 'starting room'){
-                    passOrFail = false;
-                }
-            }
-        }
-        expect(passOrFail).to.equal(true);
+        mapCompiler.traverseTilesInADirection(5, 5, 's', 'e', 2, 2, (tile)=>{
+            tile.updateType('starting room');
+        });
+        expect(testMap[5][5].getTileInfo().type).to.equal('starting room');
+        expect(testMap[6][5].getTileInfo().type).to.equal('starting room');
+        expect(testMap[5][6].getTileInfo().type).to.equal('starting room');
+        expect(testMap[6][6].getTileInfo().type).to.equal('starting room');
     })
 })
