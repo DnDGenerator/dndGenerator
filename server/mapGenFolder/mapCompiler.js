@@ -57,6 +57,45 @@ class MapCompiler{
         if(!this.tiledMap[x] || this.tiledMap[x][y]){
             return null;
         }
+        if(xCardinalDirection === 's'){
+            for(let i = x; i < x + xTraverseDistance; i++){
+                if(yCardinalDirection === 'e'){
+                    for(let j = y; j < y + yTraverseDistance; y++){
+                        if(!this.tiledMap[i] || this.tiledMap[i][j]){
+                            tileManipulation(this.tiledMap[i][j]);
+                        }
+                    }
+                }else if(yCardinalDirection === 'w'){
+                    for(let j = y; j > y - yTraverseDistance; j--){
+                        if(!this.tiledMap[i] || this.tiledMap[i][j]){
+                            tileManipulation(this.tiledMap[i][j]);
+                        }
+                    }
+                }else{
+                    return null;
+                }
+            }
+        }else if(xCardinalDirection === 'n'){
+            for(let i = x; i > x - xCardinalDirection; i--){
+                if(yCardinalDirection === 'e'){
+                    for(let j = y; j < y + yTraverseDistance; y++){
+                        if(!this.tiledMap[i] || this.tiledMap[i][j]){
+                            tileManipulation(this.tiledMap[i][j]);
+                        }
+                    }
+                }else if(yCardinalDirection === 'w'){
+                    for(let j = y; j > y - yTraverseDistance; j--){
+                        if(!this.tiledMap[i] || this.tiledMap[i][j]){
+                            tileManipulation(this.tiledMap[i][j]);
+                        }
+                    }
+                }else{
+                    return null;
+                }
+            }
+        }else{
+            return null;
+        }
     }
 }
 
