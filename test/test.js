@@ -5,6 +5,7 @@ const Door = require('../server/mapGenFolder/dndDoor');
 const Chamber = require('../server/mapGenFolder/dndChamber');
 const MapGen = require('../server/mapGenFolder/dndMapMaker');
 const MapGenVTwo = require('../server/mapGenFolder/dndMapMakerv2');
+const MapCompiler = require('../server/mapGenFolder/mapCompiler');
 const { test } = require('mocha');
 var expect = require('chai').expect;
 
@@ -463,3 +464,14 @@ describe('mapGenV2', ()=>{
         expect(testTile.getNeighbors().e.type).to.equal('changed');
     })
 });
+
+describe('mapCompiler',()=>{
+    beforeEach(()=>{
+        mapGen = new MapGenVTwo(100,100);
+    });
+    it('should use high order functions inorder to allow for reusable code on individual tiles', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+    })
+
+})
