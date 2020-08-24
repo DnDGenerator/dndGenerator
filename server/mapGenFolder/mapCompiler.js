@@ -2,6 +2,7 @@ class MapCompiler{
     constructor(tiledMap){
         this.tiledMap = tiledMap;
         this.manipulateThisTile = this.manipulateThisTile.bind(this);
+        this.manipulateThisTileNeighbor = this.manipulateThisTileNeighbor.bind(this);
     }
     /**
      * applies different methods to different tiles
@@ -30,7 +31,7 @@ class MapCompiler{
      * @param {function} tileManipulation 
      */
     manipulateThisTileNeighbor(x, y, cardinalDirection, tileManipulation){
-        if(cardinalDirection !== 'n' || cardinalDirection !== 'e' || cardinalDirection !== 's' || cardinalDirection !== 'w'){
+        if(cardinalDirection !== 'n' && cardinalDirection !== 'e' && cardinalDirection !== 's' && cardinalDirection !== 'w'){
             console.error('valid cardinal directions are n, e, s, w. not ', cardinalDirection);
             return null;
         }

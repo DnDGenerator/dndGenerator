@@ -487,6 +487,25 @@ describe('mapCompiler',()=>{
         expect(mapCompiler.manipulateThisTile(100,100, ()=>{
             console.log('does nothing');
         })).to.equal(null);
+    });
+    it('should be able to manipulate specific neighbors', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const testTileNorthNeighbor = testMap[5][5].getNeighbors().n;
+        expect(testTileNorthNeighbor.getTileInfo().type).to.be.a('string');
+        expect(testTileNorthNeighbor.getTileInfo().type).to.equal('available');
+        mapCompiler.manipulateThisTileNeighbor(5,5,'n', (tileNeighbor)=>{
+            tileNeighbor.updateType('changed');
+        });
+        expect(testTileNorthNeighbor.getTileInfo().type).to.equal('changed');
+    });
+    it('should be able to handle errors if a cardnial direction of n,e,s,w is not passed or used',()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const testTile = testMap[5][5];
+        expect(mapCompiler.manipulateThisTileNeighbor(5,5,'t',(tile)=>{
+            console.log('do nothing');
+        })).to.equal(null);
     })
 
 })
