@@ -13,7 +13,7 @@ class MapGen{
         };
         this.fiveFootTileMap = this.fiveFootTileMap.map((theYs, x)=>{
             return theYs.map((notUsed, y)=>{
-                const tile = new Tile('empty space', x, y);
+                const tile = new Tile('available', x, y);
                 return tile;
             })
         });

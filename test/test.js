@@ -442,6 +442,7 @@ describe('mapGenV2', ()=>{
         expect(testMap[0][0].getTileInfo().x).to.be.a('number')
         expect(testMap[10][0].getTileInfo().y).to.be.a('number');
         expect(testMap[0][10].getTileInfo().type).to.be.a('string')
+        expect(testMap[5][5].getTileInfo().type).to.equal('available');
     });
     it('should be populated with tiles that know their neighbors', ()=>{
         const testMap = mapGen.getMap();
