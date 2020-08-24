@@ -1,4 +1,4 @@
-class mapCompiler{
+class MapCompiler{
     constructor(tiledMap){
         this.tiledMap = tiledMap;
         this.manipulateThisTile = this.manipulateThisTile.bind(this);
@@ -11,10 +11,15 @@ class mapCompiler{
      * 
      * @param {number} x x coordinate of tile that needs to be manipulated
      * @param {number} y y coordinate of tile that needs to be manipulated
-     * @param {function} tileManipulation passed in function that will act directly onto the tile itself
+     * @param {function} tileManipulation passed in function that will act directly onto the tile that is passed into it
      */
     manipulateThisTile(x, y, tileManipulation){
+        if(!this.tiledMap[x] || !this.tiledMap[x][y]){
+            console.error('x and y are not within the boundaries of the table, please verify ', x, '&', y);
+            return null;
+        }
         const tile = this.tiledMap[x][y];
+        
         return tileManipulation(tile);
     }
     /**
@@ -29,7 +34,7 @@ class mapCompiler{
             console.error('valid cardinal directions are n, e, s, w. not ', cardinalDirection);
             return null;
         }
-        if(!this.tiledMap[x][y]){
+        if(!this.tiledMap[x] || !this.tiledMap[x][y]){
             console.error('x and y are not within the boundaries of the table, please verify ', x, '&', y);
             return null;
         }
@@ -37,3 +42,5 @@ class mapCompiler{
         return tileManipulation(tileNeighbor);
     }
 }
+
+module.exports = MapCompiler

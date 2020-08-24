@@ -472,6 +472,21 @@ describe('mapCompiler',()=>{
     it('should use high order functions inorder to allow for reusable code on individual tiles', ()=>{
         const testMap = mapGen.getMap();
         const mapCompiler = new MapCompiler(testMap);
+        const testTile = testMap[5][5];
+        expect(testTile.getTileInfo().type).to.be.a('string');
+        expect(testTile.getTileInfo().type).to.equal('available');
+        mapCompiler.manipulateThisTile(5, 5, (tile)=>{
+            tile.updateType('changeMade');
+        })
+        expect(testTile.getTileInfo().type).to.equal('changeMade');
+
+    });
+    it('should handle an error if x and y are too large or too small for the table', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        expect(mapCompiler.manipulateThisTile(100,100, ()=>{
+            console.log('does nothing');
+        })).to.equal(null);
     })
 
 })
