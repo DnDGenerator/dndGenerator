@@ -522,5 +522,23 @@ describe('StartingRoomV2', ()=>{
         const testTile = testMap[5][5];
         mapCompiler.manipulateThisTile(5,5,startingRoom.buildRoom);
         expect(testTile.getTileInfo().type).to.equal('starting room');
+    });
+    it('should build a room equal in width and length to its dimensions',()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const startingRoom = new StartingRoom();
+        const testTile = testMap[0][0];
+        mapCompiler.manipulateThisTile(0,0,startingRoom.buildRoom);
+        const width = startingRoom.getWidth();
+        const length = startingRoom.getLength();
+        let passOrFail = true;
+        for(let i = 0; i < width; i++){
+            for(let j = 0; j < length; j++){
+                if(testMap[i][j].getTileInfo().type !== 'starting room'){
+                    passOrFail = false;
+                }
+            }
+        }
+        expect(passOrFail).to.equal(true);
     })
 })

@@ -3,6 +3,7 @@ class MapCompiler{
         this.tiledMap = tiledMap;
         this.manipulateThisTile = this.manipulateThisTile.bind(this);
         this.manipulateThisTileNeighbor = this.manipulateThisTileNeighbor.bind(this);
+        this.traverseTilesInADirection = this.traverseTilesInADirection.bind(this);
     }
     /**
      * applies different methods to different tiles
@@ -41,6 +42,21 @@ class MapCompiler{
         }
         const tileNeighbor = this.tiledMap[x][y].getNeighbors()[cardinalDirection];
         return tileManipulation(tileNeighbor);
+    }
+    /**
+     * 
+     * @param {number} x 
+     * @param {number} y 
+     * @param {string} xCardinalDirection 
+     * @param {string} yCardinalDirection 
+     * @param {number} xTraverseDistance 
+     * @param {number} yTraverseDistance 
+     * @param {function} tileManipulation 
+     */
+    traverseTilesInADirection(x, y, xCardinalDirection, yCardinalDirection, xTraverseDistance, yTraverseDistance, tileManipulation){
+        if(!this.tiledMap[x] || this.tiledMap[x][y]){
+            return null;
+        }
     }
 }
 
