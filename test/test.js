@@ -6,6 +6,7 @@ const Chamber = require('../server/mapGenFolder/dndChamber');
 const MapGen = require('../server/mapGenFolder/dndMapMaker');
 const MapGenVTwo = require('../server/mapGenFolder/dndMapMakerv2');
 const MapCompiler = require('../server/mapGenFolder/mapCompiler');
+const StartingRoom = require('../server/mapGenFolder/startingRoomV2');
 const { test } = require('mocha');
 var expect = require('chai').expect;
 
@@ -508,4 +509,18 @@ describe('mapCompiler',()=>{
         })).to.equal(null);
     })
 
+})
+
+describe('StartingRoomV2', ()=>{
+    beforeEach(()=>{
+        mapGen = new MapGenVTwo(100,100);
+    });
+    it('should work hand in hand with mapgen and mapcompiler to work only on what it needs to work on', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const startingRoom = new StartingRoom();
+        const testTile = testMap[5][5];
+        mapCompiler.manipulateThisTile(5,5,startingRoom.buildRoom);
+        expect(testTile.getTileInfo().type).to.equal('starting room');
+    })
 })

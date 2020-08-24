@@ -6,8 +6,8 @@ const loot = require('./lootBranch');
 const npc = require('./npcGenerator');
 const villian = require('./villian');
 const dungeon = require('./dungeonBuilder');
-const Map = require('./dndMapMaker');
-const MapDescription = require('./mapDescription');
+const Map = require('./mapGenFolder/dndMapMaker');
+const MapDescription = require('./mapGenFolder/mapDescription');
 const cors = require('cors');
 app.use(cors())
 app.use(express.static(path.join(__dirname, '../dist')))
