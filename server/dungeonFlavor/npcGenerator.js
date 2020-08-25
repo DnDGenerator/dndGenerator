@@ -23,23 +23,23 @@ module.exports = ()=>{
         "Exceptionally beautiful",
         "Exceptionally ugly"
     ];
-    const abilitiesHighList = [
-        "Strength-powerful, brawny, strong as an ox",
-        "Dexterity-lithe, agile, graceful",
-        "Constitution-hardy, hale, healthy",
-        "Intelligence-studious, learned, inquisitive",
-        "Wisdom-perceptive, spiritual, insightful",
-        "Charisma-persuasive, forceful, born leader"
-    ];
+    const abilitiesHighList = {
+        'str':"Strength-powerful, brawny, strong as an ox",
+        'dex':"Dexterity-lithe, agile, graceful",
+        'con':"Constitution-hardy, hale, healthy",
+        'int':"Intelligence-studious, learned, inquisitive",
+        'wis':"Wisdom-perceptive, spiritual, insightful",
+        'cha':"Charisma-persuasive, forceful, born leader"
+    };
 
-    const abilitiesLowList = [
-        "Strength-feeble, scrawny",
-        "Dexterity-clumsy, fumbling",
-        "Constitution-sickly, pale",
-        "Intelligence-dim-witted, slow",
-        "Wisdom-oblivious, absentminded",
-        "Charisma-dull, boring"
-    ];
+    const abilitiesLowList = {
+        'str':"Strength-feeble, scrawny",
+        'dex':"Dexterity-clumsy, fumbling",
+        'con':"Constitution-sickly, pale",
+        'int':"Intelligence-dim-witted, slow",
+        'wis':"Wisdom-oblivious, absentminded",
+        'cha':"Charisma-dull, boring"
+    };
 
     const talentList = [
         "Plays a musical instrument",
@@ -179,10 +179,17 @@ module.exports = ()=>{
         bonds:"",
         flawAndOrSecret:""
     }
-
+    const statList = [
+        'str',
+        'dex',
+        'con',
+        'int',
+        'wis',
+        'cha'
+    ]
     npc.appearance = appearanceList[Dice.roll(`1d${appearanceList.length}`).result - 1];
-    npc.highAbility = abilitiesHighList[Dice.roll(`1d${abilitiesHighList.length}`).result - 1];
-    npc.lowAbility = abilitiesLowList[Dice.roll(`1d${abilitiesLowList.length}`).result - 1];
+    npc.highAbility = abilitiesHighList[statList.splice((Dice.roll(`1d${statList.length}`).result - 1),1)];
+    npc.lowAbility = abilitiesLowList[statList.splice((Dice.roll(`1d${statList.length}`).result - 1),1)];
     npc.talent = talentList[Dice.roll(`1d${talentList.length}`).result - 1];
     npc.mannerism = mannerismsList[Dice.roll(`1d${mannerismsList.length}`).result - 1];
     npc.interaction = interactionTraitsList[Dice.roll(`1d${interactionTraitsList.length}`).result - 1];

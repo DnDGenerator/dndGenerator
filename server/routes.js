@@ -6,6 +6,8 @@ const loot = require('./lootBranch');
 const npc = require('./npcGenerator');
 const villian = require('./villian');
 const dungeon = require('./dungeonBuilder');
+const Map = require('./mapGenFolder/dndMapMaker');
+const MapDescription = require('./mapGenFolder/mapDescription');
 const cors = require('cors');
 app.use(cors())
 app.use(express.static(path.join(__dirname, '../dist')))
@@ -33,4 +35,17 @@ app.get('/villian', (req, res)=>{
 
 app.get('/dungeon', (req, res)=>{
     res.send(dungeon());
+})
+
+app.get(`/map`, (req, res)=>{
+    const map = new Map(100, 100);
+    map.createMap();
+    res.send(map.getConvertedMap())
+})
+
+app.get('/description', (req, res)=>{
+    const numChambers = req.query.numChambers;
+    const purpose = req.query.purpose;
+    const description = new MapDescription(numChambers, purpose);
+    res.send(description.chamberDescriptions());
 })

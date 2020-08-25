@@ -11,7 +11,8 @@ import Loot from './components/loot';
 import NPC from './components/npc';
 import Villian from './components/villian';
 import Dungeon from './components/dungeon';
-
+import Map from './components/map';
+import MapDescription from './components/mapDescription';
 
 class App extends React.Component{
     constructor(props){
@@ -29,7 +30,18 @@ class App extends React.Component{
             ravnicaRaces:false,
             eberronRaces:false,
             usePointBuy:false,
-            loot:{},
+            loot:{
+                coins:{
+                    platinum:0,
+                    gold:0,
+                    electrum:0,
+                    silver:0,
+                    copper:0
+                },
+                gemsArray:[],
+                artsArray:[],
+                magicItemsArray:[]
+            },
             cr:0,
             lootType:'hoard',
             npc:{
@@ -53,8 +65,17 @@ class App extends React.Component{
                 creator:"",
                 purpose:"",
                 history:""
+            },
+            numChambers:0,
+            map:[],
+            description:{
+                chambers:[],
+                currentChamberState:[],
+                contents:[]
             }
         }
+        // this.url = 'https://dndcharactergenerator.herokuapp.com';
+        this.url = 'http://localhost:3000';
         this.handleClick = this.handleClick.bind(this);
         this.handleEberronChange = this.handleEberronChange.bind(this);
         this.handleRavnicaChange = this.handleRavnicaChange.bind(this);
@@ -68,9 +89,23 @@ class App extends React.Component{
         this.handleNPCClick = this.handleNPCClick.bind(this);
         this.handleVillianClick = this.handleVillianClick.bind(this);
         this.handleDungeonClick = this.handleDungeonClick.bind(this);
+        this.handleMapClick = this.handleMapClick.bind(this);
+        this.handleDescriptionClick = this.handleDescriptionClick.bind(this);
+    }
+    handleMapClick(){
+        
+        axios.get(this.url+`/map`)
+            .then(({data})=>{
+                this.setState({
+                    map:data.map,
+                    numChambers:data.numChambers
+                })
+            }).catch(e=>{
+                console.error(e);
+            })
     }
     handleDungeonClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/dungeon')
+        axios.get(this.url+'/dungeon')
             .then(({data})=>{
                 this.setState({
                     dungeon: data
@@ -80,7 +115,7 @@ class App extends React.Component{
             })
     }
     handleVillianClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/villian')
+        axios.get(this.url+'/villian')
             .then(({data})=>{
                 this.setState({
                     villian: data
@@ -90,7 +125,7 @@ class App extends React.Component{
             })
     }
     handleNPCClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/npc')
+        axios.get(this.url+'/npc')
             .then(({data}) =>{
                 this.setState({
                     npc: data
@@ -99,8 +134,22 @@ class App extends React.Component{
                 console.error(e);
             })
     }
+    handleDescriptionClick(){
+        axios.get(this.url+'/description', {
+            params:{
+                numChambers:this.state.numChambers,
+                purpose:this.state.dungeon.purpose
+            }
+        }).then(({data})=>{
+            this.setState({
+                description: data
+            })
+        }).catch(e=>{
+            console.error(e);
+        })
+    }
     handleLootClick(){
-        axios.get('https://dndcharactergenerator.herokuapp.com/loot', {
+        axios.get(this.url+'/loot', {
             params:{
                 CR: this.state.cr,
                 lootType: this.state.lootType
@@ -114,10 +163,8 @@ class App extends React.Component{
         })
     }
     handleClick(){
-        console.log(this.state.ravnicaRaces)
-        //https://dndcharactergenerator.herokuapp.com
         
-        axios.get('https://dndcharactergenerator.herokuapp.com/character', {
+        axios.get(this.url+'/character', {
             params:{
                 eberronInclude: this.state.eberron,
                 ravnicaInclude: this.state.ravnica,
@@ -158,26 +205,22 @@ class App extends React.Component{
     }
 
     handleLootTypeInput(e){
-        console.log(e, 'this fired! handleLootTypeInput')
         this.setState({
             lootType: e
         })
     }
     handleCRSelection(e){
-        console.log(e, 'this fired! this fired!');
         this.setState({
             cr: e
         })
     }
     handleEberronChange(){
-        console.log('handles eberron')
         this.setState(state =>({
             eberron: !state.eberron,
             ravnica: false
         }))
     }
     handleRavnicaChange(){
-        console.log('handles ravnica')
         this.setState(state =>({
             ravnica: !state.ravnica,
             eberron: false
@@ -219,9 +262,9 @@ class App extends React.Component{
                 />
                 <Accordion defaultActiveKey="0">
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button}  variant="link" eventKey="0">Character Creator!</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header}  eventKey="0">Character Creator!</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
                                 <Character 
@@ -238,20 +281,20 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button}  variant="link" eventKey="1">Loot Generator!</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header}  eventKey="1">Loot Generator!</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="1">
                             <Card.Body>
                                 <Loot lootObj={this.state.loot} handleLootTypeInput={this.handleLootTypeInput} handleCRSelection={this.handleCRSelection}/>
-                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shineys</Button>
+                                <Button variant="primary" size="lg" onClick={this.handleLootClick} block="true">Click for Shinies</Button>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="2">NPC Details Generator</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header} eventKey="2">NPC Details Generator</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="2">
                             <Card.Body>
                                 <NPC npc={this.state.npc}/>
@@ -260,9 +303,9 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="3">Villian Generator</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header} eventKey="3">Villian Generator</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="3">
                             <Card.Body>
                                 <Villian villian={this.state.villian} />
@@ -271,13 +314,35 @@ class App extends React.Component{
                         </Accordion.Collapse>
                     </Card>
                     <Card>
-                        <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="4">Dungeon Info Generator</Accordion.Toggle>
-                        </Card.Header>
+                        
+                        <Accordion.Toggle as={Card.Header} eventKey="4">Dungeon Info Generator</Accordion.Toggle>
+                        
                         <Accordion.Collapse eventKey="4">
                             <Card.Body>
                                 <Dungeon dungeon={this.state.dungeon} />
                                 <Button variant="primary" onClick={this.handleDungeonClick} block="true">Click for Dungeon Ideas</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey="5">Map Maker</Accordion.Toggle>
+
+                        <Accordion.Collapse eventKey="5">
+                            <Card.Body>
+                                <Map map={this.state.map} />
+                                <Button variant="primary" onClick={this.handleMapClick} block="true">Click for Random Map</Button>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                    <Card>
+                        <Accordion.Toggle as={Card.Header} eventKey="6">Populate the dungeon!</Accordion.Toggle>
+
+                        <Accordion.Collapse eventKey="6">
+                            <Card.Body>
+                                <div>
+                                    <MapDescription description={this.state.description} />
+                                    <Button variant="primary" onClick={this.handleDescriptionClick} block="true" >Push this for descriptions of the dungeon you created</Button>
+                                </div>
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
