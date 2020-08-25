@@ -549,5 +549,14 @@ describe('StartingRoomV2', ()=>{
         expect(testMap[5 + startingRoom.getWidth()-1][5 + startingRoom.getLength()-1].getTileInfo().type).to.equal('starting room');
         expect(testMap[5][5 + startingRoom.getLength()-1].getTileInfo().type).to.equal('starting room');
         expect(testMap[4][5].getTileInfo().type).to.equal('available');
+    });
+    it('should drop anchors for expanding in logical appropriate places',()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const startingRoom = new StartingRoom();
+        mapCompiler.traverseTilesInADirection(5, 5, 's', 'e', startingRoom.getWidth(), startingRoom.getLength(), (tile)=>{
+            startingRoom.buildRoom(tile);
+        });
+        
     })
 })

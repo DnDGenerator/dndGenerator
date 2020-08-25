@@ -56,9 +56,17 @@ class StartingRoom{
                 break;
         }
 
+        this.getExitLocations = this.getExitLocations.bind(this);
+        this.getExitTypes = this.getExitTypes.bind(this);
         this.getWidth = this.getWidth.bind(this);
         this.getLength = this.getLength.bind(this);
         this.buildRoom = this.buildRoom.bind(this);
+    }
+    getExitTypes(){
+        return this.exitTypes;
+    }
+    getExitLocations(){
+        return this.exitLocations;
     }
     getWidth(){
         return this.width;
@@ -68,6 +76,16 @@ class StartingRoom{
     }
     buildRoom(startTile){
         startTile.updateType('starting room');   
+    }
+    dropAnchor(edgeTile, neighborToChange){
+        const neighbors = edgeTile.getNeighbors();
+        const indexOfNeighbor = this.exitLocations.indexOf(neighborToChange);
+        if (indexOfNeighbor > -1) {
+            this.exitLocations.splice(indexOfNeighbor, 1);
+            neighbors[neighborToChange].updateType(this.exitTypes[indexOfNeighbor])
+            this.exitTypes.splice(indexOfNeighbor, 1);
+        }
+        
     }
 }
 
