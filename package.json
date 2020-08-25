@@ -24,11 +24,7 @@
     "dice": "0.0.2",
     "express": "^4.17.1",
     "heroku": "^7.37.0",
-<<<<<<< HEAD
-    "lodash": "^4.17.20",
-=======
     "lodash": "^4.17.19",
->>>>>>> ad505ab7442d700196b48c7c5ea763d18a8c9abf
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
