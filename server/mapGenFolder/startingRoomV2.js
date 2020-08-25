@@ -7,35 +7,35 @@ class StartingRoom{
         const startingRoll = dice.roll(`1d10`).result;
         switch(startingRoll){
             case 1:
-                width = 20/5;
-                height = 20/5;
+                this.width = 20/5;
+                this.length = 20/5;
                 break;
             case 2:
-                width = 20/5;
-                height = 20/5;
+                this.width = 20/5;
+                this.length = 20/5;
                 break;
             case 3:
-                width = 40/5;
-                height = 40/5;
+                this.width = 40/5;
+                this.length = 40/5;
                 break;
             case 4:
-                width = 80/5;
-                height = 20/5;
+                this.width = 80/5;
+                this.length = 20/5;
                 break;
             case 5:
-                width = 20/5;
-                height = 40/5;
+                this.width = 20/5;
+                this.length = 40/5;
                 break;
             case 6:
             case 7:
             case 8:
-                width = 20/5;
-                height = 20/5;
+                this.width = 20/5;
+                this.length = 20/5;
                 break;
             case 9:
             case 10:
-                width = 10/5;
-                height = 5/5;
+                this.width = 10/5;
+                this.length = 5/5;
                 break;
         }
 
