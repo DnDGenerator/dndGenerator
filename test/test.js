@@ -2,6 +2,7 @@
 const MapGenVTwo = require('../server/mapGenFolder/dndMapMakerv2');
 const MapCompiler = require('../server/mapGenFolder/mapCompiler');
 const StartingRoom = require('../server/mapGenFolder/startingRoomV2');
+const Door = require('../server/mapGenFolder/doorV2');
 const dice = require('../server/dice');
 const { test } = require('mocha');
 var expect = require('chai').expect;
@@ -185,4 +186,12 @@ describe('StartingRoomV2', ()=>{
         });
         expect(filtedResults.length).to.equal(exitTypes.length);
     })
+})
+
+describe('DoorVTwo', ()=>{
+    beforeEach(()=>{
+        mapGen = new MapGenVTwo(100,100);
+    });
+
+    
 })
