@@ -1,9 +1,13 @@
+const { takeWhile } = require("lodash");
+
 class MapCompiler{
     constructor(tiledMap){
         this.tiledMap = tiledMap;
         this.manipulateThisTile = this.manipulateThisTile.bind(this);
         this.manipulateThisTileNeighbor = this.manipulateThisTileNeighbor.bind(this);
         this.traverseTilesInADirection = this.traverseTilesInADirection.bind(this);
+        this.findEdgeTilesByType = this.findEdgeTilesByType.bind(this);
+        this.getAnchorPointsForBuild = this.getAnchorPointsForBuild.bind(this);
     }
     /**
      * applies different methods to different tiles
@@ -52,6 +56,7 @@ class MapCompiler{
      * @param {number} xTraverseDistance 
      * @param {number} yTraverseDistance 
      * @param {function} tileManipulation 
+     * @description traveses over the map allowing multiple tiles in a rectangular shape to be accessed and manipulated
      */
     traverseTilesInADirection(x, y, xCardinalDirection, yCardinalDirection, xTraverseDistance, yTraverseDistance, tileManipulation){
         if(!this.tiledMap[x] || !this.tiledMap[x][y]){
@@ -97,6 +102,42 @@ class MapCompiler{
             return null;
         }
         return;
+    }
+    /**
+     * 
+     * @param {string} anchorPoint this string will tell the method which type of room/door/etc you are looking to place
+     * @description After taking in the anchorPoint that you wish to use, the method will run through the map and find any of the anchor
+     * point locations avaliable to the type of anchorpoint you are looking for
+     * @returns {Array} that will contain the tiles that are at the acnhorpoint locations 
+     */
+    getAnchorPointsForBuild(anchorPoint){
+        const searchResults = [];
+        this.tiledMap.forEach(theYs=>{
+            theYs.forEach(tile=>{
+                if(tile.getTileInfo().type === anchorPoint){
+                    searchResults.push(tile);
+                }
+            });
+        });
+        return searchResults;
+    }
+    /**
+     * 
+     * @param {string} cardinalEdge n,s,e,w. do determine which edge is to be checked
+     * @param {string} roomType the tile type that we are searching
+     * @returns {array} of results that meet the condition of a neighboring tile to said roomtype is available to be changed
+     */
+    findEdgeTilesByType(cardinalEdge, roomType){
+        const searchResults = [];
+        this.tiledMap.forEach(theYs=>{
+            theYs.forEach(tile=>{
+                if(tile.getTileInfo().type === roomType && tile.getNeighbors()[cardinalEdge] && tile.getNeighbors()[cardinalEdge].getTileInfo().type === 'available'){
+                    searchResults.push(tile.getNeighbors()[cardinalEdge]);
+                }
+            })
+        })
+        return searchResults;
+
     }
 }
 

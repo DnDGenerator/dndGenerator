@@ -294,41 +294,41 @@ describe('chamber()',()=>{
         expect(reducedMap).to.be.an('array').to.include('C');
         expect(reducedMap).to.be.an('array').that.has.lengthOf(chamber.getWidth()*chamber.getHeight());
     });
-    it('should have replaced C tiles with the appropriate number of exits', ()=>{
-        chamber.createChamber();
-        const numEXits = chamber.getNumExits();
-        const exitLocs = chamber.getExits();
-        console.log(numEXits ,' numExits');
-        console.log(exitLocs.length, ' length of exitLocs')
-        const {nLength, eLength, sLength, wLength, tilesUpdated} = chamber.placeExits();
-        console.log('north ', nLength);
-        console.log('east ', eLength);
-        console.log('south ', sLength);
-        console.log('west ', wLength);
-        console.log(exitLocs);
+    // it('should have replaced C tiles with the appropriate number of exits', ()=>{
+    //     chamber.createChamber();
+    //     const numEXits = chamber.getNumExits();
+    //     const exitLocs = chamber.getExits();
+    //     console.log(numEXits ,' numExits');
+    //     console.log(exitLocs.length, ' length of exitLocs')
+    //     const {nLength, eLength, sLength, wLength, tilesUpdated} = chamber.placeExits();
+    //     console.log('north ', nLength);
+    //     console.log('east ', eLength);
+    //     console.log('south ', sLength);
+    //     console.log('west ', wLength);
+    //     console.log(exitLocs);
 
 
-        const testMap = map
-            .reduce((oldArray, currentArray)=>{
-                const newArray = oldArray.concat(currentArray);
-                return newArray;
-            },[])
-            .map(tile=>tile.getTileInfo().type)
-            .filter(type=>type !== 'C')
-            .filter(type=>type!=='*')
-            .filter(type=>type!=='WC');
-        console.log('testMap ', testMap)
-        console.log('num that could not be placed ', chamber.getNumNotPlaced())
-        expect(testMap).to.be.an('array').to.not.include('C');
-        expect(testMap).to.have.lengthOf(chamber.getNumExits());
+    //     const testMap = map
+    //         .reduce((oldArray, currentArray)=>{
+    //             const newArray = oldArray.concat(currentArray);
+    //             return newArray;
+    //         },[])
+    //         .map(tile=>tile.getTileInfo().type)
+    //         .filter(type=>type !== 'C')
+    //         .filter(type=>type!=='*')
+    //         .filter(type=>type!=='WC');
+    //     console.log('testMap ', testMap)
+    //     console.log('num that could not be placed ', chamber.getNumNotPlaced())
+    //     expect(testMap).to.be.an('array').to.not.include('C');
+    //     expect(testMap).to.have.lengthOf(chamber.getNumExits());
         
-        const doorArray = testMap
-            .filter(value=>value==='door');
-        const passageArray = testMap
-            .filter(value=>value==='passage');
-        expect(doorArray).to.have.lengthOf(chamber.getNumDoors());
-        expect(passageArray).to.have.lengthOf(chamber.getNumPassages());
-    })
+    //     const doorArray = testMap
+    //         .filter(value=>value==='door');
+    //     const passageArray = testMap
+    //         .filter(value=>value==='passage');
+    //     expect(doorArray).to.have.lengthOf(chamber.getNumDoors());
+    //     expect(passageArray).to.have.lengthOf(chamber.getNumPassages());
+    // })
 })
 
 describe('mapGen', ()=>{
@@ -507,6 +507,41 @@ describe('mapCompiler',()=>{
         expect(mapCompiler.manipulateThisTileNeighbor(5,5,'t',(tile)=>{
             console.log('do nothing');
         })).to.equal(null);
+    });
+
+    it('should be able to be able to filter out tiles by type', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const testTile = testMap[5][5];
+        testTile.updateType('changed');
+        const result = mapCompiler.getAnchorPointsForBuild('changed')[0].getTileInfo().type;
+        expect(testTile.getTileInfo().type).to.equal(result);
+    });
+
+    it('should be able to find edges that can be changed', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        testMap[5][5].updateType('edge');
+        testMap[5][6].updateType('edge');
+        testMap[5][7].updateType('edge');
+        testMap[6][5].updateType('edge');
+        testMap[6][6].updateType('edge');
+        testMap[6][7].updateType('edge');
+        testMap[7][5].updateType('edge');
+        testMap[7][6].updateType('edge');
+        testMap[7][7].updateType('edge');
+        testMap[8][5].updateType('edge');
+        testMap[8][6].updateType('edge');
+        testMap[8][7].updateType('edge');
+        const northResultShouldHaveLengthOfThree = mapCompiler.findEdgeTilesByType('n', 'edge');
+        expect(northResultShouldHaveLengthOfThree.length).to.equal(3);
+        const southResultShouldHaveLengthOfThree = mapCompiler.findEdgeTilesByType('s', 'edge');
+        expect(southResultShouldHaveLengthOfThree.length).to.equal(3);
+        const eastResultsShouldHaveLengthOfFour = mapCompiler.findEdgeTilesByType('e', 'edge');
+        expect(eastResultsShouldHaveLengthOfFour.length).to.equal(4);
+        const westResultsShouldHaveLengthOfFour = mapCompiler.findEdgeTilesByType('w', 'edge');
+        expect(westResultsShouldHaveLengthOfFour.length).to.equal(4);
+        
     })
 
 })
@@ -550,13 +585,13 @@ describe('StartingRoomV2', ()=>{
         expect(testMap[5][5 + startingRoom.getLength()-1].getTileInfo().type).to.equal('starting room');
         expect(testMap[4][5].getTileInfo().type).to.equal('available');
     });
-    it('should drop anchors for expanding in logical appropriate places',()=>{
-        const testMap = mapGen.getMap();
-        const mapCompiler = new MapCompiler(testMap);
-        const startingRoom = new StartingRoom();
-        mapCompiler.traverseTilesInADirection(5, 5, 's', 'e', startingRoom.getWidth(), startingRoom.getLength(), (tile)=>{
-            startingRoom.buildRoom(tile);
-        });
-        
-    })
+    // it('should drop anchors for expanding in logical appropriate places',()=>{
+    //     const testMap = mapGen.getMap();
+    //     const mapCompiler = new MapCompiler(testMap);
+    //     const startingRoom = new StartingRoom();
+    //     mapCompiler.traverseTilesInADirection(5, 5, 's', 'e', startingRoom.getWidth(), startingRoom.getLength(), (tile)=>{
+    //         startingRoom.buildRoom(tile);
+    //     });
+    //     const exitLocations = startingRoom.getExitLocations();
+    // })
 })

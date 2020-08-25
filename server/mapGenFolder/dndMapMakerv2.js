@@ -34,29 +34,11 @@ class MapGen{
         });
 
         this.getMap = this.getMap.bind(this);
-        this.getAnchorPointsForBuild = this.getAnchorPointsForBuild.bind(this);
     }
     getMap(){
         return this.fiveFootTileMap;
     }
-    /**
-     * 
-     * @param {string} anchorPoint this string will tell the method which type of room/door/etc you are looking to place
-     * @description After taking in the anchorPoint that you wish to use, the method will run through the map and find any of the anchor
-     * point locations avaliable to the type of anchorpoint you are looking for
-     * @returns {Array} that will contain the tiles that are at the acnhorpoint locations 
-     */
-    getAnchorPointsForBuild(anchorPoint){
-        const searchResults = [];
-        this.fiveFootTileMap.forEach(theYs=>{
-            theYs.forEach(tile=>{
-                if(tile.getTileInfo().type === anchorPoint){
-                    searchResults.push(tile);
-                }
-            });
-        });
-        return searchResults;
-    }
+    
 }
 
 module.exports = MapGen;
