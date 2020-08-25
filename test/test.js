@@ -5,6 +5,7 @@ const StartingRoom = require('../server/mapGenFolder/startingRoomV2');
 const Door = require('../server/mapGenFolder/doorV2');
 const dice = require('../server/dice');
 const { test } = require('mocha');
+const DoorVTwo = require('../server/mapGenFolder/doorV2');
 var expect = require('chai').expect;
 
 describe('mapGenV2', ()=>{
@@ -193,5 +194,22 @@ describe('DoorVTwo', ()=>{
         mapGen = new MapGenVTwo(100,100);
     });
 
-    
+    it('should replace door anchors with the appropriate type of door', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const door = new DoorVTwo;
+        const testTile = testMap[5][5];
+        testTile.updateType('doorAnchor');
+        mapCompiler.manipulateThisTile(5,5,door.tellTileWhatKindOfDoor);
+        expect(testTile.getTileInfo().type).to.equal(door.getType());
+    });
+    it('should be able to tell which neighbor it came from and which neigbor it needs to drop a new anchor',()=>{
+        const testMap = mapGen.getMap();
+        const door = new DoorVTwo;
+        const testTile = testMap[5][5];
+        testTile.updateType('doorAnchor');
+        testTile.getNeighbors().n.updateType('starting room');
+        door.deployAnchor(testTile, 'starting room');
+        expect(testTile.getNeighbors().s.getTileInfo().type).to.equal(door.getExit());
+    })
 })

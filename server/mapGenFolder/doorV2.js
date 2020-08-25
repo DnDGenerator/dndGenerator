@@ -40,7 +40,16 @@ class DoorVTwo{
             this.exit = "trapAnchor"
         }
 
+        this.getType = this.getType.bind(this);
+        this.getExit = this.getExit.bind(this);
         this.tellTileWhatKindOfDoor = this.tellTileWhatKindOfDoor.bind(this);
+        this.deployAnchor = this.deployAnchor.bind(this);
+    }
+    getType(){
+        return this.type;
+    }
+    getExit(){
+        return this.exit
     }
     tellTileWhatKindOfDoor(tile){
         tile.updateType(this.type);
