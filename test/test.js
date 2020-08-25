@@ -186,7 +186,7 @@ describe('StartingRoomV2', ()=>{
             return array.filter(tile=>tile.getTileInfo().type !== 'available').pop();
         });
         expect(filtedResults.length).to.equal(exitTypes.length);
-    })
+    });
 })
 
 describe('DoorVTwo', ()=>{
@@ -211,5 +211,35 @@ describe('DoorVTwo', ()=>{
         testTile.getNeighbors().n.updateType('starting room');
         door.deployAnchor(testTile, 'starting room');
         expect(testTile.getNeighbors().s.getTileInfo().type).to.equal(door.getExit());
-    })
+    });
+    it('should work with startingRoomV2 to place doors when door anchors have been dropped',()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const door = new DoorVTwo;
+        const startingRoom = new StartingRoom();
+        mapCompiler.traverseTilesInADirection(5, 5, 's', 'e', startingRoom.getWidth(), startingRoom.getLength(), (tile)=>{
+            startingRoom.buildRoom(tile);
+        });
+        const cardnialExits = startingRoom.getExitLocations();
+        const exitTypes = startingRoom.getExitTypes();
+        const mapCompilerSearchresults = [];
+        for(let i = 0; i < cardnialExits.length; i++){
+            mapCompilerSearchresults.push(mapCompiler.findEdgeTilesByType(cardnialExits[i], 'starting room'));
+        }
+        for(let i = 0; i < mapCompilerSearchresults.length; i++){
+            const resultsLength = mapCompilerSearchresults[i].length;
+            if(resultsLength > 1){
+                mapCompilerSearchresults[i][dice.roll(`1d${resultsLength}`).result - 1].updateType(exitTypes[i]);
+            } else{
+                mapCompilerSearchresults[i][0].updateType(exitTypes[i]);
+            }
+        }
+        const doorAnchors = mapCompiler.getAnchorPointsForBuild('door');
+        for(let i = 0; i < doorAnchors.length; i ++){
+            door.tellTileWhatKindOfDoor(doorAnchors[i]);
+            door.deployAnchor(doorAnchors[i], 'starting room');
+        }
+        const numberOfDoorAnchorsRemaining = mapCompiler.getAnchorPointsForBuild('door').length;
+        expect(numberOfDoorAnchorsRemaining).to.equal(0);
+    });
 })
