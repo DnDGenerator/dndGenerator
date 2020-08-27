@@ -6,6 +6,7 @@ const Door = require('../server/mapGenFolder/doorV2');
 const dice = require('../server/dice');
 const { test } = require('mocha');
 const DoorVTwo = require('../server/mapGenFolder/doorV2');
+const Cartographer = require('../server/mapGenFolder/cartographer')
 var expect = require('chai').expect;
 
 describe('mapGenV2', ()=>{
@@ -242,4 +243,60 @@ describe('DoorVTwo', ()=>{
         const numberOfDoorAnchorsRemaining = mapCompiler.getAnchorPointsForBuild('door').length;
         expect(numberOfDoorAnchorsRemaining).to.equal(0);
     });
+})
+
+describe('cartographer',()=>{
+    beforeEach(()=>{
+        mapGen = new MapGenVTwo(100,100);
+    });
+
+    it('should be able to tell us its current orientation', ()=>{
+        const testMap = mapGen.getMap();
+        const walker = new Cartographer(testMap[5][5]);
+
+        expect(walker.getOrientation().opposite).to.equal('n');
+        expect(walker.getOrientation().same).to.equal('s');
+        expect(walker.getOrientation().left).to.equal('w');
+        expect(walker.getOrientation().right).to.equal('e');
+    });
+
+    it('should be able to tell us its current orientation when its facing direction changes', ()=>{
+        const testMap = mapGen.getMap()
+        const walker = new Cartographer(testMap[5][5]);
+        walker.startWalking('s');
+        expect(walker.getOrientation().opposite).to.equal('s');
+        expect(walker.getOrientation().same).to.equal('n');
+        expect(walker.getOrientation().left).to.equal('e');
+        expect(walker.getOrientation().right).to.equal('w');
+    })
+    it('should be able t let us know what tile is infront of Walker the cartographer', ()=>{
+        const testMap = mapGen.getMap();
+        const mapCompiler = new MapCompiler(testMap);
+        const door = new DoorVTwo;
+        const startingRoom = new StartingRoom();
+        const walker = new Cartographer(testMap[5][5]);
+        mapCompiler.traverseTilesInADirection(5, 5, 's', 'e', startingRoom.getWidth(), startingRoom.getLength(), (tile)=>{
+            startingRoom.buildRoom(tile);
+        });
+        const cardnialExits = startingRoom.getExitLocations();
+        const exitTypes = startingRoom.getExitTypes();
+        const mapCompilerSearchresults = [];
+        for(let i = 0; i < cardnialExits.length; i++){
+            mapCompilerSearchresults.push(mapCompiler.findEdgeTilesByType(cardnialExits[i], 'starting room'));
+        };
+        for(let i = 0; i < mapCompilerSearchresults.length; i++){
+            const resultsLength = mapCompilerSearchresults[i].length;
+            if(resultsLength > 1){
+                mapCompilerSearchresults[i][dice.roll(`1d${resultsLength}`).result - 1].updateType(exitTypes[i]);
+            } else{
+                mapCompilerSearchresults[i][0].updateType(exitTypes[i]);
+            }
+        };
+        const doorAnchors = mapCompiler.getAnchorPointsForBuild('door');
+        for(let i = 0; i < doorAnchors.length; i ++){
+            door.tellTileWhatKindOfDoor(doorAnchors[i]);
+            door.deployAnchor(doorAnchors[i], 'starting room');
+        };
+
+    })
 })
